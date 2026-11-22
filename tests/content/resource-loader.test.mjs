@@ -61,3 +61,17 @@ test('a changed file version during ranged download fails and cancels outstandin
   await assert.rejects(loadResource('https://example.test/model.glb'), /版本发生变化/);
   assert.ok(signals.every(signal => signal.aborted));
 });
+
+test('concurrent startup assets share a bounded queue instead of timing out behind model downloads', async t => {
+  let active = 0, peak = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    active++;
+    peak = Math.max(peak, active);
+    await new Promise(resolve => setTimeout(resolve, 3));
+    active--;
+    return new Response(new Uint8Array([7]), { status: 206, headers: { 'Content-Range': 'bytes 0-0/1' } });
+  });
+  const results = await Promise.all(Array.from({ length: 7 }, (_, index) => loadResource(`https://example.test/${index}.glb`)));
+  assert.equal(peak, 2);
+  assert.ok(results.every(bytes => new Uint8Array(bytes)[0] === 7));
+});

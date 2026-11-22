@@ -7,6 +7,35 @@ export interface ContentProgress {
 const CHUNK_SIZE = 256 * 1024;
 const REQUEST_TIMEOUT = 30_000;
 const listeners = new Set<(progress: ContentProgress) => void>();
+let activeRequests = 0;
+const waitingRequests: (() => void)[] = [];
+
+async function acquireRequest(signal: AbortSignal): Promise<void> {
+  signal.throwIfAborted();
+  if (activeRequests < 2) {
+    activeRequests++;
+    return;
+  }
+  await new Promise<void>((resolve, reject) => {
+    const ready = (): void => {
+      signal.removeEventListener('abort', cancel);
+      resolve();
+    };
+    const cancel = (): void => {
+      const index = waitingRequests.indexOf(ready);
+      if (index >= 0) waitingRequests.splice(index, 1);
+      reject(signal.reason);
+    };
+    waitingRequests.push(ready);
+    signal.addEventListener('abort', cancel, { once: true });
+  });
+}
+
+function releaseRequest(): void {
+  const next = waitingRequests.shift();
+  if (next) next();
+  else activeRequests--;
+}
 
 export function subscribeContentProgress(listener: (progress: ContentProgress) => void): () => void {
   listeners.add(listener);
@@ -32,14 +61,19 @@ export async function loadResource(url: URL | string): Promise<ArrayBuffer> {
   const href = String(url);
   const controller = new AbortController();
   async function request(start: number, ranged: boolean): Promise<{ response: Response; bytes: Uint8Array<ArrayBuffer> }> {
-    const timeout = AbortSignal.timeout(REQUEST_TIMEOUT);
-    const signal = AbortSignal.any([controller.signal, timeout]);
-    const response = await fetch(href, {
-      signal,
-      ...(ranged ? { headers: { Range: `bytes=${start}-${start + CHUNK_SIZE - 1}` } } : {})
-    });
-    if (!response.ok) throw new Error(`资源读取失败：HTTP ${response.status}，${href}`);
-    return { response, bytes: new Uint8Array(await response.arrayBuffer()) };
+    await acquireRequest(controller.signal);
+    try {
+      const timeout = AbortSignal.timeout(REQUEST_TIMEOUT);
+      const signal = AbortSignal.any([controller.signal, timeout]);
+      const response = await fetch(href, {
+        signal,
+        ...(ranged ? { headers: { Range: `bytes=${start}-${start + CHUNK_SIZE - 1}` } } : {})
+      });
+      if (!response.ok) throw new Error(`资源读取失败：HTTP ${response.status}，${href}`);
+      return { response, bytes: new Uint8Array(await response.arrayBuffer()) };
+    } finally {
+      releaseRequest();
+    }
   }
   try {
     const ranged = /^https?:/i.test(href);
