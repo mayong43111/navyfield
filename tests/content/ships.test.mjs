@@ -8,6 +8,9 @@ import { turretMuzzle } from '../../src/yamato.ts';
 import { hullIntersection, shellPower, gunBallistics, ballisticVelocity } from '../../src/combat.ts';
 import { parseOriginalData } from '../../src/original-data.ts';
 import { createAmmunition, fireGun } from '../../src/ammunition.ts';
+import { createModelBattleConfig } from '../../src/adapters/local/battle-config.ts';
+import { LocalBattleSession } from '../../src/adapters/local/battle-session.ts';
+import { muzzlePoints } from '../../src/simulation/weapons.ts';
 
 const models = new Map(await Promise.all(['yamato', 'bismarck', 'california', 'yorktown'].map(async key => {
   const bytes = readFileSync(new URL(`../../content/assets/ships/${key}/${key}.glb`, import.meta.url));
@@ -16,6 +19,43 @@ const models = new Map(await Promise.all(['yamato', 'bismarck', 'california', 'y
 })));
 const data = parseOriginalData(JSON.parse(readFileSync(new URL('../../content/data/legacy/official-data.json', import.meta.url))));
 const cases = [['nf-4-116', 4, 2], ['nf-1-430', 4, 3], ['nf-1-102', 0, 0]];
+
+test('model contract is copied once into numeric cannon anchors and visual replacements cannot change a running battle', () => {
+  for (const [id, gunId] of [['nf-3-121', 'nf-gun-3-341'], ['nf-4-116', 'nf-gun-4-393'], ['nf-1-430', 'nf-gun-1-42']]) {
+    const player = createShip(models, id);
+    const loadout = { typeId: id, bulgeLevel: 1, weapons: player.turrets.map(() => gunId),
+      ammunition: player.turrets.map(() => createAmmunition()) };
+    const input = createModelBattleConfig(data, models, loadout, { team: 'alpha', slot: 0 }, 42);
+    const session = new LocalBattleSession(input), baseline = new LocalBattleSession(input);
+    const definition = session.config.ships[0];
+    for (const [index, turret] of player.turrets.entries()) {
+      const pose = { x: 120, z: -50, heading: 0.7, speed: 0, throttle: 0 };
+      const weapon = { ...session.observe().ships[0].weapons[index], yaw: turret.rear ? 2.8 : 0.3, elevation: 0.2 };
+      player.ship.position.set(pose.x, 0, pose.z); player.ship.rotation.set(0, pose.heading, 0);
+      turret.group.rotation.set(0, weapon.yaw, 0); turret.elevation.rotation.set(-weapon.elevation, 0, 0);
+      player.ship.updateMatrixWorld(true);
+      const numeric = muzzlePoints(pose, definition.weapons[index], weapon);
+      for (const [tube, node] of turret.muzzles.entries()) {
+        const visual = node.getWorldPosition(new THREE.Vector3());
+        assert.ok(visual.distanceTo(new THREE.Vector3(numeric[tube].x, numeric[tube].y, numeric[tube].z)) < 1e-7,
+          `${id}: gun ${index}, tube ${tube}`);
+      }
+    }
+    player.ship.scale.setScalar(7); player.dimensions.length = 1;
+    for (const turret of player.turrets) turret.group.position.set(1e6, 99, 1e6);
+    assert.deepEqual(createModelBattleConfig(data, models, loadout, { team: 'alpha', slot: 0 }, 42), baseline.config);
+    input.ships[0].weapons[0].power.he = 999999;
+    const camera = new THREE.OrthographicCamera(-100, 100, 100, -100, 1, 15000);
+    for (let frame = 0; frame < 144; frame++) {
+      camera.position.set(Math.sin(frame) * 5000, 900, Math.cos(frame) * 5000);
+      camera.zoom = frame % 2 ? 0.05 : 3.5; camera.lookAt(0, 0, 0);
+      camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+      session.advance(1 / 144);
+    }
+    baseline.advance(1);
+    assert.deepEqual(session.observe(), baseline.observe());
+  }
+});
 
 test('imported native meshes retain hull proportions within runtime face/byte budgets', () => {
   for (const [id] of cases) {

@@ -1,6 +1,6 @@
 # 大海战II 视觉复刻原型
 
-后续单机游戏的模块、数据、模型、目录、存档和联机扩展设计见[架构规划](docs/technical/architecture.md)。目录基础整理已经执行；模拟分层、全舰队战斗、存档与联机仍是目标设计，不代表已经实现。
+单机游戏的模块、数据、模型、目录、存档和联机扩展设计见[架构规划](docs/technical/architecture.md)。阶段一已实现纯数值模拟、固定30Hz、独立种子随机数、单机会话与应用/港口/输入/界面/表现分层；规范化内容、全舰队战斗、存档和联机仍是后续目标。
 
 企划、3D原型、美术素材、音乐音效、数值设计、研发、测试与发布的全项目组织方式见[游戏开发目录规范](docs/production/development-structure.md)。
 
@@ -18,7 +18,7 @@
 | [audio](audio/README.md) | 音乐、音效、环境声与语音制作源 |
 | [design-data](design-data/README.md) | 自研数值编辑源、试算与报告 |
 | [content](content/README.md) | 经审核的运行数据、GLB、来源许可与匹配清单 |
-| [src](src/README.md) | 当前游戏程序；本轮保留现有业务文件结构 |
+| [src](src/README.md) | 分层游戏程序；主入口只启动应用，内核与表现通过会话命令/观察/事件连接 |
 | [tools](tools/README.md) | 数据采集、模型转换与索引工具 |
 | [tests](tests/README.md) | 按模拟、内容、界面与集成分类的自动化测试 |
 | [research](research/README.md) | 原始下载、截图、手册与授权隔离；仅本地研究 |
@@ -26,6 +26,8 @@
 | [cache](cache/README.md) | 可重新生成的工具缓存 |
 
 旧 `resources` 已整体迁入 `research`，内部研究路径保留；四艘运行 GLB 位于 `content/assets/ships`，原始模型仍在研究区。现阶段官网运行数据保留旧字段格式，放在 `content/data/legacy`，并未借搬目录完成数值规范化。工具更新运行产物，不手工维护两份数值真值。尚未开展的工作只有职责说明，没有虚构素材、音频或系统。
+
+程序入口与依赖规则见[src 说明](src/README.md)。官网兼容解析、模型清单和 GeoJSON 校验集中在 `src/adapters/content`；舰船与地图绘制位于 `src/presentation`。根目录旧模块仅转发兼容导出，供现有测试和工具迁移使用，不复制业务实现。
 
 ## 运行
 

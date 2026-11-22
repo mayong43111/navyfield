@@ -9,6 +9,15 @@ const REQUEST_TIMEOUT = 30_000;
 const listeners = new Set<(progress: ContentProgress) => void>();
 let activeRequests = 0;
 const waitingRequests: (() => void)[] = [];
+const RETRYABLE_HTTP = new Set([429, 500, 502, 503, 504]);
+
+class HttpResourceError extends Error {
+  readonly retryable: boolean;
+  constructor(status: number, url: string) {
+    super(`资源读取失败：HTTP ${status}，${url}`);
+    this.retryable = RETRYABLE_HTTP.has(status);
+  }
+}
 
 async function acquireRequest(signal: AbortSignal): Promise<void> {
   signal.throwIfAborted();
@@ -61,18 +70,30 @@ export async function loadResource(url: URL | string): Promise<ArrayBuffer> {
   const href = String(url);
   const controller = new AbortController();
   async function request(start: number, ranged: boolean): Promise<{ response: Response; bytes: Uint8Array<ArrayBuffer> }> {
-    await acquireRequest(controller.signal);
-    try {
+    for (let attempt = 1; ; attempt++) {
+      await acquireRequest(controller.signal);
       const timeout = AbortSignal.timeout(REQUEST_TIMEOUT);
-      const signal = AbortSignal.any([controller.signal, timeout]);
-      const response = await fetch(href, {
-        signal,
-        ...(ranged ? { headers: { Range: `bytes=${start}-${start + CHUNK_SIZE - 1}` } } : {})
-      });
-      if (!response.ok) throw new Error(`资源读取失败：HTTP ${response.status}，${href}`);
-      return { response, bytes: new Uint8Array(await response.arrayBuffer()) };
-    } finally {
-      releaseRequest();
+      try {
+        const signal = AbortSignal.any([controller.signal, timeout]);
+        const response = await fetch(href, {
+          signal,
+          ...(ranged ? { headers: { Range: `bytes=${start}-${start + CHUNK_SIZE - 1}` } } : {})
+        });
+        if (!response.ok) {
+          await response.body?.cancel();
+          throw new HttpResourceError(response.status, href);
+        }
+        return { response, bytes: new Uint8Array(await response.arrayBuffer()) };
+      } catch (cause) {
+        if (controller.signal.aborted || attempt >= 3 ||
+          !(timeout.aborted || cause instanceof TypeError || (cause instanceof HttpResourceError && cause.retryable))) {
+          throw cause;
+        }
+        console.warn(`资源分段传输失败，准备重试 ${attempt}/2：${href}，起点 ${start}`, cause);
+      } finally {
+        releaseRequest();
+      }
+      await new Promise<void>(resolve => setTimeout(resolve, attempt * 1000));
     }
   }
   try {

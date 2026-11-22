@@ -89,3 +89,18 @@ test('lossless transport restores original bytes and inlined compressed JSON, re
   assert.deepEqual(await loadCompressedJsonResource(`data:application/octet-stream;base64,${packed}`), { models: [] });
   await assert.rejects(loadCompressedResource('https://example.test/corrupt.glb.gz'), /资源解压失败/);
 });
+
+test('transient connection and CDN errors retry the same bytes with explicit warnings', async t => {
+  const ranges = [];
+  const warnings = t.mock.method(console, 'warn', () => {});
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    ranges.push(options.headers.Range);
+    if (ranges.length === 1) throw new TypeError('connection reset');
+    if (ranges.length === 2) return new Response('temporarily unavailable', { status: 503 });
+    return new Response(new Uint8Array([9]), { status: 206, headers: { 'Content-Range': 'bytes 0-0/1' } });
+  });
+  const bytes = await loadResource('https://example.test/model.bin');
+  assert.deepEqual(new Uint8Array(bytes), new Uint8Array([9]));
+  assert.deepEqual(ranges, Array(3).fill('bytes=0-262143'));
+  assert.equal(warnings.mock.callCount(), 2);
+});
