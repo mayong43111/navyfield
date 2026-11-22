@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { context2d } from './ui.ts';
-import { loadResource } from './adapters/content/resource-loader.ts';
+import { loadCompressedResource } from './adapters/content/resource-loader.ts';
 
 export interface Turret {
   group: THREE.Object3D;
@@ -35,8 +35,8 @@ function node(root: THREE.Object3D, name: string): THREE.Object3D {
 }
 
 export async function loadYamato(): Promise<THREE.Group> {
-  const url = new URL('../content/assets/ships/yamato/yamato.glb', import.meta.url);
-  const model = await new GLTFLoader().parseAsync(await loadResource(url), '');
+  const url = new URL('../content/assets/ships/yamato/yamato.glb.gz.bin', import.meta.url);
+  const model = await new GLTFLoader().parseAsync(await loadCompressedResource(url), '');
   return model.scene;
 }
 

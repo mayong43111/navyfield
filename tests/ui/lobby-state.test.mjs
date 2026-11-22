@@ -187,7 +187,8 @@ test('empty fleets cannot READY and leaving/rejoining retains room-specific form
 
 test('world coastline loading accepts the downloaded GeoJSON and unwraps the actual map seam', async t => {
   const data = await readFile(new URL('../../content/data/maps/world-land.geojson', import.meta.url), 'utf8');
-  t.mock.method(globalThis, 'fetch', async () => new Response(data));
+  const { gzipSync } = await import('node:zlib');
+  t.mock.method(globalThis, 'fetch', async () => new Response(gzipSync(data)));
   const polygons = await loadWorldLand();
   assert.ok(polygons.length > 0);
   for (const polygon of polygons) {
@@ -205,6 +206,6 @@ test('world coastline loading accepts the downloaded GeoJSON and unwraps the act
   const ring = unwrapRing([[-71, 10], [-69, 10], [-69, 0], [-71, 0], [-71, 10]]);
   assert.ok(Math.abs(ring[1][0] - ring[0][0]) < .01);
   assert.deepEqual(worldPoint(180, 0), worldPoint(-180, 0));
-  t.mock.method(globalThis, 'fetch', async () => new Response('{"features":[{"geometry":{"type":"Polygon","coordinates":[[["x",0]]]}}]}'));
+  t.mock.method(globalThis, 'fetch', async () => new Response(gzipSync('{"features":[{"geometry":{"type":"Polygon","coordinates":[[["x",0]]]}}]}')));
   await assert.rejects(loadWorldLand(), /无效陆地多边形/);
 });

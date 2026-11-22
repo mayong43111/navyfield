@@ -1,6 +1,6 @@
 import { context2d } from './ui.ts';
 import { battles } from './battles.ts';
-import { loadJsonResource } from './adapters/content/resource-loader.ts';
+import { loadCompressedJsonResource } from './adapters/content/resource-loader.ts';
 
 export type GeoPoint = readonly [number, number];
 export type LandPolygon = GeoPoint[][];
@@ -13,7 +13,7 @@ function isPolygon(value: unknown): value is LandPolygon {
   return Array.isArray(value) && value.every(ring => Array.isArray(ring) && ring.every(isPoint));
 }
 export async function loadWorldLand(): Promise<LandPolygon[]> {
-  const data = await loadJsonResource(new URL('../content/data/maps/world-land.geojson', import.meta.url));
+  const data = await loadCompressedJsonResource(new URL('../content/data/maps/world-land.geojson.gz.bin', import.meta.url));
   if (!data || typeof data !== 'object' || !('features' in data) || !Array.isArray(data.features)) {
     throw new Error('世界海岸数据不是有效的 GeoJSON FeatureCollection。');
   }

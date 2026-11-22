@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loadResource, loadJsonResource, subscribeContentProgress } from '../../src/adapters/content/resource-loader.ts';
+import { gzipSync } from 'node:zlib';
+import { loadResource, loadJsonResource, loadCompressedResource, loadCompressedJsonResource, subscribeContentProgress } from '../../src/adapters/content/resource-loader.ts';
+const nativeFetch = globalThis.fetch;
 
 test('ranged loading reconstructs every byte despite out-of-order chunks and reports completed progress', async t => {
   const expected = Uint8Array.from({ length: 3 * 262144 + 19 }, (_, index) => (index * 17 + 31) % 251);
@@ -29,22 +31,22 @@ test('ranged loading reconstructs every byte despite out-of-order chunks and rep
 
 test('servers ignoring Range and inlined manifests still load their complete JSON', async t => {
   const json = '{"models":[]}';
-  t.mock.method(globalThis, 'fetch', async () => new Response(json, {
-    headers: { 'Content-Length': String(new TextEncoder().encode(json).length) }
-  }));
+  t.mock.method(globalThis, 'fetch', async (url, options) => String(url).startsWith('data:')
+    ? nativeFetch(url, options)
+    : new Response(json, { headers: { 'Content-Length': String(new TextEncoder().encode(json).length) } }));
   assert.deepEqual(await loadJsonResource('https://example.test/catalog.json'), { models: [] });
-  t.mock.restoreAll();
   assert.deepEqual(await loadJsonResource(`data:application/json,${encodeURIComponent(json)}`), { models: [] });
 });
 
 test('invalid ranges, truncated bodies and HTTP errors are surfaced rather than accepted as loaded', async t => {
-  t.mock.method(globalThis, 'fetch', async () => new Response('bad', { status: 206 }));
+  const responses = [
+    new Response('bad', { status: 206 }),
+    new Response('abc', { status: 206, headers: { 'Content-Range': 'bytes 0-4/5' } }),
+    new Response('missing', { status: 404 })
+  ];
+  t.mock.method(globalThis, 'fetch', async () => responses.shift());
   await assert.rejects(loadResource('https://example.test/model.glb'), /Content-Range/);
-  t.mock.method(globalThis, 'fetch', async () => new Response('abc', {
-    status: 206, headers: { 'Content-Range': 'bytes 0-4/5' }
-  }));
   await assert.rejects(loadResource('https://example.test/model.glb'), /首段长度/);
-  t.mock.method(globalThis, 'fetch', async () => new Response('missing', { status: 404 }));
   await assert.rejects(loadResource('https://example.test/model.glb'), /HTTP 404/);
 });
 
@@ -71,7 +73,19 @@ test('concurrent startup assets share a bounded queue instead of timing out behi
     active--;
     return new Response(new Uint8Array([7]), { status: 206, headers: { 'Content-Range': 'bytes 0-0/1' } });
   });
+
   const results = await Promise.all(Array.from({ length: 7 }, (_, index) => loadResource(`https://example.test/${index}.glb`)));
   assert.equal(peak, 2);
   assert.ok(results.every(bytes => new Uint8Array(bytes)[0] === 7));
+});
+
+test('lossless transport restores original bytes and inlined compressed JSON, rejecting corrupt gzip', async t => {
+  const expected = Uint8Array.from({ length: 65539 }, (_, index) => index % 251);
+  t.mock.method(globalThis, 'fetch', async (url, options) => String(url).startsWith('data:')
+    ? nativeFetch(url, options)
+    : new Response(String(url).includes('corrupt') ? 'invalid gzip' : gzipSync(expected)));
+  assert.deepEqual(new Uint8Array(await loadCompressedResource('https://example.test/model.glb.gz')), expected);
+  const packed = gzipSync('{"models":[]}').toString('base64');
+  assert.deepEqual(await loadCompressedJsonResource(`data:application/octet-stream;base64,${packed}`), { models: [] });
+  await assert.rejects(loadCompressedResource('https://example.test/corrupt.glb.gz'), /资源解压失败/);
 });

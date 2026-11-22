@@ -124,3 +124,18 @@ export async function loadJsonResource(url: URL | string): Promise<unknown> {
   const bytes = await loadResource(url);
   return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
 }
+
+export async function loadCompressedResource(url: URL | string): Promise<ArrayBuffer> {
+  const bytes = await loadResource(url);
+  try {
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+    return await new Response(stream).arrayBuffer();
+  } catch (cause) {
+    throw new Error(`资源解压失败：${String(url)}`, { cause });
+  }
+}
+
+export async function loadCompressedJsonResource(url: URL | string): Promise<unknown> {
+  const bytes = await loadCompressedResource(url);
+  return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+}

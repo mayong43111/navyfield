@@ -1,5 +1,5 @@
-import { loadJsonResource } from './adapters/content/resource-loader.ts';
-const dataUrl = new URL('../content/data/legacy/official-data.json', import.meta.url).href;
+import { loadCompressedJsonResource } from './adapters/content/resource-loader.ts';
+const dataUrl = new URL('../content/data/legacy/official-data.json.gz.bin', import.meta.url).href;
 
 export const YAMATO_ID = 'nf-3-121';
 export const MUSASHI_ID = 'nf-3-415';
@@ -141,7 +141,7 @@ export function parseOriginalData(value: unknown): OriginalData {
   };
 }
 export async function loadOriginalData(): Promise<OriginalData> {
-  const value = await loadJsonResource(dataUrl);
+  const value = await loadCompressedJsonResource(dataUrl);
   return parseOriginalData(value);
 }
 export function findOriginalShip(data: OriginalData, id: string): OriginalShip {

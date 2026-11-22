@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { createYamato, loadYamato } from './yamato.ts';
 import type { ShipInstance, Turret } from './yamato.ts';
-import { loadResource } from './adapters/content/resource-loader.ts';
+import { loadCompressedResource } from './adapters/content/resource-loader.ts';
 
 const types = new Map([
   ['nf-3-121', ['yamato', '大和']], ['nf-3-415', ['yamato', '大和（武藏同级参考）']],
@@ -16,9 +16,9 @@ export async function loadShipModels(): Promise<ReadonlyMap<string, THREE.Object
   const loader = new GLTFLoader();
   const [yamato, bismarck, california, yorktown] = await Promise.all([
     loadYamato(),
-    loadResource(new URL('../content/assets/ships/bismarck/bismarck.glb', import.meta.url)).then(bytes => loader.parseAsync(bytes, '')),
-    loadResource(new URL('../content/assets/ships/california/california.glb', import.meta.url)).then(bytes => loader.parseAsync(bytes, '')),
-    loadResource(new URL('../content/assets/ships/yorktown/yorktown.glb', import.meta.url)).then(bytes => loader.parseAsync(bytes, ''))
+    loadCompressedResource(new URL('../content/assets/ships/bismarck/bismarck.glb.gz.bin', import.meta.url)).then(bytes => loader.parseAsync(bytes, '')),
+    loadCompressedResource(new URL('../content/assets/ships/california/california.glb.gz.bin', import.meta.url)).then(bytes => loader.parseAsync(bytes, '')),
+    loadCompressedResource(new URL('../content/assets/ships/yorktown/yorktown.glb.gz.bin', import.meta.url)).then(bytes => loader.parseAsync(bytes, ''))
   ]);
   return new Map([['yamato', yamato], ['bismarck', bismarck.scene], ['california', california.scene], ['yorktown', yorktown.scene]]);
 }

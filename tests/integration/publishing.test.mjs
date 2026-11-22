@@ -32,6 +32,7 @@ test('Git permits only approved runtime resources, not original downloads or res
     'research/models/yamato/3MF_files.zip', 'research/models/catalog.json',
     'research/manuals/NavyField_Full_Manual.pdf', 'research/original-data/official-data.json',
     'content/assets/ships/yamato/original.3mf', 'content/assets/ships/unknown/unknown.glb',
+    'content/assets/ships/yamato/yamato.glb.gz.bin', 'content/data/legacy/official-data.json.gz.bin',
     'art/models/yamato.blend', 'audio/music/original.wav',
     'builds/game.zip', 'releases/game.zip', 'cache/download.json'];
   const ignored = execFileSync('git', ['check-ignore', '--no-index', '--stdin'], {
