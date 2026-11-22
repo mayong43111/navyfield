@@ -6,6 +6,7 @@ export interface ContentProgress {
 
 const CHUNK_SIZE = 256 * 1024;
 const REQUEST_TIMEOUT = 30_000;
+const MAX_REQUEST_TIME = 120_000;
 const listeners = new Set<(progress: ContentProgress) => void>();
 let activeRequests = 0;
 const waitingRequests: (() => void)[] = [];
@@ -17,6 +18,28 @@ class HttpResourceError extends Error {
     super(`资源读取失败：HTTP ${status}，${url}`);
     this.retryable = RETRYABLE_HTTP.has(status);
   }
+}
+
+async function readResponse(response: Response, progress: () => void): Promise<Uint8Array<ArrayBuffer>> {
+  if (!response.body) return new Uint8Array(await response.arrayBuffer());
+  const reader = response.body.getReader();
+  const chunks: Uint8Array<ArrayBufferLike>[] = [];
+  let length = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value.byteLength > 0) {
+        chunks.push(value); length += value.byteLength; progress();
+      }
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const bytes = new Uint8Array(length);
+  let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return bytes;
 }
 
 async function acquireRequest(signal: AbortSignal): Promise<void> {
@@ -72,9 +95,13 @@ export async function loadResource(url: URL | string): Promise<ArrayBuffer> {
   async function request(start: number, ranged: boolean): Promise<{ response: Response; bytes: Uint8Array<ArrayBuffer> }> {
     for (let attempt = 1; ; attempt++) {
       await acquireRequest(controller.signal);
-      const timeout = AbortSignal.timeout(REQUEST_TIMEOUT);
+      const idle = new AbortController();
+      const maximum = AbortSignal.timeout(MAX_REQUEST_TIME);
+      const expire = () => idle.abort(new DOMException('资源分段连续 30 秒没有传输进展', 'TimeoutError'));
+      let timer = setTimeout(expire, REQUEST_TIMEOUT);
+      const progress = () => { clearTimeout(timer); timer = setTimeout(expire, REQUEST_TIMEOUT); };
       try {
-        const signal = AbortSignal.any([controller.signal, timeout]);
+        const signal = AbortSignal.any([controller.signal, idle.signal, maximum]);
         const response = await fetch(href, {
           signal,
           ...(ranged ? { headers: { Range: `bytes=${start}-${start + CHUNK_SIZE - 1}` } } : {})
@@ -83,14 +110,16 @@ export async function loadResource(url: URL | string): Promise<ArrayBuffer> {
           await response.body?.cancel();
           throw new HttpResourceError(response.status, href);
         }
-        return { response, bytes: new Uint8Array(await response.arrayBuffer()) };
+        progress();
+        return { response, bytes: await readResponse(response, progress) };
       } catch (cause) {
         if (controller.signal.aborted || attempt >= 3 ||
-          !(timeout.aborted || cause instanceof TypeError || (cause instanceof HttpResourceError && cause.retryable))) {
+          !(idle.signal.aborted || maximum.aborted || cause instanceof TypeError || (cause instanceof HttpResourceError && cause.retryable))) {
           throw cause;
         }
         console.warn(`资源分段传输失败，准备重试 ${attempt}/2：${href}，起点 ${start}`, cause);
       } finally {
+        clearTimeout(timer);
         releaseRequest();
       }
       await new Promise<void>(resolve => setTimeout(resolve, attempt * 1000));

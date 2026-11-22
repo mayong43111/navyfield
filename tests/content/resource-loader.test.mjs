@@ -104,3 +104,40 @@ test('transient connection and CDN errors retry the same bytes with explicit war
   assert.deepEqual(ranges, Array(3).fill('bytes=0-262143'));
   assert.equal(warnings.mock.callCount(), 2);
 });
+
+test('a slowly streaming segment lasting over 30 seconds remains alive while receiving bytes', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  t.mock.method(AbortSignal, 'timeout', milliseconds => {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(new DOMException('timeout', 'TimeoutError')), milliseconds);
+    return controller.signal;
+  });
+  const streams = [];
+  t.after(() => streams.forEach(stream => stream.error(new Error('test cleanup'))));
+  const fetch = t.mock.method(globalThis, 'fetch', async (url, { signal }) => new Response(new ReadableStream({
+    start(controller) {
+      streams.push(controller);
+      signal.addEventListener('abort', () => controller.error(signal.reason), { once: true });
+      for (let index = 1; index <= 3; index++) {
+        setTimeout(() => {
+          if (signal.aborted) return;
+          controller.enqueue(new Uint8Array([index]));
+          if (index === 3) controller.close();
+        }, index * 20_000);
+      }
+    }
+  }), { status: 206, headers: { 'Content-Range': 'bytes 0-2/3' } }));
+  let completed = false;
+  let failure;
+  const pending = loadResource('https://example.test/slow.bin');
+  pending.then(() => { completed = true; }, reason => { failure = reason; });
+  await new Promise(setImmediate);
+  for (let step = 0; step < 3; step++) {
+    t.mock.timers.tick(20_000);
+    await new Promise(setImmediate);
+  }
+  assert.equal(failure, undefined);
+  assert.equal(completed, true, 'steady transfer must finish without being restarted at 30 seconds');
+  assert.equal(fetch.mock.callCount(), 1);
+  assert.deepEqual(new Uint8Array(await pending), new Uint8Array([1, 2, 3]));
+});
