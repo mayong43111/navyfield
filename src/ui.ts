@@ -1,6 +1,7 @@
 import type { GunState } from './ammunition.ts';
 import { nationNames, shipClassNames } from './original-data.ts';
 import type { OriginalShip } from './original-data.ts';
+import { loadJsonResource } from './adapters/content/resource-loader.ts';
 
 export type ShipModelStatus = 'integrated' | 'downloaded' | 'link_only';
 const modelStatusRank = { integrated: 3, downloaded: 2, link_only: 1 };
@@ -32,9 +33,7 @@ export function parseShipModelMatches(value: unknown): Map<string, ShipModelStat
 
 export async function loadShipModelMatches(): Promise<Map<string, ShipModelStatus>> {
   const url = new URL('../content/manifests/ship-model-catalog.json', import.meta.url);
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`舰船模型清单读取失败：${response.status}`);
-  return parseShipModelMatches(await response.json());
+  return parseShipModelMatches(await loadJsonResource(url));
 }
 
 export function renderShipTypes(select: HTMLSelectElement, ships: readonly OriginalShip[],

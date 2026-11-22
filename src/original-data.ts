@@ -1,3 +1,4 @@
+import { loadJsonResource } from './adapters/content/resource-loader.ts';
 const dataUrl = new URL('../content/data/legacy/official-data.json', import.meta.url).href;
 
 export const YAMATO_ID = 'nf-3-121';
@@ -140,9 +141,7 @@ export function parseOriginalData(value: unknown): OriginalData {
   };
 }
 export async function loadOriginalData(): Promise<OriginalData> {
-  const response = await fetch(dataUrl);
-  if (!response.ok) throw new Error(`原版资料加载失败：${response.status}`);
-  const value: unknown = await response.json();
+  const value = await loadJsonResource(dataUrl);
   return parseOriginalData(value);
 }
 export function findOriginalShip(data: OriginalData, id: string): OriginalShip {
