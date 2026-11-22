@@ -1,0 +1,96 @@
+.lobby [hidden], .lobby[hidden] { display: none; }
+.lobby { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+.lobby-screen { position: absolute; inset: 0; }
+.lobby :is(button,a,dialog,.warzone-details,.preparation-bottom,.fleet-tools,#formation-grid) { pointer-events: auto; }
+.lobby-top { position: absolute; top: 0; left: 0; right: 0; height: 28px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; font-size: 10px; z-index: 3; }
+.lobby-top h1 { margin: 0; min-width: 230px; padding: 1px 12px; text-align: center; background: linear-gradient(#43667c,#142c3d); border: 2px ridge #9aa9a8; font-size: 14px; letter-spacing: 1px; }
+.lobby-top > b { font: normal 10px "Courier New",monospace; color: #e7d993; }
+.lobby button:disabled { cursor: not-allowed; opacity: .5; }
+.local-note { position: absolute; left: 10px; bottom: 6px; color: #a3b5bb; font-size: 9px; text-shadow: 1px 1px #14212b; }
+.channel-controls { position: absolute; top: 40px; left: 10px; right: 10px; display: flex; align-items: center; gap: 5px; padding: 5px 8px; }
+.channel-controls button { padding: 5px 9px; font-size: 11px; white-space: nowrap; }
+.channel-controls > span { font: 10px "Courier New",monospace; white-space: nowrap; }
+.channel-controls [data-go="yard"] { margin-left: auto; color: #f0d598; }
+.world-chart-area { position: absolute; top: 90px; left: 10px; right: 334px; bottom: 155px; display: grid; align-items: center; }
+.world-chart { width: 100%; aspect-ratio: 2; position: relative; border: 5px ridge #97aaa4; box-shadow: 0 4px 10px #08151c; }
+#lobby-map { width: 100%; height: 100%; position: absolute; inset: 0; }
+#battle-markers { position: absolute; inset: 0; }
+.world-marker { position: absolute; transform: translate(-50%,-50%); width: 20px; height: 20px; padding: 0; border: 1px solid #dcc385; border-radius: 50%; font: bold 9px "Courier New",monospace; background: #293e4b; box-shadow: 1px 2px 2px #122835; z-index: 1; }
+.world-marker.active { color: #172a2f; background: #ead28b; outline: 2px solid #fff0b5; outline-offset: 2px; z-index: 2; }
+.chart-caption { position: absolute; bottom: 6px; left: 8px; font: 9px "Courier New",monospace; color: #b6c7b8; }
+.warzone-details { position: absolute; top: 90px; right: 10px; bottom: 8px; width: 310px; padding: 7px; display: flex; flex-direction: column; gap: 7px; }
+.lobby h2 { font: bold 10px "Courier New",monospace; margin: 0; padding-bottom: 5px; border-bottom: 1px solid #617f8e; }
+.lobby h3 { font-size: 13px; color: #ddd394; margin: 5px 0; overflow-wrap: anywhere; }
+#battle-list { min-height: 55px; flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; align-content: start; gap: 3px; scrollbar-width: thin; }
+#battle-list button { text-align: left; font-size: 10px; padding: 5px 3px; }
+.battle-information { border-block: 1px solid #617f8e; padding: 4px 0; }
+.battle-information time { font: 10px "Courier New",monospace; color: #a6c8ce; }
+.battle-information p,.room-inspector p { margin: 5px 0; font-size: 10px; line-height: 1.5; }
+.battle-information a { font-size: 10px; color: #d7cb99; }
+.battle-information small,.fleet-tools small { display: block; margin-top: 6px; color: #9ab0b5; font-size: 9px; line-height: 1.5; }
+.room-inspector button { width: 100%; }
+#room-plaques { position: absolute; left: 14px; right: 338px; bottom: 25px; height: 117px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: repeat(2,1fr); gap: 9px; }
+.room-plaque { min-width: 0; padding: 6px; border: 4px ridge #9aaca7; border-radius: 5px; background: repeating-linear-gradient(0deg,#132e3755 0 1px,transparent 1px 3px),linear-gradient(#294653,#0c2430); box-shadow: 1px 3px 3px #15232488; }
+.room-plaque b,.room-plaque small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.room-plaque b { font-size: 12px; }.room-plaque small { font-size: 9px; margin-top: 3px; }
+.room-plaque.active { outline: 2px solid #e0c564; outline-offset: 2px; }
+.rooms-empty { position: absolute; left: 20px; right: 350px; bottom: 65px; font-size: 12px; color: #cfbf93; text-align: center; }
+.fleet-tools { position: absolute; left: 9px; top: 38px; bottom: 174px; width: 179px; padding: 7px; overflow-y: auto; scrollbar-width: thin; }
+.fleet-tools > button { width: 100%; padding: 5px; margin-bottom: 5px; font-size: 11px; }
+.fleet-tools p { font-size: 10px; line-height: 1.6; margin: 7px 0; }
+.fleet-tools h3 { font-size: 10px; padding-top: 5px; border-top: 1px solid #395a69; }
+.fleet-tools table { width: 100%; font: 9px "Courier New",monospace; text-align: center; border-collapse: collapse; margin-top: 10px; }
+.fleet-tools th { color: #97b3bd; }.fleet-tools td { line-height: 15px; }
+.team-tabs { display: flex; gap: 4px; margin-top: 7px; }
+.team-tabs button { flex: 1; padding: 5px 1px; font-size: 11px; }
+.team-flag { display: inline-block; width: 8px; height: 12px; margin-right: 4px; vertical-align: middle; }.alpha { background: #b93231; }.bravo { background: #397aa6; }
+.formation-presets { display: flex; gap: 3px; }.formation-presets button { flex: 1; padding: 4px 1px; font-size: 9px; }
+.formation-toolbar { position: absolute; top: 39px; left: 201px; right: 136px; display: flex; align-items: center; gap: 5px; padding: 5px; height: 36px; }
+.formation-toolbar button { padding: 4px 6px; font-size: 10px; white-space: nowrap; }
+.formation-toolbar span { font-size: 10px; }.formation-toolbar span:last-child { margin-left: auto; color: #9cb5b9; font-size: 9px; }
+#formation-grid { position: absolute; left: 201px; right: 136px; top: 85px; bottom: 196px; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); grid-template-rows: repeat(8,minmax(44px,1fr)); gap: 3px; padding: 5px; border: 2px ridge #678781; background: #17334238; overflow-y: auto; scrollbar-width: thin; }
+.formation-slot { position: relative; min-width: 0; min-height: 0; padding: 0; border: 1px solid #77998455; background: #17334220; overflow: hidden; border-radius: 2px; box-shadow: none; }
+.formation-slot:hover { background: #8caf7630; }.formation-slot small { position: absolute; top: 2px; left: 3px; font: 8px "Courier New",monospace; color: #8aa993; }
+.formation-slot img { position: absolute; inset: 3px 4px 11px; width: calc(100% - 8px); height: calc(100% - 14px); object-fit: contain; pointer-events: none; }
+.formation-slot span { position: absolute; bottom: 1px; left: 3px; right: 3px; font-size: 9px; color: #b6d1b4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.formation-slot.occupied { cursor: grab; background: #26493935; }.formation-slot.selected { border: 2px solid #e2cd75; background: #7c844f35; }
+.formation-slot.drop-target { outline: 2px solid #b2e785; background: #70926177; z-index: 1; }
+.formation-help { position: absolute; left: 204px; right: 136px; bottom: 174px; margin: 0; font-size: 9px; color: #aac1b4; line-height: 15px; }
+.readiness-controls { position: absolute; right: 12px; top: 42px; display: flex; flex-direction: column; align-items: center; gap: 12px; width: 110px; }
+.ready-wheel,.exit-wheel { border: 10px ridge #899b95; border-radius: 50%; width: 89px; height: 89px; padding: 0; box-shadow: 0 0 0 3px #23333a,2px 4px 2px 4px #10212baa; font: bold 13px Arial,sans-serif; }
+.ready-wheel { background: radial-gradient(#57795b,#243a2a); }.ready-wheel.active { background: radial-gradient(#abf282,#2d663f); color: #f7fff1; }
+.exit-wheel { width: 65px; height: 65px; border-width: 7px; font-size: 10px; background: radial-gradient(#665954,#283338); }
+.readiness-controls #room-start { font-size: 10px; padding: 6px 4px; }
+.prep-empty { position: absolute; left: 50%; top: 42%; transform: translate(-50%,-50%); padding: 22px; width: min(360px,80%); pointer-events: auto; text-align: center; z-index: 2; }
+.prep-empty h2 { font-size: 17px; }.prep-empty p { font-size: 11px; line-height: 1.8; }
+.preparation-bottom { position: absolute; left: 9px; right: 9px; bottom: 25px; display: grid; grid-template-columns: minmax(260px,36%) minmax(0,1fr); gap: 8px; height: 135px; }
+.preparation-bottom h2 { padding: 4px 6px; background: #25465a; }
+.roster-scroll { height: 105px; overflow-y: auto; scrollbar-width: thin; }
+.roster table { width: 100%; font-size: 10px; border-collapse: collapse; }.roster td { padding: 2px; }.roster td:last-child { font: 9px "Courier New",monospace; }
+.roster button { text-align: left; padding: 2px 4px; font-size: 10px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.roster tr.selected { background: #7f8d4b44; }.room-log h2 { display: flex; justify-content: space-between; gap: 8px; }.room-log h2 span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.room-log h2 b { white-space: nowrap; font-weight: normal; }
+.room-log ol { height: 86px; overflow-y: auto; padding: 3px 7px; margin: 0; list-style: none; font-size: 10px; line-height: 17px; color: #9bd8a2; scrollbar-width: thin; }.room-log small { display: block; font-size: 9px; color: #8ca4b0; padding: 2px 7px; line-height: 13px; }
+#lobby-alert { position: absolute; bottom: 28px; left: 25%; right: 25%; padding: 8px; border: 1px solid #d5b979; background: #26353bf2; color: #f2de9d; font-size: 11px; text-align: center; z-index: 4; }
+#room-dialog { width: min(420px,90vw); color: #dce5db; padding: 18px; border: 4px ridge #93a4a7; }
+#room-dialog::backdrop { background: #05121cb3; }#room-dialog h2 { font-size: 14px; margin: 0 0 18px; }
+#room-dialog label { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin: 12px 0; font-size: 12px; }
+#room-dialog input,#room-dialog select { width: 230px; padding: 6px; color: #e4e9df; border: 1px solid #718692; background: #102a3b; font: inherit; }
+#room-dialog form > div { display: flex; justify-content: flex-end; gap: 12px; }#room-dialog p { font-size: 10px; color: #a0b8be; line-height: 1.6; }#room-dialog #room-validation { color: #f0c088; }
+#app:is([data-mode="warzone"],[data-mode="prepare"]) :is(.health,.battle-stat,.battle-meta,.team,.ship-tag,.crew,#aim-label,.bottom-console,.yard-info,.yard-topbar,.yard-armament,#yard-mount-pins) { display: none; }
+#app[data-mode="warzone"] #scene { visibility: hidden; }
+#app:not([data-mode="battle"]) + .hint .fire-menu { display: none; }
+#app:is([data-mode="warzone"],[data-mode="prepare"]) + .hint :is(#reset,label) { display: none; }
+@media(max-width:800px) {
+  .lobby-top > span { font-size: 9px; }.lobby-top > b { font-size: 8px; }.lobby-top h1 { min-width: 180px; font-size: 11px; }
+  .warzone-details { width: 226px; top: 86px; }.world-chart-area { right: 251px; top: 86px; bottom: 148px; }#room-plaques { right: 255px; height: 109px; gap: 6px; }
+  .world-marker { width: 18px; height: 18px; font-size: 8px; }
+  #battle-list { grid-template-columns: 1fr; }.battle-information h3 { font-size: 12px; }.battle-information p { font-size: 9px; }.battle-information small { font-size: 8px; }.rooms-empty { right: 265px; font-size: 10px; }
+  .room-plaque b { font-size: 10px; }.room-plaque small { font-size: 8px; }
+  .channel-controls { gap: 4px; }.channel-controls button { font-size: 10px; padding: 4px 6px; }
+  .fleet-tools { width: 149px; }.formation-toolbar,#formation-grid { left: 170px; right: 99px; }.formation-help { left: 173px; right: 99px; }
+  .formation-toolbar span:last-child { display: none; }.formation-toolbar span { font-size: 9px; }.formation-toolbar button { padding: 4px; font-size: 9px; }
+  .fleet-tools h3 { font-size: 9px; }.fleet-tools p { font-size: 9px; }.fleet-tools small { font-size: 8px; }
+  .formation-slot small { font-size: 7px; }.formation-slot span { font-size: 8px; }
+  .readiness-controls { width: 83px; right: 5px; }.ready-wheel { width: 72px; height: 72px; font-size: 11px; }.exit-wheel { width: 55px; height: 55px; }
+  .preparation-bottom { grid-template-columns: 270px minmax(0,1fr); }.roster button { max-width: 138px; font-size: 9px; }.room-log small { font-size: 8px; }
+}

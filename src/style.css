@@ -1,0 +1,334 @@
+* { box-sizing: border-box; }
+body { margin: 0; overflow: hidden; background: #1a303d; color: #e3e7df; font: 12px Arial, "Microsoft YaHei", sans-serif; }
+body { display:grid; grid-template-rows:minmax(0,1fr) 32px; height:100dvh; }
+#app { position:relative; min-height:0; overflow:hidden; }
+#scene { display:block; width:100%; height:100%; touch-action:none; }
+.metal { background: repeating-linear-gradient(0deg,#0000000a 0 1px,transparent 1px 3px),linear-gradient(115deg,#999f9d,#3c484b 10%,#adb2ae 11%,#5c6464 14%,#26343a 48%,#6c7370 90%,#d2d5ca); border: 2px solid #222d31; box-shadow: inset 0 0 0 1px #d3d4c3, inset 0 0 0 4px #566363,0 2px 4px #0009; }
+.glass { background: repeating-linear-gradient(0deg,#09182266 0 1px,transparent 1px 3px),linear-gradient(#12374cdd,#071a28ee); border: 2px solid #657d83; box-shadow: inset 0 0 0 1px #071620,0 0 0 1px #11242a; }
+button,a { font: inherit; color: #e3e7df; }
+button { cursor: pointer; background: linear-gradient(#607578,#20323b); border: 1px solid #abb7b2; box-shadow: inset 0 0 0 1px #263239; padding: 5px 12px; text-shadow: 1px 1px #000; }
+button:hover,button.active { color: #f8df78; background: linear-gradient(#818974,#35433b); }
+button:focus-visible,a:focus-visible { outline: 2px solid #e8d386; }
+.health { position: absolute; top: 0; left: 0; right: 0; height: 30px; padding: 2px 12px; display: flex; align-items: center; gap: 15px; }
+.health b { color: #faf1c2; }.health > span { white-space: nowrap; font-weight: bold; letter-spacing: 1px; text-shadow: 2px 2px #142b3d; }
+.health-track { height: 8px; flex: 1; background: #111b22; border: 1px solid #c2cabd; padding: 1px; }.health-track i { display: block; width: 100%; height: 100%; background: linear-gradient(#79a69c,#255c57); }
+.battle-stat { position: absolute; top: 43px; left: 18px; right: 18px; display: flex; justify-content: space-between; color: #edeeea; font-weight: bold; text-shadow: 2px 2px 1px #0b1d29; pointer-events: none; }
+.battle-stat b { margin-left: 15px; font-size: 23px; letter-spacing: 2px; }.battle-stat span { color: #c8dddb; }
+.team { position: absolute; left: 18px; top: 95px; width: 104px; padding: 6px 10px; pointer-events: none; }
+.team h2 { margin: 0 0 8px; font-size: 11px; text-align: center; color: #bdd5e5; }.team div { display: flex; justify-content: space-between; font-size: 10px; line-height: 17px; }.team b { font-weight: normal; }
+.ship-tag { position: absolute; pointer-events: none; text-align: center; transform: translate(-50%,-100%); text-shadow: 1px 1px #001424, -1px -1px #001424; font-size: 11px; }.ship-tag b { color: #f0ce55; }.ship-tag span { display: block; font-size: 10px; color: #72bade; }.ally-tag b { color: #81c6ec; }
+#aim-label { position: absolute; color: #f5d147; font-size: 10px; pointer-events: none; text-shadow: 1px 1px #091923; transform: translate(10px,4px); }
+.crew { position: absolute; right: 18px; bottom: 260px; width: 100px; text-align: center; pointer-events: none; }.crew b,.crew small { display: block; font-size: 10px; text-shadow: 1px 1px #081620; }.crew small { font-size: 8px; }
+.officer { height: 58px; width: 50px; position: relative; margin: 0 auto; }.face { position: absolute; top: 13px; left: 18px; width: 19px; height: 23px; background: linear-gradient(90deg,#bd9f7b,#e8d1a5); border-radius: 6px 6px 8px 9px; }.cap { position: absolute; left: 10px; top: 6px; width: 30px; height: 12px; background: #dfdfca; border-bottom: 4px solid #313d40; z-index: 1; transform: rotate(-8deg); }.uniform { position: absolute; left: 6px; bottom: 0; width: 42px; height: 25px; background: linear-gradient(100deg,#b7bfa9,#e4e7cf,#708377); clip-path: polygon(20% 0,75% 0,100% 100%,0 100%); }
+.bottom-console { position: absolute; bottom: 17px; left: 0; right: 0; display: grid; grid-template-columns: minmax(410px,45%) minmax(260px,1fr) 235px; gap: 7px; align-items: end; z-index: 3; }
+.gun-console { padding: 6px 8px 8px; border-radius: 10px 10px 0 0; }.gauge-row { display: flex; justify-content: space-around; align-items: end; margin-top: -28px; }
+.dial { position: relative; width: 61px; height: 61px; border: 5px solid #242b2c; border-radius: 50%; background: repeating-conic-gradient(from -130deg,#22312b 0deg 2deg,#e3ddbb 2deg 10deg); box-shadow: 0 0 0 2px #9caaa8,0 0 0 5px #263032,2px 3px 0 5px #0006; }
+.dial::before { content: ""; position: absolute; inset: 6px; background: radial-gradient(circle at 40% 40%,#eee4b9,#c5c097); border-radius: 50%; }.dial::after { content: ""; position: absolute; width: 6px; height: 6px; top: calc(50% - 3px); left: calc(50% - 3px); border-radius: 50%; background: #3e4033; border: 1px solid #8c8768; }
+.dial i { position: absolute; width: 2px; height: 21px; background: #991c17; left: calc(50% - 1px); top: 6px; transform-origin: 50% calc(100% - 1px); transform: rotate(-130deg); z-index: 1; }.dial span { position: absolute; top: 30px; width: 100%; text-align: center; font-size: 6px; color: #28362d; }.dial b { position: absolute; bottom: 7px; width: 100%; text-align: center; font: bold 8px monospace; color: #172820; z-index: 2; }
+.dial.large { width: 77px; height: 77px; }.dial.large i { height: 29px; }.dial.large span { top: 39px; }.dial.large b { bottom: 10px; font-size: 10px; }
+.ammo-row { margin-top: 11px; display: flex; gap: 5px; align-items: center; }.ammo-row button { padding: 10px 8px; font-size: 12px; color: #f1dda4; }.ammo-row small { display: block; font-size: 8px; color: #b9c8be; }.ammo { flex: 1; padding: 5px 4px; border: 2px inset #8c9a94; background: linear-gradient(#737b76,#343e3f); }.ammo span { display: block; font-size: 7px; color: #c4cac4; }.ammo b { font: bold 10px monospace; letter-spacing: 1px; }.ammo-row label { font-size: 9px; }.ammo-row input { width: 11px; margin: 0; }
+.weapon-panel { padding: 5px 7px; }.weapon-panel h2 { font-size: 11px; font-weight: normal; margin: 2px 0 5px; text-shadow: 1px 1px #001522; }.weapon-panel h2 span { float: right; font-size: 8px; color: #bac6be; }.weapon-body { display: flex; align-items: center; height: 81px; padding: 4px; }.weapon-body svg { width: 60%; }.weapon-body dl { margin: 0; width: 40%; font-size: 10px; }.weapon-body dl div { display: flex; justify-content: space-between; line-height: 21px; }.weapon-body dd { margin: 0; color: #f1e2a8; }.weapon-panel p { height: 29px; margin: 5px 0 0; font-size: 10px; color: #d6d8b6; line-height: 14px; }
+.navigation { padding: 6px; }.minimap { position: relative; height: 156px; }.minimap canvas { width: 100%; height: 100%; }.minimap > span { position: absolute; left: 5px; top: 3px; font-size: 7px; color: #94ada7; }.engine-row { display: flex; gap: 15px; padding: 8px 3px 0; }.speed-dial { width: 64px; height: 64px; }.speed-dial i { height: 22px; }.speed-dial b { font-size: 11px; }.engine-switch { display: flex; flex-direction: column; gap: 5px; padding: 4px 0; font-size: 9px; color: #d1d6c7; }.engine-switch b { font-size: 8px; }
+.hint { position: absolute; bottom: 0; height: 17px; left: 0; right: 0; padding: 2px 8px; font-size: 9px; color: #9aafac; background: #142831; display: flex; justify-content: space-between; align-items: center; gap: 8px; z-index: 4; }
+.prototype-controls { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.prototype-controls button, .prototype-controls a { padding: 0; border: 0; box-shadow: none; background: none; color: #afc1bd; font-size: 9px; text-shadow: none; }
+.prototype-controls button:hover, .prototype-controls button.active { color: #f1dda5; background: none; }
+.prototype-controls label { display: flex; align-items: center; gap: 2px; }
+.prototype-controls input { width: 10px; height: 10px; margin: 0; }
+.hint p { margin: 0; min-width: 0; flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+body > .hint { position:relative; height:100%; padding:0 12px; gap:20px; background:#20272c; border-top:1px solid #566167; font-size:11px; }
+.hint .prototype-controls { gap:12px; }
+.hint .prototype-controls :is(button,a,summary) { font-size:11px; }
+.fire-menu { position:relative; }
+.fire-menu summary { cursor:pointer; }
+.fire-menu > div { position:absolute; bottom:24px; left:-8px; display:flex; gap:12px; padding:10px; background:#20272c; border:1px solid #657076; }
+#app[data-mode="yard"] + .hint .fire-menu { display:none; }
+.hint #status { text-align:right; }
+.classic-gun-console, .battle-engine { display: none; }
+.yard-info { max-height: calc(100vh - 250px); overflow-y: auto; }
+.yard-ammunition label { display: flex; align-items: center; gap: 8px; margin: 7px 0; }
+.yard-ammunition select { min-width: 0; flex: 1; padding: 3px; color: #e4e9d7; background: #16302f; border: 1px solid #738c7f; }
+.yard-info { display: none; position: absolute; top: 43px; left: 12px; width: 236px; padding: 15px; }.yard-info h2 { margin: 0 0 16px; font-size: 15px; }.yard-info dl div { display: flex; justify-content: space-between; border-bottom: 1px solid #718e8d55; padding: 9px 0; }.yard-info dd { margin: 0; color: #ced9d0; }.yard-info h3 { font-size: 11px; margin-top: 25px; }.yard-info button { width: 100%; text-align: left; margin-bottom: 6px; }.yard-info p { line-height: 1.7; color: #a2b9b7; font-size: 10px; }
+[data-mode="yard"] .yard-info { display: block; }[data-mode="yard"] .team,[data-mode="yard"] .battle-stat,[data-mode="yard"] .battle-meta,[data-mode="yard"] .crew,[data-mode="yard"] .ally-tag,[data-mode="yard"] #aim-label,[data-mode="yard"] .protection-track { display: none; }
+#error { position: absolute; inset: 20%; padding: 28px; background: #382126; border: 1px solid #eb997f; line-height: 1.8; z-index: 10; }
+@media(max-width:1000px) { .bottom-console { grid-template-columns: minmax(340px,43%) 1fr 190px; gap: 4px; }.dial { width: 48px; height: 48px; }.dial.large { width: 59px; height: 59px; }.dial i { height: 15px; }.dial.large i { height: 21px; }.dial span { top: 23px; font-size: 5px; }.dial.large span { top: 28px; }.dial b { font-size: 6px; bottom: 5px; }.dial.large b { font-size: 8px; bottom: 7px; }.ammo b { font-size: 8px; letter-spacing: 0; }.minimap { height: 130px; }.battle-stat b { font-size: 17px; }.crew { bottom: 230px; }}
+@media(max-width:720px) { .bottom-console { grid-template-columns: minmax(300px,1fr) 170px; }.weapon-panel { display: none; }.health > span { font-size: 9px; }.health-track { display: none; }.battle-stat b { font-size: 13px; margin-left: 4px; }.battle-stat span { font-size: 10px; }.ammo-row label { display: none; }.yard-info { width: 190px; }.team { top: 80px; }.minimap { height: 105px; }.crew { bottom: 210px; }.gauge-row { margin-top: -20px; }}
+
+.dial-unit, .ammo small { display: none; }
+.health-stack { display: contents; }
+.officer svg { width: 100%; height: 100%; }
+
+#app[data-mode="battle"] .health { top: 0; left: 0; right: 12px; height: 44px; padding: 0 0 0 102px; gap: 0; background: none; border: 0; box-shadow: none; align-items: start; pointer-events: none; }
+#app[data-mode="battle"] .health > b { position:absolute; top:10px; left:0; width:102px; height:12px; border-block:1px solid #242928; background:repeating-linear-gradient(110deg,transparent 0 7px,#3338 8px 10px),linear-gradient(#5c5d57,#dad9cc 25%,#646761 50%,#232724 85%,#84857a); }
+#app[data-mode="battle"] .health > b::after { content:""; position:absolute; right:0; top:-6px; width:9px; height:27px; border:2px outset #a5a397; background:linear-gradient(90deg,#a5a497,#454841); }
+#app[data-mode="battle"] .health > span { position: absolute; left: 102px; top: 0; padding: 2px 22px 3px 12px; font: bold 11px "Courier New",monospace; letter-spacing: 1px; color: #f2f2e4; background: linear-gradient(#476679,#182e40); border-bottom: 2px ridge #8ba7b6; clip-path: polygon(0 0,87% 0,100% 65%,100% 100%,0 100%); }
+#app[data-mode="battle"] .health-stack { display: flex; flex: 1; flex-direction: column; gap: 6px; padding-top: 19px; }
+#app[data-mode="battle"] .health-track { position:relative; display: block; flex: none; height: 5px; padding: 1px; background: #0d191d; border: 1px solid #a4b5ae; box-shadow: 0 1px 2px #000; }
+#app[data-mode="battle"] .hull-track i { background: linear-gradient(#a4c3a7,#397b58); }
+#app[data-mode="battle"] .health-track::after { content:""; position:absolute; right:5px; top:-7px; border:4px solid transparent; border-top:5px solid #52a4ba; filter:drop-shadow(1px 1px #0b1519); }
+#app[data-mode="battle"] .protection-track { width:72%; border-color:#758683; background:repeating-linear-gradient(110deg,#101a1c 0 3px,#273237 3px 4px); }
+#app[data-mode="battle"] .protection-track i { width:0; }
+#app[data-mode="battle"] .protection-track::after { border-top-color:#ac4232; }
+#app[data-mode="battle"] .protection-track small { position:absolute; top:6px; right:0; color:#aab7b0; font:7px Arial,sans-serif; white-space:nowrap; text-shadow:1px 1px #0b1519; }
+#app[data-mode="battle"] .battle-stat { top: 47px; left: 5px; right: 12px; display: grid; grid-template-columns: 39% 19% 21% 21%; font: bold 11px Arial,sans-serif; text-shadow: 1px 2px 2px #101e27; color: #e0e8e2; }
+#app[data-mode="battle"] .battle-stat span { min-width:0; display: flex; align-items: center; gap: 4px; color: #e1e5df; padding-right: 5%; }
+#app[data-mode="battle"] .battle-stat span::before { content: ""; border: 5px solid transparent; border-left: 8px solid #ad3727; border-right: 0; filter: drop-shadow(1px 1px 1px black); }
+#app[data-mode="battle"] .battle-stat span:first-child::before { border-left-color: #4296ae; }
+#app[data-mode="battle"] .battle-stat span b { margin-left: auto; }
+#app[data-mode="battle"] .battle-stat span:first-child b { margin-left:clamp(55px,11vw,160px); }
+#app[data-mode="battle"] .battle-stat b { font: italic bold 24px "Arial Black",Arial,sans-serif; letter-spacing: 1px; color: #f1f1e7; vertical-align: middle; }
+#app[data-mode="battle"] .battle-stat b small { margin-left:4px; font:bold 12px Arial,sans-serif; }
+#app[data-mode="battle"] .battle-meta { position:absolute; top:84px; right:12px; display:flex; gap:14px; font:9px "Courier New",monospace; color:#c6d2cb; text-shadow:1px 1px #10232a; pointer-events:none; }
+#app[data-mode="battle"] .team { display: none; }
+#app[data-mode="battle"] .team h2 { font: bold 9px Arial,sans-serif; margin: 0 0 5px; padding: 2px 0; background: #172638; border-left: 3px solid #e1e2cb; }
+#app[data-mode="battle"] .team div { font: 9px "Courier New",monospace; line-height: 15px; }
+#app[data-mode="battle"] .team div:last-child { border-top: 1px solid #a1b5b433; margin-top: 3px; padding-top: 3px; }
+#app[data-mode="battle"] .ship-tag { font: bold 10px Arial,sans-serif; letter-spacing: .2px; transform: translate(-70%,-65%); }
+#app[data-mode="battle"] .ship-tag b { text-shadow: -1px -1px #18232b,1px 1px #18232b; }
+#app[data-mode="battle"] .ship-tag span { display: none; }
+#app[data-mode="battle"] .crew { right: 14px; bottom: 203px; width: 78px; text-align: right; }
+#app[data-mode="battle"] .officer { width: 48px; height: 65px; margin: 0 4px 2px auto; filter: drop-shadow(1px 2px 1px #0a1826); }
+#app[data-mode="battle"] .crew b { font: 9px Arial,sans-serif; color: #f0f1e5; }
+#app[data-mode="battle"] .crew small { margin-top: 2px; font: 8px Arial,sans-serif; }
+#app[data-mode="battle"] .bottom-console { bottom: 16px; grid-template-columns: minmax(370px,43.5%) minmax(0,1fr) clamp(195px,21vw,238px); gap: 5px; }
+#app[data-mode="battle"] .bottom-console .metal { background: repeating-linear-gradient(105deg,#a4aaa408 0 1px,transparent 1px 3px),linear-gradient(90deg,#d3d6cc,#606b6c 3%,#2b393c 7%,#64716e 52%,#263336 92%,#c5cbc2 98%); border: 3px solid #263135; box-shadow: inset 0 0 0 1px #d5d9cf,inset 0 0 0 3px #758480,inset 0 5px 0 #a8b4ae,0 -1px #e4e6d5,0 2px 6px #000; }
+#app[data-mode="battle"] .gun-console, #app[data-mode="battle"] .weapon-panel, #app[data-mode="battle"] .navigation { position: relative; }
+#app[data-mode="battle"] .gun-console::after, #app[data-mode="battle"] .weapon-panel::after, #app[data-mode="battle"] .navigation::after { content: ""; position: absolute; inset: 3px; pointer-events: none; background: radial-gradient(circle at 3px 3px,#242d2f 0 1px,#a3b2a6 1px 2px,#253639 2px 3px,transparent 3px),radial-gradient(circle at calc(100% - 3px) 3px,#242d2f 0 1px,#a3b2a6 1px 2px,#253639 2px 3px,transparent 3px),radial-gradient(circle at 3px calc(100% - 3px),#253639 0 2px,#8c9e93 2px 3px,transparent 3px),radial-gradient(circle at calc(100% - 3px) calc(100% - 3px),#253639 0 2px,#8c9e93 2px 3px,transparent 3px); }
+#app[data-mode="battle"] .gun-console { padding: 7px 9px 6px; border-radius: 4px 4px 0 0; }
+#app[data-mode="battle"] .legacy-gun-console { display: none; }
+#app[data-mode="battle"] .classic-gun-console { display: block; padding: 7px 4px 6px; }
+#app[data-mode="battle"] .dial { width: 52px; height: 52px; flex: 0 0 52px; border: 7px solid #192429; background: repeating-conic-gradient(from -132deg,#293a34 0deg 2deg,#e6d79b 2deg 12deg); box-shadow: 0 0 0 1px #b3c0b8,0 0 0 3px #596a6d,0 0 0 5px #152024,inset 1px 1px 3px #000,2px 4px 3px 4px #0007; }
+#app[data-mode="battle"] .dial::before { inset: 4px; background: radial-gradient(circle at 37% 35%,#f2e3ad,#d0b96f 72%,#8b7d4d); box-shadow: inset 0 1px 2px #4f573c; }
+#app[data-mode="battle"] .dial::after { width: 5px; height: 5px; top: calc(50% - 2px); left: calc(50% - 2px); background: #475347; border-color: #a1a67e; }
+#app[data-mode="battle"] .dial i { top: 3px; height: 17px; width: 1.5px; background: #354a31; }
+#app[data-mode="battle"] .dial span { top: 23px; font: 6px "Courier New",monospace; color: #253b2c; }
+#app[data-mode="battle"] .dial b { bottom: 5px; font: bold 6px "Courier New",monospace; color: #2a3828; }
+#app[data-mode="battle"] .dial-unit { display: block; position: absolute; left: 0; right: 0; top: 9px; text-align: center; color: #485440; font: normal 7px Arial,sans-serif; }
+#app[data-mode="battle"] .dial.large { width: 73px; height: 73px; flex-basis: 73px; border-width: 8px; background: repeating-conic-gradient(from -132deg,#101b1e 0deg 5deg,#d1cbae 5deg 6deg,#101b1e 6deg 12deg); box-shadow: 0 0 0 1px #d8dbcb,0 0 0 3px #536568,0 0 0 5px #121c20,2px 4px 3px 5px #0009; }
+#app[data-mode="battle"] .dial.large::before { inset: 8px; background: radial-gradient(circle at 45% 30%,#23383b,#0d151a); box-shadow: none; }
+#app[data-mode="battle"] .dial.large i { top: 4px; height: 26px; width: 2px; background: linear-gradient(#d83427 0 28%,#e5e7da 28%); }
+#app[data-mode="battle"] .dial.large span { top: 33px; color: #b9c7b9; font-size: 6px; }
+#app[data-mode="battle"] .dial.large b { bottom: 8px; color: #e2e7d5; font: bold 10px "Courier New",monospace; }
+#app[data-mode="battle"] .dial.large .dial-unit { color: #d5d8bc; top: 14px; font-size: 6px; }
+#app[data-mode="battle"] .bearing-stack { position: absolute; bottom: 5px; display: flex; flex-direction: column; gap: 2px; }
+#app[data-mode="battle"] .bearing-stack .dial.large { width: 63px; height: 63px; flex-basis: 63px; }
+#app[data-mode="battle"] .bearing-stack .dial.large i { height: 22px; }
+#app[data-mode="battle"] .bearing-stack .dial.large span { top: 27px; font-size: 5px; }
+#app[data-mode="battle"] .bearing-stack .dial.large b { bottom: 5px; font-size: 9px; }
+#app[data-mode="battle"] .bearing-stack .dial-unit { top: 10px; }
+#app[data-mode="battle"] .r-bearings { left: 4px; }
+#app[data-mode="battle"] .station-banks { display: grid; gap: 12px; margin: -34px 7px 0 70px; }
+#app[data-mode="battle"] .weapon-bank { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0; }
+#app[data-mode="battle"] .station-dial { padding: 0; text-shadow: none; }
+#app[data-mode="battle"] .station-dial span { top: 19px; }
+#app[data-mode="battle"] .station-dial b { bottom: 2px; }
+#app[data-mode="battle"] .station-dial .dial-unit { top: 7px; }
+#app[data-mode="battle"] .station-dial.active { outline: 1px solid #dbe5a1; outline-offset: 4px; }
+#app[data-mode="battle"] .station-dial:hover { filter: brightness(1.15); }
+#app[data-mode="battle"] .station-dial.ready { box-shadow: 0 0 0 1px #b3c0b8,0 0 0 3px #596a6d,0 0 0 5px #152024,0 0 6px 6px #90ae6133; }
+#app[data-mode="battle"] button:disabled { cursor: not-allowed; }
+
+.yard-topbar, .yard-armament, #yard-mount-pins { display: none; }
+#app[data-mode="yard"] :is(.health, .bottom-console, .ship-tag) { display: none; }
+#app[data-mode="yard"] .yard-topbar { position: absolute; top: 0; left: 0; right: 0; height: 27px; display: flex; justify-content: space-between; align-items: center; padding: 0 9px; border-width: 1px; border-radius: 0; z-index: 4; }
+.yard-topbar :is(a,button) { font-size: 10px; padding: 2px 8px; text-decoration: none; }
+.yard-topbar h1 { margin: 0; min-width: 220px; text-align: center; font: bold 15px Arial,sans-serif; letter-spacing: 1px; background: linear-gradient(#34556c,#0e2b40); border: 2px ridge #91a1a1; text-shadow: 1px 2px #12202a; }
+.yard-topbar h1 span { font-size: 10px; letter-spacing: 0; margin-left: 12px; }
+#app[data-mode="yard"] .yard-info { top: 28px; left: 6px; width: 210px; max-height: calc(100% - 35px); padding: 0 8px 5px; border-color: #5f747e; border-radius: 0; scrollbar-width: thin; z-index: 3; background: repeating-linear-gradient(0deg,#09162255 0 1px,transparent 1px 3px),linear-gradient(90deg,#102d40ed,#071d2ef5); }
+.yard-info h2 { display: flex; gap: 6px; align-items: baseline; margin: 0; padding: 8px 0 5px; font-size: 13px; border-bottom: 1px solid #6e858a; }
+.yard-info h2 small { font-size: 9px; font-weight: normal; color: #a9c2cb; }
+.yard-info h2 span { margin-left: auto; font: 10px "Courier New",monospace; }
+.yard-info .yard-particulars div, .yard-info .yard-system dl div { padding: 5px 0; font-size: 10px; border-bottom: 1px solid #45647666; }
+.yard-info .yard-particulars dd { font: bold 11px "Courier New",monospace; }
+.yard-info dl { margin: 0 0 5px; }
+.yard-info .yard-system h3 { display: flex; align-items: center; gap: 5px; margin: 7px -3px 6px; padding: 2px 3px; font: 11px Arial,sans-serif; color: #c3d7df; border-block: 1px solid #73909b; }
+.yard-system h3 span { font-size: 9px; color: #9fb4bf; }
+.yard-info .yard-system h3 button { margin: 0 0 0 auto; padding: 0 4px; width: auto; color: #899ba1; font-size: 9px; cursor: not-allowed; background: #203747; border: 1px solid #5b6b73; }
+.yard-info .yard-system > b { display: block; font-size: 12px; font-weight: normal; text-align: center; color: #d4e0df; }
+.yard-info .yard-system p { margin: 5px 0 8px; font-size: 10px; line-height: 1.6; }
+#app[data-mode="yard"] #yard-mount-pins { display: block; }
+.yard-mount-pin { position: absolute; z-index: 2; transform: translate(-50%,-50%); width: 33px; height: 33px; border: 3px ridge #a5b7b9; border-radius: 50%; padding: 0; background: radial-gradient(circle at 35% 30%,#335367,#071b2c); font: bold 10px "Courier New",monospace; box-shadow: 0 1px 3px #000b; }
+.yard-mount-pin.active { border-color: #c5e3e4; color: #e1efda; background: radial-gradient(circle at 35% 30%,#517683,#132b3c); outline: 1px solid #5bb9c7; outline-offset: 2px; }
+#app[data-mode="yard"] .yard-armament { display: block; position: absolute; right: 7px; bottom: 7px; width: min(510px,calc(100% - 230px)); padding: 0 5px 4px; z-index: 3; border: 3px ridge #7c9094; background: repeating-linear-gradient(0deg,#08172588 0 1px,transparent 1px 3px),linear-gradient(#0e2c40ee,#071825f5); }
+.yard-armament h2 { display: flex; justify-content: space-between; align-items: center; margin: 0 -5px 4px; padding: 3px 7px; font: 12px Arial,sans-serif; border-block: 1px solid #93a7b0; background: linear-gradient(#3d657d,#163247); }
+.yard-armament h2 span { font-size: 10px; }
+.yard-armament h2 b { font-weight: normal; }
+.yard-equipment-list { max-height: 105px; overflow-y: auto; scrollbar-width: thin; }
+.yard-armament table { width: 100%; border-collapse: collapse; font: 10px Arial,sans-serif; }
+.yard-armament th { padding: 3px 5px; text-align: left; font-weight: normal; background: #264c63; border-right: 1px solid #7d969f; }
+.yard-armament td { padding: 3px 5px; border-right: 1px solid #375365; border-bottom: 1px solid #324956; white-space: nowrap; }
+.yard-armament tr.active td { background: #38536a88; }
+.yard-armament td:nth-child(2), .yard-armament td:nth-child(3) { color: #6f8791; text-align: center; }
+.yard-armament td:last-child span { display: inline-block; min-width: 70px; font: 10px "Courier New",monospace; }
+.yard-armament .mount { width: 100%; padding: 1px 0; border: 0; box-shadow: none; text-align: left; background: none; font-size: 10px; }
+.yard-armament .mount b { color: #d7c967; margin-right: 7px; }
+.yard-armament .yard-ammunition { display: flex; align-items: center; gap: 10px; margin-top: 5px; padding-top: 4px; border-top: 1px solid #718895; }
+.yard-armament .yard-ammunition h3 { margin: 0; font: 10px Arial,sans-serif; white-space: nowrap; }
+.yard-armament .yard-ammunition label { flex: 1; margin: 0; gap: 5px; font-size: 10px; }
+.yard-armament select { padding: 1px 3px; font-size: 10px; background: #173346; }
+.yard-armament #mount-info { margin: 5px 0 2px; font-size: 10px; color: #c0d1d1; }
+.yard-armament > small { display: block; font-size: 9px; color: #8aa2ac; }
+@media(max-width:800px) {
+  #app[data-mode="yard"] .yard-info { width: 190px; }
+  #app[data-mode="yard"] .yard-armament { width: calc(100% - 205px); }
+  .yard-armament td { padding-inline: 3px; }
+  .yard-armament td:last-child span { display: block; min-width: 65px; }
+  .yard-armament th:nth-child(2), .yard-armament td:nth-child(2), .yard-armament th:nth-child(3), .yard-armament td:nth-child(3) { display: none; }
+}
+#app[data-mode="battle"] .magazine-readout { position: relative; width: min(100%,80px); min-width: 0; display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 2px; padding: 12px 2px 3px; background: linear-gradient(#6a7670,#384b47); border: 2px inset #acb7a5; box-shadow: inset 0 0 0 1px #18312e; }
+#app[data-mode="battle"] .magazine-readout > span { position: absolute; top: 1px; left: 2px; font: 6px Arial,sans-serif; color: #d7ddcb; }
+#app[data-mode="battle"] .magazine-toggle { align-self: center; width: 18px; height: 18px; padding: 0; border: 2px solid #c3c2a5; border-radius: 50%; color: #f0dfad; background: linear-gradient(135deg,#192d2c 0 43%,#9f966f 44% 53%,#263c32 54%); box-shadow: 1px 2px #142326; font: bold 8px "Courier New",monospace; }
+#app[data-mode="battle"] .locker-row { display: flex; align-items: center; justify-content: space-between; gap: 1px; width: 100%; height: 14px; padding: 0; border: 0; box-shadow: none; background: none; font: 7px "Courier New",monospace; color: #a8b5a7; }
+#app[data-mode="battle"] .locker-row b { padding: 0 1px; min-width: 0; color: #b1beb1; background: repeating-linear-gradient(90deg,#162829 0 6px,#566760 6px 7px); border: 1px inset #718177; font: bold 9px "Courier New",monospace; letter-spacing: .5px; }
+#app[data-mode="battle"] .locker-row.active, #app[data-mode="battle"] .locker-row.active b { color: #fff2b0; }
+#app[data-mode="battle"] .locker-row:hover:not(:disabled) { color: #fff2b0; }
+#app[data-mode="battle"] .firing-controls { display: flex; align-items: center; justify-content: space-between; gap: 3px; margin: 4px 7px 0 70px; min-height: 19px; font-size: 8px; }
+#app[data-mode="battle"] .firing-controls button { padding: 3px 2px; font-size: 8px; white-space: nowrap; }
+#app[data-mode="battle"] .firing-controls > span { font: 7px Arial,sans-serif; color: #becbb7; white-space: nowrap; }
+#app[data-mode="battle"] .weapon-panel, #app[data-mode="battle"] .yard-engine { display: none; }
+#app[data-mode="battle"] .navigation { grid-column: 3; padding: 6px 6px 3px; border-radius: 3px 3px 0 0; }
+#app[data-mode="battle"] .minimap { height: 110px; border-color: #667b7b; background: #0a212b; box-shadow: inset 0 0 0 2px #09141b; }
+#app[data-mode="battle"] .minimap > span { top: 4px; left: 5px; font: 6px "Courier New",monospace; opacity: .6; }
+#app[data-mode="battle"] .engine-row { padding: 7px 4px 0; gap: 11px; min-height: 52px; }
+#app[data-mode="battle"] .speed-dial { width: 45px; height: 45px; flex-basis: 45px; border-width: 5px; }
+#app[data-mode="battle"] .speed-dial i { height: 14px; background: #a8231c; }
+#app[data-mode="battle"] .speed-dial span { top: 20px; }
+#app[data-mode="battle"] .speed-dial b { bottom: 3px; font-size: 8px; }
+#app[data-mode="battle"] .engine-switch { position: relative; padding: 0 0 0 15px; gap: 4px; color: #cfdbc7; }
+#app[data-mode="battle"] .engine-switch::before { content: ""; position: absolute; left: 0; top: 18px; width: 10px; height: 10px; background: radial-gradient(#608e64 0 3px,#1c3938 4px); border: 1px solid #b9c7a8; border-radius: 50%; box-shadow: 0 0 2px #a7d179; }
+#app[data-mode="battle"] .engine-switch b { font-size: 7px; }
+#app[data-mode="battle"] .engine-switch span { font-size: 8px; }
+#app[data-mode="battle"] .battle-engine { display: flex; align-items: center; gap: 8px; padding: 10px 2px 4px; }
+#app[data-mode="battle"] .engine-power-dial { width: 57px; height: 57px; flex-basis: 57px; border-width: 6px; background: conic-gradient(from -132deg,#e0d394 0deg 260deg,#91372c 260deg 286deg,#24312a 286deg); }
+#app[data-mode="battle"] .engine-power-dial i { height: 20px; background: #9d241f; }
+#app[data-mode="battle"] .engine-power-dial span { top: 24px; }
+#app[data-mode="battle"] .engine-power-dial b { bottom: 3px; font-size: 8px; }
+#app[data-mode="battle"] .power-controls { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; color: #dce3c9; font: 8px "Courier New",monospace; }
+#app[data-mode="battle"] .power-controls > div { display: flex; align-items: center; gap: 3px; }
+#app[data-mode="battle"] .power-controls button { padding: 3px 2px; font: 7px Arial,sans-serif; white-space: nowrap; }
+#app[data-mode="battle"] #tda { padding-left: 12px; position: relative; }
+#app[data-mode="battle"] #tda::before { content: ""; position: absolute; left: 3px; top: 6px; width: 5px; height: 5px; border-radius: 50%; background: #213632; border: 1px solid #768778; }
+#app[data-mode="battle"] #tda[aria-pressed="true"]::before { background: #91bd70; box-shadow: 0 0 3px #93b966; }
+#app[data-mode="battle"] .hint { font: 8px Arial,sans-serif; line-height: 12px; height: 16px; background: linear-gradient(#293f45,#112931); color: #9baea8; border-top: 1px solid #6e8480; }
+/* The air slot stays empty; only the low mounting rail crosses it. */
+#app[data-mode="battle"] .bottom-console { pointer-events: none; bottom:0; }
+#app[data-mode="battle"] .bottom-console > * { pointer-events: auto; }
+#app[data-mode="battle"] .bottom-console::before { content:""; position:absolute; inset:auto 0 0; height:24px; z-index:-1; border-top:3px ridge #505556; background: radial-gradient(circle at 10px 8px,#1a2021 0 2px,#697273 3px,#272928 4px,transparent 5px) 0 0/48px 24px,linear-gradient(#454443,#222321 55%,#111716); }
+#app[data-mode="battle"] .bottom-console .classic-gun-console { width: max-content; max-width:100%; padding: 22px 4px 4px 0; border:0; background:none; box-shadow:none; }
+#app[data-mode="battle"] .classic-gun-console::after { inset: 20px 0 auto; height: 9px; z-index:-1; background:linear-gradient(#181a19,#d6c8ac 15%,#5b5145 40%,#322b25 70%,#121312); box-shadow:0 2px 2px #121311; }
+#app[data-mode="battle"] .station-banks { gap: 3px; margin: 0 2px 0 61px; }
+#app[data-mode="battle"] .weapon-bank { width: 74px; gap: 6px; }
+#app[data-mode="battle"] .firing-controls { margin: 0 0 0 61px; padding:1px 3px; background:linear-gradient(#45443d,#161918); }
+#app[data-mode="battle"] .dial.station-dial { width:41px; height:41px; flex-basis:41px; border:6px solid #181817; background: repeating-conic-gradient(#433a26 0deg 2deg,#efdeaa 2deg 10deg); }
+#app[data-mode="battle"] .station-dial i { height:13px; top:2px; }
+#app[data-mode="battle"] .station-dial .dial-unit { top:3px; }
+#app[data-mode="battle"] .dial.station-dial span { top:16px; }
+#app[data-mode="battle"] .dial.station-dial b { bottom:0; }
+#app[data-mode="battle"] .weapon-bank { position: relative; }
+#app[data-mode="battle"] .weapon-bank::after { content:""; position:absolute; right:2px; top:19px; width:6px; height:6px; border:2px ridge #858e85; border-radius:50%; background:#344339; pointer-events:none; }
+#app[data-mode="battle"] .weapon-bank:has(.ready)::after { background: radial-gradient(at 40% 30%,#e7f1b6,#5ba52d 55%,#2b411e); }
+#app[data-mode="battle"] .locker-row b { font-size:10px; letter-spacing:1px; background: repeating-linear-gradient(90deg,#25231e 0 6px,#757065 6px 7px); }
+#app[data-mode="battle"] .magazine-readout { border:2px outset #96948a; border-radius:5px 5px 2px 2px; background: radial-gradient(circle at 91% 10%,#63b4e5 1px,#1a384c 3px,transparent 4px),linear-gradient(#dfdad2,#898781 32%,#4e4c48 76%,#282824); box-shadow:1px 2px 2px #111; }
+#app[data-mode="battle"] .bearing-stack { gap:0; bottom:2px; }
+#app[data-mode="battle"] .bearing-stack .dial.large { width:55px; height:55px; flex-basis:55px; background:conic-gradient(from -98deg,#ede8d7 0 121deg,#aa3027 121deg 130deg,#101416 130deg); }
+#app[data-mode="battle"] .bearing-stack .dial.large::before { inset:6px; }
+#app[data-mode="battle"] .classic-gun-console .station-banks { gap:2px; margin:0 3px 0 69px; }
+#app[data-mode="battle"] .classic-gun-console .weapon-bank { width:83px; gap:3px; }
+#app[data-mode="battle"] .classic-gun-console::after { top:49px; height:7px; }
+#app[data-mode="battle"] .classic-gun-console .engraved-gauge { border:0; background:none; box-shadow:none; overflow:visible; }
+#app[data-mode="battle"] .classic-gun-console .engraved-gauge::before { content:none; }
+#app[data-mode="battle"] .classic-gun-console .instrument-art { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+#app[data-mode="battle"] .classic-gun-console .dial.station-dial { width:54px; height:54px; flex-basis:54px; outline:none; }
+#app[data-mode="battle"] .classic-gun-console .station-dial.active .instrument-art { filter:drop-shadow(0 0 1px #f0e5b2); }
+#app[data-mode="battle"] .classic-gun-console .engraved-gauge i { left:calc(50% - 1px); top:calc(50% - 17px); height:22px; width:2px; transform-origin:50% 17px; background:linear-gradient(#302f23 0 72%,#c6b685 74%); clip-path:polygon(50% 0,100% 18%,100% 100%,0 100%,0 18%); }
+#app[data-mode="battle"] .classic-gun-console .engraved-gauge::after { width:6px; height:6px; left:calc(50% - 3px); top:calc(50% - 3px); border:1px solid #535647; background:radial-gradient(at 30% 25%,#d5ccb2,#747968 65%,#353d31); z-index:2; }
+#app[data-mode="battle"] .classic-gun-console .instrument-state { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); }
+#app[data-mode="battle"] .classic-gun-console .bearing-stack { left:-9px; top:auto; bottom:4px; gap:0; }
+#app[data-mode="battle"] .classic-gun-console .bearing-stack .dial.large { width:64px; height:64px; flex-basis:64px; }
+#app[data-mode="battle"] .classic-gun-console .bearing-stack .engraved-gauge i { height:29px; top:calc(50% - 23px); transform-origin:50% 23px; width:4px; left:calc(50% - 2px); background:linear-gradient(#d94529 0 25%,#efeedb 26% 76%,#626456 77%); }
+#app[data-mode="battle"] .classic-gun-console .bearing-stack .dial.large b { bottom:15px; font:bold 12px "Courier New",monospace; color:#f3f0da; text-shadow:1px 1px #000; }
+#app[data-mode="battle"] .classic-gun-console .weapon-bank::after { top:24px; right:4px; width:7px; height:7px; box-shadow:1px 1px 1px #070b08; }
+#app[data-mode="battle"] .classic-gun-console .engraved-magazine { width:83px; height:49px; display:block; padding:0; border:0; border-radius:0; background:none; box-shadow:none; }
+#app[data-mode="battle"] .classic-gun-console .station-number { top:5px; left:8px; color:#4b4d3b; font:6px "Courier New",monospace; }
+#app[data-mode="battle"] .classic-gun-console .magazine-toggle { position:absolute; top:22px; left:5px; width:23px; height:23px; border:0; background:none; box-shadow:none; color:#f4efd2; }
+#app[data-mode="battle"] .classic-gun-console .magazine-toggle svg { width:100%; height:100%; }
+#app[data-mode="battle"] .classic-gun-console .magazine-toggle span { position:absolute; top:-7px; right:0; font:bold 7px "Courier New",monospace; color:#343f2a; }
+#app[data-mode="battle"] .classic-gun-console .magazine-toggle[data-locker="B"] .selector-pointer { transform:rotate(90deg); transform-origin:16px 16px; }
+#app[data-mode="battle"] .classic-gun-console .engraved-magazine > div { position:absolute; top:16px; left:30px; right:8px; }
+#app[data-mode="battle"] .classic-gun-console .locker-row { height:12px; font:bold 7px "Courier New",monospace; padding:0; color:#969d80; }
+#app[data-mode="battle"] .classic-gun-console .locker-row b { width:34px; padding:0; border:0; background:repeating-linear-gradient(90deg,#12190f 0 7px,#58604a 7px 8px); font:bold 10px "Courier New",monospace; letter-spacing:2px; color:#a5ad8f; line-height:11px; text-align:center; }
+#app[data-mode="battle"] .classic-gun-console .locker-row.active, #app[data-mode="battle"] .classic-gun-console .locker-row.active b { color:#fff0b8; }
+#app[data-mode="battle"] .classic-gun-console button:focus-visible { outline:2px solid #eddf98; outline-offset:1px; }
+#app[data-mode="battle"] .crew { bottom:174px; right:9px; }
+#app[data-mode="battle"] .officer { width:35px; height:46px; }
+#app[data-mode="battle"] .bottom-console .navigation { padding:0; border:0; background:none; box-shadow:none; }
+#app[data-mode="battle"] .navigation::after { content:none; }
+.navigation-art { display:none; }
+#app[data-mode="battle"] .navigation-art { display:block; position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+#app[data-mode="battle"] .navigation { margin-bottom:4px; }
+#app[data-mode="battle"] .battle-engine { position:relative; display:flex; gap:3px; height:58px; padding:3px 7px 3px 0; border:0; background:none; }
+#app[data-mode="battle"] .battle-engine > :not(.navigation-art) { position:relative; z-index:1; }
+#app[data-mode="battle"] .power-controls { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; color:#e2e3ce; font:7px "Courier New",monospace; white-space:nowrap; }
+#app[data-mode="battle"] .power-caption { font:6px Arial,sans-serif; letter-spacing:.2px; text-shadow:1px 1px #283428; }
+#app[data-mode="battle"] #battle-speed { padding:1px 2px; background:repeating-linear-gradient(90deg,#131a13 0 6px,#454f3c 6px 7px); border:1px inset #a8ad94; color:#f3efce; letter-spacing:1px; }
+#app[data-mode="battle"] #battle-heading { font:6px "Courier New",monospace; color:#c1cab3; }
+#app[data-mode="battle"] .navigation #tda { display:flex; flex-direction:column; align-items:center; justify-content:center; flex:0 0 27px; align-self:center; gap:1px; width:27px; height:42px; padding:0; border:none; background:none; box-shadow:none; color:#425335; font:6px Arial,sans-serif; }
+#app[data-mode="battle"] .navigation #tda span { color:#e0e4ce; }
+#app[data-mode="battle"] .navigation #tda::before { content:none; }
+#app[data-mode="battle"] .tda-lamp-art { width:25px; height:25px; }
+#app[data-mode="battle"] .navigation #tda[aria-pressed="true"] { color:#96d438; }
+#app[data-mode="battle"] .navigation #tda[aria-pressed="true"] .tda-lamp-art { filter:drop-shadow(0 0 2px #91c540); }
+#app[data-mode="battle"] .navigation .engine-power-dial { width:60px; height:60px; flex-basis:60px; align-self:center; border:0; background:none; box-shadow:none; }
+#app[data-mode="battle"] .navigation .engine-power-dial .instrument-art { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+#app[data-mode="battle"] .navigation .engine-power-dial::before { content:none; }
+#app[data-mode="battle"] .navigation .engine-power-dial::after { width:6px; height:6px; left:calc(50% - 3px); top:calc(50% - 3px); border:1px solid #60614d; background:radial-gradient(at 30% 25%,#d5ccb2,#747968 65%,#353d31); z-index:2; }
+#app[data-mode="battle"] .navigation .engine-power-dial i { left:calc(50% - 1px); top:calc(50% - 19px); height:24px; width:2px; transform-origin:50% 19px; background:linear-gradient(#b93424 0 76%,#646446 77%); clip-path:polygon(50% 0,100% 16%,100% 100%,0 100%,0 16%); }
+#app[data-mode="battle"] .navigation .engine-power-dial b { bottom:17px; font:bold 7px "Courier New",monospace; color:#4a402a; }
+#app[data-mode="battle"] .power-step-buttons { flex:0 0 16px; height:46px; align-self:center; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(90deg,transparent 5px,#16231a 6px 9px,#929a7f 10px,transparent 11px); }
+#app[data-mode="battle"] .power-step-buttons button { width:16px; height:13px; padding:0; border:1px outset #a7ae96; background:linear-gradient(#76826b,#29392b); font:bold 9px "Courier New",monospace; }
+#app[data-mode="battle"] #power-lever { position:absolute; left:2px; width:12px; height:7px; background:linear-gradient(#d9ddc5,#4a5b40 45%,#91a078); border:1px solid #152117; box-shadow:0 1px 1px #000; pointer-events:none; }
+#app[data-mode="battle"] .navigation button:focus-visible { outline:2px solid #eddf98; outline-offset:1px; }
+#app[data-mode="battle"] .minimap { height:clamp(96px,16vh,150px); padding:5px; border:0; box-shadow:none; background:linear-gradient(165deg,#24394870,#11262185); }
+#app[data-mode="battle"] .minimap canvas { display:block; }
+#app[data-mode="battle"] .minimap > span { display:none; }
+#app[data-mode="battle"] .hint #status { position:fixed; left:5px; bottom:28%; max-width:min(360px,48vw); margin:0; color:#e6e7d3; font:bold 10px Arial,sans-serif; text-shadow:1px 1px 2px black; pointer-events:none; }
+#app[data-mode="battle"] .hint #status::before { content:"◀ "; color:#c4dd58; }
+@media (min-width: 901px) {
+  #app[data-mode="battle"] .bottom-console { bottom:0; }
+  #app[data-mode="battle"] .hint { left: max(345px,34vw); right:clamp(195px,21vw,238px); height:24px; padding:0 8px; border:0; background:transparent; }
+  #app[data-mode="battle"] .hint .prototype-controls { gap:5px; }
+}
+@media (max-width: 1000px) {
+  #app[data-mode="battle"] .bottom-console { grid-template-columns: minmax(345px,43%) minmax(0,1fr) 195px; }
+  #app[data-mode="battle"] .dial { width: 45px; height: 45px; flex-basis: 45px; border-width: 6px; }
+  #app[data-mode="battle"] .dial i { height: 14px; }
+  #app[data-mode="battle"] .dial span { top: 19px; font-size: 5px; }
+  #app[data-mode="battle"] .dial b { bottom: 3px; font-size: 5px; }
+  #app[data-mode="battle"] .dial .dial-unit { top: 7px; font-size: 6px; }
+  #app[data-mode="battle"] .station-dial span { top: 17px; }
+  #app[data-mode="battle"] .station-dial b { bottom: 1px; }
+  #app[data-mode="battle"] .dial.large { width: 63px; height: 63px; flex-basis: 63px; }
+  #app[data-mode="battle"] .dial.large i { height: 22px; }
+  #app[data-mode="battle"] .dial.large span { top: 28px; font-size: 5px; }
+  #app[data-mode="battle"] .dial.large b { bottom: 6px; font-size: 8px; }
+  #app[data-mode="battle"] .station-banks { gap: 6px; margin-left: 60px; margin-right: 7px; }
+  #app[data-mode="battle"] .firing-controls { margin-left: 60px; margin-right: 7px; }
+  #app[data-mode="battle"] .bearing-stack .dial.large { width: 54px; height: 54px; flex-basis: 54px; }
+  #app[data-mode="battle"] .bearing-stack .dial.large i { height: 18px; }
+  #app[data-mode="battle"] .bearing-stack .dial.large span { top: 23px; }
+  #app[data-mode="battle"] .bearing-stack .dial.large b { bottom: 3px; font-size: 7px; }
+  #app[data-mode="battle"] .locker-row b { font-size: 8px; letter-spacing: 0; }
+  #app[data-mode="battle"] .battle-stat b { font-size: 22px; }
+}
+@media (max-width: 760px) {
+  #app[data-mode="battle"] .bottom-console { grid-template-columns: minmax(290px,1fr) 180px; }
+  #app[data-mode="battle"] .weapon-panel { display: none; }
+  #app[data-mode="battle"] .navigation { grid-column: 2; }
+  #app[data-mode="battle"] .battle-stat b { font-size: 15px; margin-left: 4px; }
+  #app[data-mode="battle"] .battle-stat { font-size: 9px; }
+  #app[data-mode="battle"] .dial.large { width: 54px; height: 54px; flex-basis: 54px; }
+  #app[data-mode="battle"] .dial.large i { height: 18px; }
+  #app[data-mode="battle"] .dial.large span { top: 23px; }
+  #app[data-mode="battle"] .dial.large b { bottom: 3px; font-size: 7px; }
+  #app[data-mode="battle"] .crew { bottom: 206px; }
+}

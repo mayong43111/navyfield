@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>大海战 · 舰队司令部</title></head>
+<body>
+  <main id="app" data-mode="warzone">
+    <canvas id="scene" aria-label="经典大海战风格的三维海战与船厂"></canvas>
+    <div class="health metal"><b aria-hidden="true"></b><span>65 000 / 65 000</span><div class="health-stack">
+      <div class="health-track hull-track" role="meter" aria-label="舰体耐久" aria-valuemin="0" aria-valuemax="65000" aria-valuenow="65000"><i></i></div>
+      <div id="protection" class="health-track protection-track" role="meter" aria-label="防雷装甲" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0"><i></i><small>防雷装甲：未配置</small></div>
+    </div></div>
+    <section class="battle-stat" aria-label="本场战斗统计">
+      <span>击沉 <b id="combat-kills">0</b></span>
+      <span>命中率 <b id="combat-accuracy">0%</b></span>
+      <span>伤害 <b id="combat-damage">0</b></span>
+    </section>
+    <aside class="team glass"><h2>甲队</h2><div><span>战列舰</span><b>2 / 2</b></div><div><span>航母</span><b>0 / 0</b></div><div><span>重巡</span><b>0 / 0</b></div><div><span>轻巡</span><b>0 / 0</b></div><div><span>驱逐舰</span><b>0 / 0</b></div><div><span>合计</span><b>2 / 2</b></div></aside>
+    <div class="ship-tag" id="ship-tag"><b>◆ 大和</b><span>旗舰</span></div>
+    <div class="ship-tag ally-tag enemy-tag" id="ally-tag"><b>◆ 敌舰</b><span id="enemy-health">敌舰耐久</span></div>
+    <section id="battle-result" class="glass" role="dialog" aria-modal="true" aria-labelledby="battle-result-title" hidden>
+      <h2 id="battle-result-title"></h2>
+      <p id="battle-result-stats"></p>
+      <button id="battle-result-exit" type="button">返回战区</button>
+    </section>
+    <div id="aim-label">射击指示</div>
+    <aside class="crew">
+      <div class="battle-actions" aria-label="战斗操作"><button id="battle-exit" type="button" title="撤离战斗，返回战区">撤离</button></div>
+      <div class="officer"><svg viewBox="0 0 56 76" aria-label="自行绘制的舰桥指挥官示意头像"><defs><linearGradient id="coat" x2="1" y2="1"><stop stop-color="#c1c7bd"/><stop offset="1" stop-color="#64716a"/></linearGradient><linearGradient id="skin"><stop stop-color="#9c8065"/><stop offset=".6" stop-color="#d9c4a0"/><stop offset="1" stop-color="#baa183"/></linearGradient></defs><path fill="url(#coat)" stroke="#233337" d="M7 74 9 53 20 47 36 46 47 55 52 74Z"/><path fill="#e0dec9" d="m23 45 7 10 7-10-3 19h-7Z"/><path fill="#333f3d" d="m28 53 4 1 2 16-5 3-2-3Z"/><path fill="url(#skin)" stroke="#63594a" d="m19 18 22-1 1 11 5 6-6 3-1 8-6 6-12-7-4-12Z"/><path fill="#4c463c" d="m19 19 4 5-1 12-4-5ZM31 28l7-1M32 31h3M37 39l-6 1"/><path fill="#e2e2d0" stroke="#58615b" d="m11 17 5-9 24-2 6 9-8 5-20 1Z"/><path fill="#263b3f" d="m18 19 26-4 3 4-19 6-10-2Z"/><path fill="#b5aa74" d="m29 12 3-2 3 2-1 4h-4Z"/><path fill="none" stroke="#e2e4d8" d="m11 54 10 5M39 54l8 4M13 71h8M41 67h6"/><path fill="#c6b686" d="m11 53 9-4 2 4-10 4ZM39 49l7 4-1 3-8-3Z"/></svg></div><b>舰桥指挥官</b>
+    </aside>
+    <header class="yard-topbar metal">
+      <span class="command-seal">舰队司令部</span>
+      <h1>船坞</h1>
+      <button id="berth-open" type="button" aria-haspopup="dialog" aria-controls="berth-dialog">泊位名册 ▾</button>
+    </header>
+    <dialog id="berth-dialog" aria-labelledby="berth-title">
+      <header><h2 id="berth-title">泊位名册</h2><button id="berth-close" type="button">关闭</button></header>
+      <input id="berth-search" type="search" aria-label="搜索船名或泊位号" placeholder="搜索船名或泊位号">
+      <div id="berth-list" aria-label="可选泊位"></div>
+      <p id="berth-result" role="status"></p>
+    </dialog>
+    <aside class="yard-info glass" aria-label="船厂舰体与系统信息">
+      <div class="vessel-plate"><span>舰籍档案</span><img id="yard-portrait" alt=""></div>
+      <h2><b id="yard-vessel">大和</b><span id="yard-vessel-class">战列舰</span></h2>
+      <label class="yard-type-label">舰型<select id="yard-ship-type" aria-label="泊位舰型"></select></label>
+      <label class="yard-type-label">防雷装甲档位<input id="yard-bulge-level" type="number" min="0" max="10" step="1" value="1" aria-label="防雷装甲档位"></label>
+      <dl class="yard-particulars" id="yard-particulars">
+        <div><dt>舰体耐久</dt><dd>65 000</dd></div>
+        <div><dt>全长</dt><dd>263 米</dd></div>
+        <div><dt>主炮</dt><dd>三座三联装</dd></div>
+        <div><dt>状态</dt><dd>停泊</dd></div>
+      </dl>
+    </aside>
+    <div id="yard-mount-pins" aria-label="舰上主炮挂点"></div>
+    <button id="yard-depart" type="button" title="出港前往战区">出港 <span aria-hidden="true">➤</span></button>
+    <section class="yard-armament glass" aria-label="船厂装备与弹仓">
+      <h2>舰载装备 <span><b id="yard-gun-count">—</b></span></h2>
+      <div class="yard-equipment-list"><table><thead><tr><th scope="col">挂点 / 武器</th><th scope="col">弹仓 / 备弹</th></tr></thead><tbody id="yard-equipment"></tbody></table></div>
+      <label class="yard-type-label">炮型<select id="yard-gun-model" aria-label="所选主炮炮型"></select></label>
+      <p id="yard-gun-statistics"></p>
+      <div class="yard-ammunition"><h3 id="locker-station">主炮 1 弹仓</h3><label>甲仓 <select id="shell-a" aria-label="甲弹仓弹种"><option value="HE">高爆弹</option><option value="AP">穿甲弹</option></select></label><label>乙仓 <select id="shell-b" aria-label="乙弹仓弹种"><option value="HE">高爆弹</option><option value="AP" selected>穿甲弹</option></select></label></div>
+      <p id="mount-info"></p>
+      
+    </section>
+    <section class="bottom-console">
+      <div class="gun-console legacy-gun-console metal">
+        <div class="gauge-row"><div class="dial large"><em class="dial-unit">航向</em><span>航向</span><i id="heading-needle"></i><b id="heading">090°</b></div><div class="dial gun-dial"><em class="dial-unit">Ⅰ</em><span>Ⅰ 就绪</span><i class="reload-needle"></i><b>46厘米</b></div><div class="dial gun-dial"><em class="dial-unit">Ⅱ</em><span>Ⅱ 就绪</span><i class="reload-needle"></i><b>46厘米</b></div><div class="dial gun-dial"><em class="dial-unit">Ⅲ</em><span>Ⅲ 就绪</span><i class="reload-needle"></i><b>46厘米</b></div><div class="dial large"><em class="dial-unit">转速</em><span>动力</span><i id="speed-needle"></i><b id="throttle">0%</b></div></div>
+        <div class="ammo-row"><button id="fire" type="button">齐射 <small>空格</small></button><div class="ammo"><span>Ⅰ · 炮弹</span><b>46厘米</b><small>九四式</small></div><div class="ammo"><span>Ⅱ · 炮弹</span><b>46厘米</b><small>九四式</small></div><div class="ammo"><span>Ⅲ · 炮弹</span><b>46厘米</b><small>九四式</small></div></div>
+      </div>
+      <div id="battle-gun-console" class="gun-console classic-gun-console metal" aria-label="R 组主炮装填与弹仓">
+        <div class="bearing-stack r-bearings">
+          <div class="dial large" title="R 组前炮角度"><i id="r-front-elevation"></i><b id="r-front-angle">0°</b></div>
+          <div class="dial large" title="R 组后炮角度"><i id="r-rear-elevation"></i><b id="r-rear-angle">0°</b></div>
+        </div>
+        <div class="station-banks" id="station-banks"></div>
+      </div>
+      <section class="weapon-panel metal"><h2>46厘米 / 45 九四式 <span>主炮</span></h2><div class="weapon-body glass"><svg viewBox="0 0 220 65" aria-label="原创主炮示意图"><defs><linearGradient id="turret-steel" x2=".2" y2="1"><stop stop-color="#a6adab"/><stop offset=".5" stop-color="#68767a"/><stop offset="1" stop-color="#37434b"/></linearGradient></defs><path fill="#23313c" d="m23 49 15-6h68l12 10-14 6H26Z"/><path fill="url(#turret-steel)" stroke="#17272f" d="M25 50V23L38 13H101L116 25V49Z"/><path fill="#afbab7" stroke="#2d3d43" d="m29 23 12-8h59l10 10-7 2H29Z"/><path fill="#4a5a60" stroke="#1a2c34" d="m101 27 13-2v22l-13 4Z"/><g fill="url(#turret-steel)" stroke="#26363e"><path d="M51 17 189 10v4L53 23ZM63 28l140-4v4L65 34ZM75 39l136 1v4L75 45Z"/></g><path stroke="#c1cac5" fill="none" d="m55 18 130-6M69 29l131-3M79 40h129M30 46h70"/><g fill="#26373c"><circle cx="35" cy="30" r="1"/><circle cx="35" cy="43" r="1"/><circle cx="96" cy="30" r="1"/><circle cx="96" cy="43" r="1"/></g></svg><dl><div><dt>口径</dt><dd>460毫米</dd></div><div><dt>配置</dt><dd>3 × 3</dd></div><div><dt>状态</dt><dd id="reload">停泊</dd></div></dl></div></section>
+      <section class="navigation metal">
+        <div class="minimap glass"><canvas id="minimap" width="220" height="150" aria-label="海战小地图"></canvas><span>海图</span></div>
+        <div class="engine-row yard-engine"><div class="dial speed-dial"><span>航速</span><i id="knots-needle"></i><b id="speed">0.0</b></div><div class="engine-switch"><b>动力</b><span>F / V 推进</span><span>A / D 转舵</span><span>R 重置 · C 视角</span></div></div>
+        <div class="battle-engine">
+          <div class="dial engine-power-dial"><i id="engine-power-needle"></i><b id="engine-power">0%</b></div>
+          <div class="power-controls"><span class="power-caption">动力</span><span >航速 <b id="battle-speed">0.0</b> 单位/秒</span><span id="battle-heading">航向 090°</span></div>
+          <button id="tda" type="button" aria-pressed="false" aria-label="炮塔转动加速，关闭" title="Ctrl：炮塔转动加速"><span>TDA</span></button>
+          <div class="power-step-buttons"><button id="power-up" type="button" aria-label="增加动力（F）" title="增加动力（F）">F +</button><i id="power-lever" aria-hidden="true"></i><button id="power-down" type="button" aria-label="降低动力（V）" title="降低动力（V）">V −</button></div>
+        </div>
+      </section>
+    </section>
+    <p id="status" role="status">正在载入…</p>
+    <div id="error" role="alert" hidden></div>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

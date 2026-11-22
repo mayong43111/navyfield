@@ -1,0 +1,243 @@
+:root {
+  --ui-type: "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  --ink: #f0f2e9;
+  --secondary: #c6d6da;
+  --gold: #f5da92;
+  --panel: linear-gradient(125deg, #243c48, #142731 75%);
+  --edge: #69818a;
+}
+#app #battle-result[hidden] { display: none; }
+#battle-result {
+  position: absolute; z-index: 30; left: 50%; top: max(140px,22%); transform: translate(-50%,-50%);
+  width: min(360px,calc(100% - 32px)); padding: 24px; text-align: center;
+  background: var(--panel); border: 2px solid #aa9660;
+  box-shadow: 0 12px 40px #000a, inset 0 0 0 3px #142731;
+}
+#battle-result h2 { margin: 0 0 16px; color: var(--gold); font-size: 28px; }
+#battle-result p { font-size: 15px; line-height: 1.8; white-space: pre-line; }
+#battle-result button { padding: 10px 24px; font-size: 16px; }
+#app[data-mode="battle"] .ship-tag.enemy-tag b { color: #ffafa0; }
+#app[data-mode="battle"] .ship-tag.enemy-tag span { display: block; color: #ffdbd2; font-size: 13px; }
+#app[data-mode="battle"] .ship-tag:not(.enemy-tag) span { display: block; color: var(--gold); font-size: 13px; }
+#app[data-mode="battle"] .battle-stat { grid-template-columns: 39% 30% 31%; }
+.yard-type-label input { width: 100%; padding: 5px; font: 14px var(--ui-type); color: var(--ink); background: #182d38; border: 1px solid #849690; }
+#app[data-mode="battle"] .protection-track i { background: linear-gradient(#8cc6d4,#386d88); }
+body { font: 15px/1.45 var(--ui-type); color: var(--ink); grid-template-rows: minmax(0,1fr) auto; }
+button, select, input { font-family: inherit; }
+button:focus-visible, a:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+body > .hint { min-height: 46px; padding: 5px 12px; gap: 16px; height: auto; background: #192a32; }
+.hint .prototype-controls { flex-wrap: wrap; gap: 4px; }
+.hint .prototype-controls :is(button,a,summary,label) { color: var(--secondary); padding: 4px 7px; font: 14px/1.35 var(--ui-type); }
+.hint .prototype-controls :is(button.active,button:hover,summary:hover,a:hover) { color: var(--gold); background: #314851; }
+.hint #status { color: var(--secondary); font-size: 13px; white-space: normal; line-height: 1.35; overflow-wrap: anywhere; }
+.lobby .glass, #app[data-mode="yard"] :is(.yard-info,.yard-armament) {
+  background: var(--panel); border: 1px solid var(--edge); box-shadow: inset 0 1px #ffffff19, 0 2px 5px #08192180;
+}
+.lobby .metal, #app[data-mode="yard"] .yard-topbar { background: linear-gradient(#40535b,#253942); border: 1px solid var(--edge); }
+.lobby-top, #app[data-mode="yard"] .yard-topbar { height: 38px; padding-inline: 12px; }
+.lobby-top > :is(span,b), .yard-topbar :is(a,button) { font: 14px var(--ui-type); }
+.lobby-top h1, .yard-topbar h1 { font: bold 18px/1.4 var(--ui-type); }
+.lobby button:disabled { opacity: 1; color: #adbbc0; background-color: #273942; }
+.lobby h2, .preparation-bottom h2, .yard-armament h2 { font: bold 16px/1.4 var(--ui-type); color: var(--ink); }
+.lobby :is(h3,p,td,th,small,button,time,label,input,select,a) { font-family: var(--ui-type); }
+.lobby .channel-controls { top: 47px; gap: 6px; }
+.channel-controls button, .formation-toolbar button, .formation-presets button, .team-tabs button,
+.fleet-tools > button, .room-inspector button, .readiness-controls #room-start { font-size: 14px; min-height: 30px; }
+.channel-controls > span, .formation-toolbar span, .room-plaque small { font: 13px/1.4 var(--ui-type); }
+.warzone-details { width: clamp(246px,28vw,360px); top: 96px; padding: 10px; gap: 8px; overflow-y: auto; }
+.world-chart-area { right: calc(clamp(246px,28vw,360px) + 22px); top: 96px; bottom: 146px; container-type: size; place-items: center; }
+.world-chart { width: min(100%,200cqh); }
+.chart-caption { font: 13px var(--ui-type); color: #f3f3e4; padding: 2px 5px; background: #172c38dc; }
+.world-marker { width: 23px; height: 23px; font: bold 13px var(--ui-type); }
+#battle-list { grid-template-columns: repeat(auto-fit,minmax(128px,1fr)); min-height: 66px; flex: 1 0 66px; }
+#battle-list button { font-size: 14px; padding: 5px; }
+.battle-information h3, .room-inspector h3 { font-size: 17px; }
+.battle-information :is(time,p,a), .room-inspector p { font: 14px/1.45 var(--ui-type); color: var(--secondary); }
+.battle-information a { color: var(--gold); }
+#room-plaques { right: calc(clamp(246px,28vw,360px) + 22px); bottom: 10px; height: 126px; gap: 7px; }
+.room-plaque b { font-size: 15px; }
+.rooms-empty { right: calc(clamp(246px,28vw,360px) + 22px); font-size: 15px; }
+.fleet-tools { top: 48px; width: clamp(177px,18vw,230px); padding: 9px; bottom: 156px; }
+.fleet-tools :is(h3,p), .fleet-tools table { font: 14px/1.45 var(--ui-type); }
+.fleet-tools h3 { font-weight: bold; color: var(--gold); }
+.fleet-tools td { line-height: 1.6; }
+.formation-presets { flex-wrap: wrap; }
+.formation-presets button { flex: 1 0 40%; }
+.formation-toolbar, #formation-grid, .formation-help { left: calc(clamp(177px,18vw,230px) + 22px); right: 124px; }
+.formation-toolbar { top: 48px; height: 40px; }
+.formation-toolbar span:last-child { display: inline; }
+#formation-grid { top: 98px; bottom: 184px; grid-template-rows: repeat(8,minmax(70px,1fr)); }
+.formation-help { bottom: 155px; line-height: 1.45; font-size: 13px; color: var(--ink); text-shadow: 0 1px 3px #000; }
+.formation-slot small, .formation-slot span { font: 12px/1.3 var(--ui-type); color: var(--ink); text-shadow: 1px 1px 2px #000; }
+.formation-slot small { color: #d0dfdf; }
+.formation-slot span { background: #142934d9; }
+.formation-slot img { top: 14px; height: calc(100% - 30px); }
+.readiness-controls { top: 54px; }
+.ready-wheel,.exit-wheel { font: bold 14px var(--ui-type); }
+.preparation-bottom { bottom: 9px; height: 136px; grid-template-columns: minmax(270px,36%) minmax(0,1fr); }
+.roster-scroll { height: calc(100% - 33px); }
+.roster td, .roster td:last-child, .roster button, .room-log ol { font: 13px/1.45 var(--ui-type); }
+.room-log ol { height: calc(100% - 33px); color: #c1e2ce; }
+#room-dialog :is(label,input,select,button), .prep-empty p { font-size: 15px; }
+#room-dialog h2, .prep-empty h2 { font-size: 18px; }
+#room-dialog p, #lobby-alert { font-size: 14px; }
+#app[data-mode="yard"] .yard-info { top: 47px; width: clamp(180px,20vw,248px); padding: 6px 10px; max-height: calc(100% - 55px); }
+.yard-info h2 { font-size: 18px; }
+.yard-info h2 span, .yard-info .yard-particulars :is(div,dd) { font: 14px/1.45 var(--ui-type); }
+.vessel-plate { position: relative; margin: -6px -10px 6px; padding: 8px 12px; border-bottom: 1px solid #a18d62;
+  background: radial-gradient(ellipse at center,#466b7566,transparent 70%),repeating-linear-gradient(0deg,transparent 0 13px,#85adbb22 13px 14px),repeating-linear-gradient(90deg,#172e39 0 13px,#29424c 13px 14px); }
+.vessel-plate span { color: #dfca94; font-size: 13px; letter-spacing: .16em; }
+.vessel-plate img { display: block; width: 100%; height: clamp(54px,9vh,96px); object-fit: contain; filter: drop-shadow(2px 5px 2px #091720); }
+#berth-dialog { color: var(--ink); background: var(--panel); border: 1px solid #a59169; padding: 16px; width: min(470px,90vw); box-shadow: 0 12px 60px #000a,inset 0 0 0 3px #10232d; }
+#berth-dialog::backdrop { background: #081820b8; }
+#berth-dialog header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #85785d; }
+#berth-dialog h2 { font-size: 20px; color: var(--gold); margin: 0; letter-spacing: .12em; }
+#berth-search { display: block; width: 100%; margin: 10px 0; padding: 8px; color: var(--ink); background: #0c202a; border: 1px solid var(--edge); font-size: 15px; }
+#berth-list { display: grid; gap: 5px; max-height: min(48vh,380px); overflow: auto; }
+#berth-list button { display: flex; gap: 14px; align-items: center; text-align: left; padding: 8px 12px; font-size: 16px; }
+#berth-list b { padding: 2px 7px; border: 1px solid #88938b; color: #ede1bd; font: bold 16px monospace; }
+#berth-list small { margin-left: auto; color: var(--gold); font-size: 13px; }
+#berth-list [aria-pressed="true"] { border-color: #d7bd7b; background: #30494b; }
+#berth-result { margin: 10px 0 0; color: var(--secondary); font-size: 14px; }
+#yard-depart { display: none; }
+#app[data-mode="yard"] #yard-depart { display: block; position: absolute; z-index: 4; transform: translate(-50%,calc(-100% - 10px));
+  padding: 5px 12px; border: 1px solid #f6dda0; background: linear-gradient(#675e3c,#383a2b); color: #fff6d6;
+  font: bold 15px/1.4 var(--ui-type); box-shadow: 0 2px 6px #10191f,inset 0 0 0 2px #383c31; }
+#yard-depart::after { content:""; position:absolute; left:calc(50% - 5px); bottom:-7px; width:10px; height:10px; border:solid #f6dda0; border-width:0 1px 1px 0; background:#383a2b; transform:rotate(45deg); }
+#app[data-mode="yard"] .yard-armament { width: min(470px,calc(100% - clamp(180px,20vw,248px) - 25px)); padding: 0 7px 5px; }
+.yard-armament h2 { margin-inline: -7px; }
+.yard-armament h2 span, .yard-armament table, .yard-armament .mount, .yard-armament td:last-child span,
+.yard-armament .yard-ammunition :is(h3,label,select), .yard-armament #mount-info { font: 13px/1.4 var(--ui-type); }
+.yard-armament .yard-equipment-list { max-height: 110px; }
+.yard-armament :is(th,td):last-child { display: table-cell; text-align: left; color: var(--ink); }
+.yard-armament td:last-child span { display: inline-block; margin-right: 7px; }
+.yard-mount-pin { font: bold 14px var(--ui-type); }
+#app[data-mode="battle"] :is(.battle-stat,.ship-tag,.health > span,.crew b,#aim-label,.protection-track small) { font-size: 13px; }
+#app[data-mode="battle"] .crew { bottom: calc(clamp(96px,16vh,150px) + 75px); }
+#app[data-mode="battle"] .power-controls, #app[data-mode="battle"] :is(.power-caption,#battle-heading,.navigation #tda span) { font: bold 12px/1.15 var(--ui-type); color: var(--ink); text-shadow: 1px 1px 2px #121c20; }
+#app[data-mode="battle"] .navigation .engine-power-dial b { font-size: 12px; bottom: 12px; }
+#app[data-mode="battle"] .power-step-buttons { flex-basis: 22px; }
+#app[data-mode="battle"] .power-step-buttons button { font: bold 14px/1 var(--ui-type); width: 22px; height: 18px; }
+#app[data-mode="battle"] .classic-gun-console .station-number { font: bold 12px var(--ui-type); top: 2px; }
+#app[data-mode="battle"] .classic-gun-console .magazine-toggle span { display: none; }
+#app[data-mode="battle"] .classic-gun-console .locker-row { font: bold 12px/1 var(--ui-type); height: 15px; }
+#app[data-mode="battle"] .classic-gun-console .locker-row b { font: bold 13px/1 monospace; letter-spacing: 0; color: #e6e8d6; }
+#app[data-mode="battle"] .classic-gun-console .engraved-magazine > div { top: 12px; }
+#app[data-mode="battle"] .bottom-console {
+  grid-template-columns: minmax(0,var(--battle-gun-width,366px)) minmax(0,1fr) clamp(218px,21vw,258px);
+}
+#app[data-mode="battle"] .navigation { grid-column: 3; }
+#app[data-mode="battle"] .classic-gun-console { min-height: 166px; }
+#app[data-mode="battle"] .classic-gun-console [hidden],
+#app[data-mode="battle"] .classic-gun-console[hidden] { display: none; }
+#app[data-mode="battle"] .classic-gun-console .station-banks { gap: 8px; margin-left: 72px; }
+#app[data-mode="battle"] .classic-gun-console .weapon-bank { width: 88px; gap: 5px; }
+#app[data-mode="battle"] .classic-gun-console .dial.station-dial { width: 64px; height: 64px; flex-basis: 64px; margin-bottom: 20px; }
+#app[data-mode="battle"] .classic-gun-console .station-dial .instrument-state {
+  width: 88px; height: 18px; left: -12px; top: calc(100% + 2px); margin: 0; padding: 1px 0;
+  clip-path: none; overflow: visible; color: #dde0c8; font: 11px/16px var(--ui-type); text-shadow: 1px 1px #101a16;
+}
+#app[data-mode="battle"] .classic-gun-console .station-dial.ready .instrument-state { color: #d9eaaa; }
+#app[data-mode="battle"] .classic-gun-console .weapon-bank::after { top: 29px; right: 0; }
+#app[data-mode="battle"] .classic-gun-console .bearing-stack { left: 0; bottom: 4px; gap: 8px; }
+#app[data-mode="battle"] .classic-gun-console .bearing-stack .angle-caption {
+  top: 14px; color: #cdd3c1; font: 10px/1 var(--ui-type); text-shadow: 1px 1px #0b1713;
+}
+#app[data-mode="battle"] .classic-gun-console .station-number { font-size: 11px; }
+#app[data-mode="battle"] .power-step-buttons { flex-basis: 32px; }
+#app[data-mode="battle"] .power-step-buttons button { width: 32px; font-size: 10px; }
+#app[data-mode="battle"] #power-lever { left: 10px; }
+#app[data-mode="battle"] .crew { bottom: calc(clamp(96px,16vh,150px) + 66px); }
+#app[data-mode="battle"] #status { bottom: 180px; }
+@media (max-width: 640px) {
+  #app[data-mode="battle"] .bottom-console { grid-template-columns: minmax(0,1fr) 190px; gap: 2px; }
+  #app[data-mode="battle"] .navigation { grid-column: 2; }
+  #app[data-mode="battle"] .classic-gun-console .station-banks { margin-left: 60px; gap: 3px; }
+  #app[data-mode="battle"] .classic-gun-console .weapon-bank { width: 68px; }
+  #app[data-mode="battle"] .classic-gun-console .engraved-magazine { width: 68px; }
+  #app[data-mode="battle"] .classic-gun-console .bearing-stack .dial.large { width: 54px; height: 54px; flex-basis: 54px; }
+  #app[data-mode="battle"] .classic-gun-console .station-dial .instrument-state { width: 72px; left: -4px; font-size: 10px; }
+  #app[data-mode="battle"] .classic-gun-console .locker-row b { width: 27px; font-size: 11px; }
+  #app[data-mode="battle"] .power-controls { font-size: 10px; }
+}
+@media (max-width: 480px) {
+  #app[data-mode="battle"] .classic-gun-console { overflow-x: auto; width: 100%; min-height: 184px; }
+  #app[data-mode="battle"] .classic-gun-console .station-banks { width: max-content; }
+}
+@media (max-width: 900px) {
+  body > .hint { flex-wrap: wrap; gap: 0 8px; padding: 4px 8px; }
+  .hint #status { flex-basis: 100%; text-align: left; min-height: 18px; }
+  .formation-toolbar,.formation-help,#formation-grid { right: 99px; }
+  .formation-slot span { font-size: 12px; }
+}
+
+/* A brass-edged command rail surrounds the chart, plotting board and dock. */
+:root { --panel: linear-gradient(115deg,#263941 0%,#182c37 55%,#11232d); }
+.lobby .lobby-top, #app[data-mode="yard"] .yard-topbar {
+  background: radial-gradient(circle at 5px 50%,#d2c5a1 0 1px,#13222a 2px,transparent 3px),
+    linear-gradient(180deg,#52626a 0,#354851 9%,#1d313d 47%,#182b34 90%,#8b805f);
+  border-block: 1px solid #9a8e71; padding-inline: 20px; box-shadow: 0 3px 8px #09141b80;
+}
+.lobby-top h1,.yard-topbar h1 { position: absolute; left: 50%; transform: translateX(-50%); background: none; border: none; color: #fff0c9; letter-spacing: .23em; text-shadow: 0 2px #0a1721; }
+.lobby-top > span,.command-seal { display: inline-flex; align-items: center; gap: 8px; color: #ddd4b7; }
+.lobby-top > span::before,.command-seal::before { content:"⚓"; display:grid; place-items:center; width:23px; height:23px; border:1px solid #ad9e74; border-radius:50%; color:var(--gold); font:16px Georgia,serif; }
+.lobby .glass,#app[data-mode="yard"] :is(.yard-info,.yard-armament) { border-top: 2px solid #b4a177; box-shadow: inset 0 0 0 2px #12232c, 0 4px 12px #07131a70; }
+.lobby :is(.warzone-details,.fleet-tools,.roster,.room-log) h2,.yard-armament h2 {
+  background: linear-gradient(90deg,#59615166,#1e303900); color:#f1dfac; padding:4px 7px; border-left:3px solid #ac9564; border-bottom:1px solid #657170;
+}
+#warzone-page { background: radial-gradient(ellipse at 35% 45%,#324e56 0%,transparent 68%),
+  repeating-linear-gradient(115deg,#20343d 0 2px,#20363e 2px 4px); }
+.world-chart { border: 4px ridge #9e9c87; outline: 1px solid #161e22; box-shadow: 0 6px 14px #09161caa; }
+.world-chart::after { content:""; pointer-events:none; position:absolute; inset:0; box-shadow: inset 0 0 18px #152e3b88; }
+.chart-caption { border-left: 3px solid #d5ba79; letter-spacing:.1em; }
+.lobby .world-marker { border-color: #e9cd83; background: radial-gradient(at 30% 20%,#526374,#183446 70%); color:#fff7db; }
+.lobby .world-marker.active { color:#192e3a; background:linear-gradient(#ffe8a1,#cdae64); box-shadow:0 0 0 5px #ffe09b36; }
+#battle-list { align-content:start; gap:1px; }
+#battle-list button { background: #213944; box-shadow:none; border:0; border-bottom:1px solid #46606a; padding:7px; color:#dce4df; }
+#battle-list button:is(:hover,.active) { background:#344d53; box-shadow:inset 3px 0 #d6bb7a; color:#fff0c2; }
+#room-plaques .room-plaque { position:relative; background:linear-gradient(110deg,#354d54,#172f3b 80%); border:1px solid #72858a; border-left:4px solid #a39470; text-align:left; padding-left:14px; }
+#room-plaques .room-plaque b { color:#f3e5bd; } #room-plaques .room-plaque small { color:#bfced0; }
+#room-plaques .room-plaque::after { content:none; }
+#formation-grid { background:linear-gradient(#102b395c,#102b3980); border:1px solid #918d71; box-shadow: inset 0 0 15px #13202b80; }
+.formation-slot { background:radial-gradient(at center,#34546535,#162f3c30); border:1px solid #829f9d50; }
+.formation-slot.occupied { border-color:#849e99; background:linear-gradient(150deg,#475d596b,#213c4780); }
+.formation-slot.selected { background:linear-gradient(150deg,#86774670,#293e4780); border:2px solid #e4c67d; }
+.formation-slot img { filter:drop-shadow(1px 3px 2px #07151c); }
+.formation-slot small { font-variant-numeric:tabular-nums; color:#c0d4d3; }
+.ready-wheel { color:#e4f3d5; background:radial-gradient(at 36% 26%,#657e66,#31483e 62%,#172f29); }
+.readiness-controls #room-start { padding:0; color:#fff0c2; background:radial-gradient(at 36% 26%,#97834e,#5a4e30 62%,#302c22); }
+#app[data-mode="yard"] .yard-info h2 { color:#f4dfa7; }
+.yard-armament tr.active td { background:#665d345e; }
+.yard-armament select { color:var(--ink); border-color:#849690; padding:2px 4px; }
+body > .hint { background: linear-gradient(#27383f,#13242d); border-top:2px ridge #88918b; }
+.hint .prototype-controls button.active { box-shadow:inset 0 -2px #ddc280; color:#ffebaf; }
+#app[data-mode="battle"] .ship-tag b { color:#ffe4a0; text-shadow:0 2px 2px #10202b,-1px -1px #162c37; }
+#app[data-mode="battle"] .ally-tag b { color:#b9e3eb; }
+
+body { grid-template-rows: minmax(0,1fr); }
+.battle-actions { display:none; }
+#app[data-mode="battle"] .battle-actions { display:block; margin-bottom:12px; position:relative; z-index:6; pointer-events:auto; }
+#battle-exit { width:64px; height:64px; padding:0; border:6px ridge #aa9a73; border-radius:50%; font:bold 14px var(--ui-type); color:#f4e2b7; background:radial-gradient(at 35% 25%,#526365,#20313a 65%,#12232d); box-shadow:0 0 0 2px #18252a,0 3px 6px #061119b3,inset 0 0 0 1px #c4b78b; }
+#battle-exit:hover { color:#fff0bc; border-color:#c5b486; background:radial-gradient(at 35% 25%,#7c795c,#35433b 65%,#20312c); }
+#battle-exit:active { box-shadow:0 0 0 2px #18252a,inset 0 2px 5px #07141c; }
+#battle-exit:focus-visible { outline:2px solid #ffe4a0; outline-offset:3px; }
+.yard-type-label,.fleet-type-label { display:flex; flex-direction:column; gap:4px; margin:8px 0; font:13px var(--ui-type); }
+.yard-type-label select,.fleet-type-label select { width:100%; min-width:0; padding:5px; font:13px var(--ui-type); color:var(--ink); background:#182d38; border:1px solid #849690; }
+#yard-ship-type optgroup[data-model-matched="true"] { color:var(--gold); }
+#yard-ship-type option { color:var(--ink); background:#182d38; }
+#yard-ship-type[data-model-matched="false"],
+#yard-ship-type optgroup[data-model-matched="false"],
+#yard-ship-type option[data-model-matched="false"] { color:#a6b1b6; }
+#yard-gun-statistics { margin:6px 0; font:13px/1.5 var(--ui-type); }
+#app[data-mode="yard"] .yard-info { overflow-y:auto; }
+#app[data-mode="yard"] .yard-armament { max-height:calc(100% - 60px); overflow-y:auto; }
+.fleet-tools { overflow-y:auto; }
+#status { position:absolute; left:12px; bottom:185px; max-width:min(420px,60vw); margin:0; color:var(--ink); font:13px var(--ui-type); text-shadow:1px 1px 2px #000; pointer-events:none; }
+#app:not([data-mode="battle"]) #status { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+@media (min-width: 1280px) and (min-aspect-ratio: 16/10) {
+  #app[data-mode="battle"] :is(.health > span,.crew b,#aim-label,.ship-tag,.ship-tag span,#status) {
+    font-size: clamp(13px,0.8vw,16px);
+  }
+  #app[data-mode="battle"] .minimap { height: clamp(115px,16vh,175px); }
+  #app[data-mode="battle"] .crew { bottom: calc(clamp(115px,16vh,175px) + 76px); }
+}
