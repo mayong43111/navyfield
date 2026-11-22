@@ -1,0 +1,30 @@
+{
+  "source": "https://www.thingiverse.com/thing:5336549",
+  "license": "CC BY 4.0",
+  "author": "MDSW",
+  "triangles": 133897,
+  "bytes": 2552264,
+  "key": "yorktown",
+  "hull": {
+    "length": 251,
+    "beam": 35.70665876782055,
+    "height": 15.01145445993653
+  },
+  "maxHeight": 42.88996124267578,
+  "barrels": [],
+  "rear": [],
+  "bounds": {
+    "min": [
+      -17.853073120117188,
+      -9.028152465820312,
+      -125.5
+    ],
+    "max": [
+      17.792461395263672,
+      42.88996124267578,
+      125.5
+    ]
+  },
+  "method": "Native assembly transforms; position-cell vertex clustering; collapsed/duplicate faces removed; normals regenerated.",
+  "modifications": "Complete CV-5 STL normalized and simplified. No battleship guns or aircraft combat added."
+}

@@ -29,7 +29,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
   root.className = 'lobby';
   root.hidden = true;
   root.innerHTML = `
-    <header class="lobby-top metal"><span>舰队司令部</span><h1 id="lobby-title">战区</h1><b>单机</b></header>
+    <header class="lobby-top metal"><span>舰队司令部</span><h1 id="lobby-title">战区</h1><b>单机 <a href="./credits.html" target="_blank" rel="noopener">署名 / 许可</a></b></header>
     <section id="warzone-page" class="lobby-screen" aria-label="世界战区选房">
       <div class="channel-controls metal"><button data-area="training" type="button">新手战区</button><button data-area="open" type="button">自由战区</button><button id="room-previous" type="button" aria-label="上一页房间">◀</button><span id="room-page">1 / 1</span><button id="room-next" type="button" aria-label="下一页房间">▶</button><button id="room-new" type="button">＋ 建立房间</button><button data-go="yard" type="button">⚓ 港口 / 船坞</button></div>
       <div class="world-chart-area"><div class="world-chart"><canvas id="lobby-map" aria-label="世界海战地图"></canvas><div id="battle-markers" aria-label="二战海战地点，坐标为战区约位"></div><span class="chart-caption">海战位置示意</span></div></div>

@@ -1,0 +1,31 @@
+RC Suitable Yamato Battleship 1:250
+Author: MDSW
+Source: https://www.thingiverse.com/thing:6251126
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+License terms: https://creativecommons.org/licenses/by-sa/4.0/
+Full legal text: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+Source credits retained:
+MDSW identifies PiotruchaWro's Yamato as the source and thanks
+M-Miller-97 and MotherbrainJr for gun and aircraft models.
+PiotruchaWro: https://www.thingiverse.com/thing:3445642
+
+This directory contains downloaded source model files and a modified GLB.
+The modified model is distributed under CC BY-SA 4.0.
+When sharing it, retain attribution, a license link and modification notices,
+and comply with the ShareAlike terms. No endorsement by the authors is implied.
+This notice applies to the model assets, not unrelated application code or UI.
+
+Modifications by the Navy Field visual prototype project:
+- Imported native 3MF files and restored print-layout assembly offsets.
+- Converted coordinates and uniformly normalized hull length to 263 m.
+- Removed zero-area triangles, calculated normals and assigned new materials.
+- Separated original main-gun meshes into turret bodies and individual tubes.
+- Added independent yaw, elevation and recoil nodes, muzzle and funnel anchors.
+- Exported the assembled model as yamato.glb.
+- Applied a project-generated wooden deck texture at runtime.
+
+The source is a printable RC model, not a museum-grade reconstruction.
+Its proportions are preserved: scaled hull beam is about 41.12 m rather than
+the historical 38.9 m. Not every supplied accessory is assembled.
+The static Musashi reference currently reuses the same model.

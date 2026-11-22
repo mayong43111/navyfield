@@ -1,0 +1,22 @@
+{
+  "title": "RC suitable German Battleship Bismarck",
+  "author": "MDSW",
+  "authorPage": "https://www.thingiverse.com/mdsw/designs",
+  "source": "https://www.thingiverse.com/thing:5241416",
+  "filesPage": "https://www.thingiverse.com/thing:5241416/files",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "retrieved": "2026-11-22",
+  "status": "Converted and integrated into shipyard, previews and single-ship combat",
+  "runtimeFile": "bismarck.glb",
+  "downloadedFiles": ["Bismarck-all.3mf"],
+  "files": {
+    "Bismarck-all.3mf": "https://cdn.thingiverse.com/assets/53/dd/73/9c/47/Bismarck-all.3mf"
+  },
+  "sha256": {
+    "Bismarck-all.3mf": "8e9881cd6ee33ac1c12c0eee3ca6af15ae5b53bbe2da49b7831c743fb200a595"
+  },
+  "triangles": 542110,
+  "modifications": "Original download preserved. GLB restores native assembly transforms, isolates four turret sections, re-seats original tubes, adds yaw/elevation/recoil/muzzle/smoke nodes, normalizes game scale, clusters vertices and recolors materials. See conversion.json and LICENSE.txt.",
+  "accuracy": "Printable RC model. Year-specific fidelity and upstream attribution have not been fully reviewed. The page license is not a guarantee of third-party rights."
+}

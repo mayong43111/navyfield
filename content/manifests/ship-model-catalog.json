@@ -1,0 +1,135 @@
+{
+  "updated": "2026-11-22",
+  "models": [
+    {
+      "id": "yamato",
+      "shipIds": [
+        "nf-3-121",
+        "nf-3-415"
+      ],
+      "status": "integrated",
+      "notes": "大和已接入；武藏明确共用大和外形，未制作独立改型。"
+    },
+    {
+      "id": "yamato-1945",
+      "shipIds": [
+        "nf-3-465"
+      ],
+      "status": "integrated",
+      "notes": "运行外形共用已转换的同源 MDSW 大和1945衍生模型。九个原始 STL 保留研究，未另行组装；不是新增独立外形。"
+    },
+    {
+      "id": "bismarck",
+      "shipIds": [
+        "nf-4-116",
+        "nf-4-370",
+        "nf-4-516"
+      ],
+      "status": "integrated",
+      "notes": "原始 3MF 已转换，四座双联装主炮可转动、俯仰及后坐。1943/1945 条目共用同级参考，不是独立年份外形。"
+    },
+    {
+      "id": "california",
+      "shipIds": [
+        "nf-1-430"
+      ],
+      "status": "integrated",
+      "notes": "三份原始 3MF 已组装转换，四座三联装主炮。下载炮座为双管模板，复制原炮管补齐中管；非精确史实模型，部分打印附件未装配。"
+    },
+    {
+      "id": "yorktown",
+      "shipIds": [
+        "nf-1-102"
+      ],
+      "status": "integrated",
+      "notes": "CV-5 整船 STL 已减面接入船坞及编队预览。未装战列舰主炮；舰载机战斗未实现，当前不能出击。"
+    },
+    {
+      "id": "kongo",
+      "shipIds": [
+        "nf-3-30"
+      ],
+      "status": "link_only",
+      "notes": "页面许可已核实，尚无已确认落盘的文件。"
+    },
+    {
+      "id": "duke-of-york",
+      "shipIds": [
+        "nf-2-100",
+        "nf-2-128"
+      ],
+      "status": "link_only",
+      "notes": "约克公爵同级参考，不冒充乔治五世或威尔士亲王独立模型；许可及下载待核实。"
+    },
+    {
+      "id": "lexington",
+      "shipIds": [
+        "nf-1-155"
+      ],
+      "status": "link_only",
+      "notes": "作者作品列表发现 CV-2；许可及文件尚未核实，不能误配 CV-16。"
+    },
+    {
+      "id": "hood-printables",
+      "shipIds": [
+        "nf-2-92",
+        "nf-2-366",
+        "nf-2-517"
+      ],
+      "status": "link_only",
+      "notes": "页面访问失败，未确认具体许可或下载；年份变体仅列作参考。"
+    },
+    {
+      "id": "kriegsmarine-small-scale",
+      "shipIds": [
+        "nf-4-12",
+        "nf-4-22",
+        "nf-4-150",
+        "nf-4-116"
+      ],
+      "status": "link_only",
+      "notes": "搜索结果列出希佩尔、德意志、埃姆登、俾斯麦及 BY-SA 许可；未核实完整页面和文件，低细节微缩模型。"
+    },
+    {
+      "id": "royal-navy-small-scale",
+      "shipIds": [
+        "nf-2-92"
+      ],
+      "status": "link_only",
+      "notes": "搜索结果列出胡德与 BY-SA 许可；包含现代舰，不能按国家整包套用二战舰型。"
+    },
+    {
+      "id": "ijn-small-scale",
+      "shipIds": [
+        "nf-3-15"
+      ],
+      "status": "link_only",
+      "notes": "搜索结果列出阿贺野与 BY-SA 许可；其他包内舰型尚未读取，不推测匹配。"
+    },
+    {
+      "id": "wwii-battleships-research",
+      "shipIds": [
+        "nf-1-45",
+        "nf-1-107",
+        "nf-1-119",
+        "nf-2-40",
+        "nf-2-92",
+        "nf-2-118",
+        "nf-4-23",
+        "nf-4-116",
+        "nf-5-249"
+      ],
+      "status": "link_only",
+      "notes": "搜索结果标注 BY-NC-SA（非商业限制），具体版本未核实。不能当成已获商业使用授权；仅候选研究来源，未下载或接入。"
+    },
+    {
+      "id": "scharnhorst",
+      "shipIds": [
+        "nf-4-23",
+        "nf-4-568"
+      ],
+      "status": "link_only",
+      "notes": "搜索结果为 1940 年沙恩霍斯特的十四个部件；许可未核实，1942 条目仅作参考。"
+    }
+  ]
+}

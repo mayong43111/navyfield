@@ -1,12 +1,35 @@
 # 大海战II 视觉复刻原型
 
+后续单机游戏的模块、数据、模型、目录、存档和联机扩展设计见[架构规划](docs/technical/architecture.md)。目录基础整理已经执行；模拟分层、全舰队战斗、存档与联机仍是目标设计，不代表已经实现。
+
+企划、3D原型、美术素材、音乐音效、数值设计、研发、测试与发布的全项目组织方式见[游戏开发目录规范](docs/production/development-structure.md)。
+
 以已收集的老版海战与船厂截图为视觉参考：正交斜俯视海面、小比例舰船、金属仪表式底部控制台、顶部战况、舰桥信息与右下小地图。战斗默认视线约为海面上方 35°，显示侧舷，而非垂直顶视；重置与返回海战恢复同一角度。不是现代舰船展示页。
 
 使用第三方免费授权的大和、俾斯麦、加利福尼亚及约克镇 CV-5 模型。大和为三座三联装、俾斯麦为四座双联装、加利福尼亚为四座三联装，支持航行、独立转炮/俯仰/后坐、弹道与单舰对战。敌舰使用所选舰型的独立实例，船坞、头像和编队预览也按舰型切换；碰撞、影子和艏艉挂点使用对应尺寸。约克镇仅接入外观，没有伪装成战列舰主炮，舰载机战斗未实现，当前不能出击。未匹配舰型仍明确使用大和占位。界面、木板纹理和特效自行制作，没有使用游戏提取素材。
 
+## 开发目录
+
+| 目录 | 职责与说明 |
+| --- | --- |
+| [docs](docs/README.md) | 整体企划、玩法、美术/音频方向、技术、制作管理与验收 |
+| [prototypes](prototypes/README.md) | 独立玩法、3D、界面与音频试验，不作为正式运行依赖 |
+| [art](art/README.md) | 美术制作源；大文件与未确认公开范围的素材不自动入库 |
+| [audio](audio/README.md) | 音乐、音效、环境声与语音制作源 |
+| [design-data](design-data/README.md) | 自研数值编辑源、试算与报告 |
+| [content](content/README.md) | 经审核的运行数据、GLB、来源许可与匹配清单 |
+| [src](src/README.md) | 当前游戏程序；本轮保留现有业务文件结构 |
+| [tools](tools/README.md) | 数据采集、模型转换与索引工具 |
+| [tests](tests/README.md) | 按模拟、内容、界面与集成分类的自动化测试 |
+| [research](research/README.md) | 原始下载、截图、手册与授权隔离；仅本地研究 |
+| [builds](builds/README.md) / [releases](releases/README.md) | 内部构建与发布候选，不直接作为运行内容来源 |
+| [cache](cache/README.md) | 可重新生成的工具缓存 |
+
+旧 `resources` 已整体迁入 `research`，内部研究路径保留；四艘运行 GLB 位于 `content/assets/ships`，原始模型仍在研究区。现阶段官网运行数据保留旧字段格式，放在 `content/data/legacy`，并未借搬目录完成数值规范化。工具更新运行产物，不手工维护两份数值真值。尚未开展的工作只有职责说明，没有虚构素材、音频或系统。
+
 ## 运行
 
-Git 不收录 `resources/` 下收集的资料与模型，文件仅保留在本地。新克隆需先恢复该目录中的运行资源，才能构建、运行或执行依赖资源的测试。
+Git 只收录白名单中的运行资源：四个转换后的 GLB、舰型/武器/弹药运行 JSON、模型匹配清单、海岸 GeoJSON，以及对应署名、来源和转换记录。原始 STL/3MF/ZIP、截图、手册、研究网页及其余收集资料仍仅保留本地，不签入也不发布。新克隆可直接安装依赖后运行；重新转换模型则需要自行恢复本地原始下载。
 
 安装 Node.js 22.18+ 后，在项目目录运行：
 
@@ -22,13 +45,27 @@ npm test
 npm run build
 ```
 
-F 加速、V 减速，右下 `+ F` / `− V` 按钮按10%调整动力；移除 W / S 推进，保留 A / D 手动转舵。战斗中左键点击锁定海面瞄准点，鼠标移动和本舰移动都不会改变该世界坐标；空格齐射，左键不发射。右键点击设定自动航点，新右键替换旧航点，F/V及手动转舵取消自动航行。小地图左右键同样可以锁定瞄准点/设置远程航点。自动航行按舰船转弯半径预先规划转弯弧和切线接近段，20游戏单位内停车。Ctrl 或 TDA 按钮切换炮塔转动加速。战斗镜头按[06 号参考图](resources/archive-2012/screenshot-06.jpg)固定斜俯视并跟随舰体，只能缩放，宽屏向两侧扩展海域。船厂仍可右键旋转、按 C 切换跟随/自由视角。R仅在船厂重置，战斗中禁用。这不是原版完整手动火控键位。不再提供音效开关及合成炮声。船厂按实际主炮挂点高亮观察及配置弹仓，不能航行或开炮。
+F 加速、V 减速，右下 `+ F` / `− V` 按钮按10%调整动力；移除 W / S 推进，保留 A / D 手动转舵。战斗中左键点击锁定海面瞄准点，鼠标移动和本舰移动都不会改变该世界坐标；空格齐射，左键不发射。右键点击设定自动航点，新右键替换旧航点，F/V及手动转舵取消自动航行。小地图左右键同样可以锁定瞄准点/设置远程航点。自动航行按舰船转弯半径预先规划转弯弧和切线接近段，20游戏单位内停车。Ctrl 或 TDA 按钮切换炮塔转动加速。战斗镜头保留固定斜俯视：鼠标移到窗口边缘32像素内滚屏，越靠边越快；开始浏览后停止跟随，C 返回本舰并保留缩放。操作按钮/仪表、按住鼠标、移出窗口、失焦、后台或退出战斗时停止滚屏。浏览限制在战场及周边，不改变瞄准点或航线。滚轮最低缩放0.05，相比默认0.66可缩小13.2倍；镜头高度、裁剪距离和海面覆盖同步调整，避免缩小时海面缺失。宽屏向两侧扩展海域。船厂仍可右键旋转、按 C 切换跟随/自由视角。R仅在船厂重置，战斗中禁用。这不是原版完整手动火控键位。不再提供音效开关及合成炮声。船厂按实际主炮挂点高亮观察及配置弹仓，不能航行或开炮。
+
+### GitHub Pages
+
+公开仓库为 [mayong43111/navyfield](https://github.com/mayong43111/navyfield)，站点地址为 <https://mayong43111.github.io/navyfield/>。本站使用 **GitHub Actions** 部署；推送 `main` 自动运行测试、构建并部署，也可手动触发 Deploy game to GitHub Pages。迁移到其他仓库时，首次需在 Settings → Pages 中选择 GitHub Actions。
+
+工作流按 Pages 提供的项目子路径配置 `GITHUB_PAGES_BASE`。生产包只含代码实际引用的运行资源、署名页面与白名单许可记录，不递归复制 `research` 或整个 `content`。战区右上角提供「署名 / 许可」入口，修改后的大和模型继续遵守 CC BY-SA 4.0，其余三舰为 CC BY 4.0；图形库 MIT 许可和地图公共领域来源随网站保留。
+
+本地验证相同的项目子路径：
+
+```powershell
+$env:GITHUB_PAGES_BASE = '/navyfield/'
+npm run build
+npm run preview
+```
 
 ### 弹仓与炮控
 
 已移除底部全局菜单，游戏占满窗口。页面通过战区选房、准备出击、港口进船坞、舰艏出港及战斗撤离衔接；圆形黄铜「撤离」按钮放在舰桥指挥官头像上方，不再显示发射计数、战斗计时、炮控菜单和音效开关。主炮使用前后炮组，鼠标左键 / 空格发射，弹仓仪表和射击反馈保持不变。船坞视角仍用 C 切换，R 重置。
 
-已下载并实际阅读[官方完整手册（61 页）](resources/manuals/NavyField_Full_Manual.pdf)，来源为 [Steam 官方手册地址](https://steamcdn-a.akamaihd.net/steam/apps/675560/manuals/NavyField_Full_Manual.pdf)。操作说明另见[官网](https://www.navyfield.com/GameInfo/Guide/HowToControl.aspx)。手册截图仅作研究参考，不是自由授权的界面素材。
+已下载并实际阅读[官方完整手册（61 页）](research/manuals/NavyField_Full_Manual.pdf)，来源为 [Steam 官方手册地址](https://steamcdn-a.akamaihd.net/steam/apps/675560/manuals/NavyField_Full_Manual.pdf)。操作说明另见[官网](https://www.navyfield.com/GameInfo/Guide/HowToControl.aspx)。手册截图仅作研究参考，不是自由授权的界面素材。
 
 手册确认的原版规则：
 
@@ -68,56 +105,56 @@ HE 使用暖色弹迹与较宽水花，AP 使用冷色弹迹与较窄水花；�
 
 ### 原版舰船、武器与计算资料
 
-经典Navy Field官网舰船树去重得到496条舰型记录，八份舰炮表共807条炮／发射器记录，完整名称和字段见[原版资料目录](resources/original-data/README.md)。保留来源、原始单位与年份，缺失详情不伪造。八条舰型关联四种运行外形；武藏、1945大和及俾斯麦年份变体均明确标记同源/同级参考，其余外形使用大和占位。战斗采用官网基础资料与上文自研规则，不称为原版完整算法。
+经典Navy Field官网舰船树去重得到496条舰型记录，八份舰炮表共807条炮／发射器记录，完整名称和字段见[原版资料目录](research/original-data/README.md)。保留来源、原始单位与年份，缺失详情不伪造。八条舰型关联四种运行外形；武藏、1945大和及俾斯麦年份变体均明确标记同源/同级参考，其余外形使用大和占位。战斗采用官网基础资料与上文自研规则，不称为原版完整算法。
 
 ### 实际模型与转换
 
-当前接入 [MDSW：RC Suitable Yamato Battleship 1:250](https://www.thingiverse.com/thing:6251126)，许可为 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)。作者注明来自 [PiotruchaWro：Yamato 1945 - 53cm](https://www.thingiverse.com/thing:3445642)，并致谢 M-Miller-97、MotherbrainJr。原始 3MF 压缩包、核心 STL、转换结果和来源记录保存在 [模型目录](resources/models/yamato/)，署名、许可及修改说明见 [LICENSE.txt](resources/models/yamato/LICENSE.txt)。分发修改后的模型需保留这些信息，并遵守相同许可。
+当前接入 [MDSW：RC Suitable Yamato Battleship 1:250](https://www.thingiverse.com/thing:6251126)，许可为 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)。作者注明来自 [PiotruchaWro：Yamato 1945 - 53cm](https://www.thingiverse.com/thing:3445642)，并致谢 M-Miller-97、MotherbrainJr。原始 3MF 压缩包、核心 STL 与来源记录保存在[研究模型目录](research/models/yamato/)；转换结果位于[运行模型目录](content/assets/ships/yamato/)，署名、许可及修改说明见 [LICENSE.txt](content/assets/ships/yamato/LICENSE.txt)。分发修改后的模型需保留这些信息，并遵守相同许可。
 
 ```powershell
 npm run convert:yamato
 ```
 
-[转换脚本](tools/convert-yamato.mjs)读取目录内的 `3MF_files.zip`，不需要联网、账号或 Blender；输出 `yamato.glb` 和 `conversion.json`。转换恢复打印布局偏移、更换坐标系、按船体全长 263 m 统一缩放、剔除零面积面、重新赋色，并从原始主炮网格分离三根炮管、建立炮塔转动/仰角/后坐层级与真实炮口、烟囱锚点。GLB 约 10.15 MB、127,302 三角面，两舰共享几何与材质，炮塔姿态独立。
+[转换脚本](tools/models/convert-yamato.mjs)读取 `research/models/yamato` 内的 `3MF_files.zip`，不需要联网、账号或 Blender；向 `content/assets/ships/yamato` 输出 `yamato.glb`、`conversion.json`，同步许可和来源记录。转换恢复打印布局偏移、更换坐标系、按船体全长 263 m 统一缩放、剔除零面积面、重新赋色，并从原始主炮网格分离三根炮管、建立炮塔转动/仰角/后坐层级与真实炮口、烟囱锚点。GLB 约 10.15 MB、127,302 三角面，两舰共享几何与材质，炮塔姿态独立。
 
-这是可打印的 RC 舰船模型，不是博物馆级或某年精确复原。保留源模型比例后舰宽约 41.12 m，与历史舰宽 38.9 m 不同；不做单轴挤压来伪装精度。副炮与高射炮只作外观，尚未装配全部源文件中的天线、起重机及航空附件；武藏没有独立改型。全长、历史舰宽、最大航速 27.46 kn 和主炮史实见 [资料页](resources/yamato-research.html)，战斗物理使用上文自研的游戏单位，不把这些史实参数直接套给其他舰型。
+这是可打印的 RC 舰船模型，不是博物馆级或某年精确复原。保留源模型比例后舰宽约 41.12 m，与历史舰宽 38.9 m 不同；不做单轴挤压来伪装精度。副炮与高射炮只作外观，尚未装配全部源文件中的天线、起重机及航空附件；武藏没有独立改型。全长、历史舰宽、最大航速 27.46 kn 和主炮史实见 [资料页](research/yamato-research.html)，战斗物理使用上文自研的游戏单位，不把这些史实参数直接套给其他舰型。
 
-PiotruchaWro 的九个 STL 保存在 [研究目录](resources/models/yamato-1945/)。1945大和舰型已接入，但运行外形复用上述已转换、署名该作品的 MDSW 同源衍生模型，遵守其 CC BY-SA 4.0；九个 STL 未另行组装，不宣称新增独立年份模型。BlendSwap 的 [GuillaumeCote 候选](https://blendswap.com/blend/5770)仍未取得。
+PiotruchaWro 的九个 STL 保存在 [研究目录](research/models/yamato-1945/)。1945大和舰型已接入，但运行外形复用上述已转换、署名该作品的 MDSW 同源衍生模型，遵守其 CC BY-SA 4.0；九个 STL 未另行组装，不宣称新增独立年份模型。BlendSwap 的 [GuillaumeCote 候选](https://blendswap.com/blend/5770)仍未取得。
 
 #### 按完整舰型名单搜集模型
 
-[模型来源清单](resources/models/catalog.json)与[496 条舰型覆盖表](resources/models/ship-model-coverage.csv)区分“已接入”“已下载，未接入”和“仅有来源链接”。清单按完整官网名单匹配，不限四艘优先；尚未匹配不代表全网没有模型，也不代表已经逐一完成搜索。来源中的同级舰与年份变体仅作为明确标注的参考，不能冒充独立改型。
+[模型来源清单](research/models/catalog.json)与[496 条舰型覆盖表](research/models/ship-model-coverage.csv)区分“已接入”“已下载，未接入”和“仅有来源链接”。游戏读取工具生成的[精简匹配清单](content/manifests/ship-model-catalog.json)，不依赖研究目录。清单按完整官网名单匹配，不限四艘优先；尚未匹配不代表全网没有模型，也不代表已经逐一完成搜索。来源中的同级舰与年份变体仅作为明确标注的参考，不能冒充独立改型。
 
 本轮新增原始资源均来自 MDSW，三个页面均明确链接 CC BY 4.0：
 
-- [俾斯麦](resources/models/bismarck/)：542,110 面原始 3MF 转为 90,286 面、约 1.84 MB GLB，四座双联炮。
-- [加利福尼亚 BB-44](resources/models/california/)：三份 3MF 的船体/上层接合面校准后，转为 149,397 面、约 2.49 MB GLB。原下载炮座模板是双管，复制原炮管补齐中管，形成四座三联炮；这是明确的模型修改，不是精确史实复原，部分打印附件未装配。
-- [约克镇 CV-5](resources/models/yorktown/)：完整 STL 从 4,537,586 面减为 133,897 面、约 2.55 MB GLB；保留完整舰体/飞行甲板，不是 CV-10。仅外观接入，暂无航空战斗。
+- [俾斯麦](research/models/bismarck/)：542,110 面原始 3MF 转为 90,286 面、约 1.84 MB GLB，四座双联炮。
+- [加利福尼亚 BB-44](research/models/california/)：三份 3MF 的船体/上层接合面校准后，转为 149,397 面、约 2.49 MB GLB。原下载炮座模板是双管，复制原炮管补齐中管，形成四座三联炮；这是明确的模型修改，不是精确史实复原，部分打印附件未装配。
+- [约克镇 CV-5](research/models/yorktown/)：完整 STL 从 4,537,586 面减为 133,897 面、约 2.55 MB GLB；保留完整舰体/飞行甲板，不是 CV-10。仅外观接入，暂无航空战斗。
 
-各目录的 `source.json` 保留作者、公开下载来源、页面许可和原文件 SHA-256；`LICENSE.txt` 与 `conversion.json` 记录署名、许可及修改。原始文件不修改，生产包只包含 GLB，不打包庞大的 STL/3MF。减面采用位置网格顶点聚类、移除塌缩/重复面及重建法线，不是随机抽删三角面；单个新模型不超过22万面/12 MiB。页面许可不是上游第三方权利保证，相关说明仍保留。
+研究目录中的 `source.json` 保留作者、公开下载来源、页面许可和原文件 SHA-256；运行 GLB、许可、来源副本与当前转换报告统一输出到 `content/assets/ships`。研究区原有报告作为历史记录保留，以运行目录的报告描述当前导出。原始文件不修改，生产包只包含 GLB 及必需署名，不打包庞大的 STL/3MF。减面采用位置网格顶点聚类、移除塌缩/重复面及重建法线，不是随机抽删三角面；单个新模型不超过22万面/12 MiB。页面许可不是上游第三方权利保证，相关说明仍保留。
 
 ```powershell
 npm run convert:ships
 ```
 
-[离线转换器](tools/convert-ships.mjs)复用已安装的 Three.js/JSDOM，不联网、不依赖 Blender。舰长250.5/190.2/251只设定资源内部比例，运行显示游戏单位；没有接入新的史实速度、飞机或鱼雷系统。
+[离线转换器](tools/models/convert-ships.mjs)从 `research/models` 读取原始文件，向 `content/assets/ships` 导出 GLB、转换报告、署名与来源；复用已安装的 Three.js/JSDOM，不联网、不依赖 Blender。舰长250.5/190.2/251只设定资源内部比例，运行显示游戏单位；没有接入新的史实速度、飞机或鱼雷系统。
 
-其他已找到的候选包括金刚、约克公爵、列克星敦 CV-2、胡德、沙恩霍斯特，以及英/德/日的小比例舰船包，具体进度见清单。搜索结果标注非商业限制的二战战列舰包单独标记，不视为商业授权。允许公开下载但使用授权未确认的文件应隔离在 `resources/models/pending-license/`，作者和来源随文件保留，未获授权不接入游戏；只有预览、需购买或不允许下载的资源仅保存链接，不绕过限制。
+其他已找到的候选包括金刚、约克公爵、列克星敦 CV-2、胡德、沙恩霍斯特，以及英/德/日的小比例舰船包，具体进度见清单。搜索结果标注非商业限制的二战战列舰包单独标记，不视为商业授权。允许公开下载但使用授权未确认的文件应隔离在 `research/pending-license`，作者和来源随文件保留，未获授权不接入游戏；只有预览、需购买或不允许下载的资源仅保存链接，不绕过限制。
 
 ```powershell
-node tools\index-models.mjs
+npm run index:models
 ```
 
-该命令核对全部舰型编号、实际下载文件与新资源校验值后更新覆盖表；失败会明确报错，不将链接当成已经取得的模型。
+该命令核对全部舰型编号、实际下载文件与新资源校验值后更新研究覆盖表及运行匹配清单；失败会明确报错，不将链接当成已经取得的模型。新增可分发资产还需显式更新 `.gitignore` 白名单与发布测试。
 
-图片参考图库保留在 [resources](resources/index.html)，来源及校验信息见 [sources.csv](resources/sources.csv)。
+图片参考图库保留在[本地研究图库](research/index.html)，来源及校验信息见 [sources.csv](research/sources.csv)。上述研究链接在不含原始资料的新克隆中不可用，不影响游戏运行。
 
 ### 船厂
 
 船坞左栏为舰籍档案，可从官网舰型目录更换当前泊位舰体，属性随舰型变化。标题栏「泊位名册」按实际泊位生成可滚动名单，可按船名或泊位号搜索。默认一号泊位为大和、二号泊位为武藏。两舰共用占位模型，但分别持有舰型编号、炮型配置、炮塔实例、已选挂点、弹仓配置和剩余备弹；当前泊位的舰艇也是下次海战操控的旗舰。点击舰艏旁的「出港」直接返回世界战区。
 舰型下拉框按模型来源清单显示匹配情况：已匹配舰型在前，未匹配舰型置灰但仍可选择；仅官网资料缺失的舰型禁选。各项显示中文船型，并区分“已接入”“已下载”“来源匹配”和“未匹配”。来源匹配包括候选链接与同级参考，不代表对应模型已经接入；泊位切换同步所选舰型的匹配颜色。标题栏「泊位名册」按实际泊位生成可滚动名单，可按船名或泊位号搜索。默认一号泊位为大和、二号泊位为武藏。两舰共用占位模型，但分别持有舰型编号、炮型配置、炮塔实例、已选挂点、弹仓配置和剩余备弹；当前泊位的舰艇也是下次海战操控的旗舰。点击舰艏旁的「出港」直接返回世界战区。
 
-布局按[官网船厂截图](resources/official-screenshots/05-shipyard.gif)校准：上方标题条、左侧舰体资料、中央舰船和右下装备表；模型与装备行按所选舰型生成，不把航母甲板布局套到战列舰上。船厂隐藏战斗仪表、地图、血条与战斗舰名标签。
+布局按[官网船厂截图](research/official-screenshots/05-shipyard.gif)校准：上方标题条、左侧舰体资料、中央舰船和右下装备表；模型与装备行按所选舰型生成，不把航母甲板布局套到战列舰上。船厂隐藏战斗仪表、地图、血条与战斗舰名标签。
 
 点击舰上实际 R 挂点或装备行选择主炮，选中环与 A/B 编辑器同步；双联/三联标签、弹种与备弹按模型与泊位独立保存。改弹种不切仓、不补弹，返回海战沿用配置。重量/空间未计算，副炮与防空炮仅为外观。
 
@@ -125,9 +162,9 @@ node tools\index-models.mjs
 
 ### 世界战区、船坞与战前布阵
 
-界面继续参考[战区 11 号图](resources/archive-2012/screenshot-11.jpg)、[房间频道 14 号图](resources/archive-2012/screenshot-14.jpg)及[准备 13 号图](resources/archive-2012/screenshot-13.jpg)，不使用截图作为应用贴图。
+界面继续参考[战区 11 号图](research/archive-2012/screenshot-11.jpg)、[房间频道 14 号图](research/archive-2012/screenshot-14.jpg)及[准备 13 号图](research/archive-2012/screenshot-13.jpg)，不使用截图作为应用贴图。
 
-世界地图使用已下载的 [Natural Earth 陆地 GeoJSON](resources/maps/world-land.geojson)，采用太平洋居中的等距圆柱投影；地图与图钉共用投影，处理环绕经线，不绘制国家边界。数据是[公共领域](https://www.naturalearthdata.com/about/terms-of-use/)，原始来源与许可见 [source.json](resources/maps/source.json)，离线资源随构建发布。
+世界地图使用已下载的 [Natural Earth 陆地 GeoJSON](content/data/maps/world-land.geojson)，采用太平洋居中的等距圆柱投影；地图与图钉共用投影，处理环绕经线，不绘制国家边界。数据是[公共领域](https://www.naturalearthdata.com/about/terms-of-use/)，原始来源与许可见 [source.json](content/data/maps/source.json)，离线资源随构建发布。
 
 [battles.ts](src/battles.ts)记录珍珠港、中途岛、珊瑚海、瓜达尔卡纳尔、莱特湾、菲律宾海、爪哇海、丹麦海峡、北角、拉普拉塔河口、马塔潘角及塔兰托，共 12 个地点。日期依据美国海军历史与遗产司令部和帝国战争博物馆资料，每项可在地图侧栏打开来源；马塔潘角标主要交战日，塔兰托标行动开始日。坐标是用于世界海图的**战区约位**，不是精确战斗 / 沉船位置。选地点后显示该区域的本地房间，建房可另选地点；历史标签不代表原型复现该战役或历史参战阵容。
 
@@ -139,7 +176,7 @@ node tools\index-models.mjs
 
 **本轮布阵仍是本地房间预览，尚未接入战斗舰队 AI。**「出击」进入所选配装舰对一艘独立AI敌舰的单舰对战，不把编队数量冒充战斗参战数量。没有服务器、匹配或联机聊天；原战斗海面、云、固定镜头、主炮及弹仓操作不变，准备页不消耗炮弹。
 
-战斗画面以[无飞机面板的战斗画面](resources/archive-2012/screenshot-04.jpg)和[06 号图](resources/archive-2012/screenshot-06.jpg)校准。仪表贴在战斗区底缘，中央只保留安装底条；没有画布下方菜单栏或额外炮控菜单，反馈显示在画面左下，撤离按钮位于舰桥指挥官头像上方。左上仅显示耐久数值、细槽和接头。没有从截图裁取仪表或海面贴图。
+战斗画面以[无飞机面板的战斗画面](research/archive-2012/screenshot-04.jpg)和[06 号图](research/archive-2012/screenshot-06.jpg)校准。仪表贴在战斗区底缘，中央只保留安装底条；没有画布下方菜单栏或额外炮控菜单，反馈显示在画面左下，撤离按钮位于舰桥指挥官头像上方。左上仅显示耐久数值、细槽和接头。没有从截图裁取仪表或海面贴图。
 
 左侧炮控外壳由 [instrument-art.ts](src/instrument-art.ts) 原创生成 SVG：独立金属表圈、刻度、黑色角度表、黄铜装填表和银灰弹仓。指针、备弹数字和就绪灯仍绑定实际演示状态；旋钮随 A/B 仓位转动。刻度与外壳是参考轮廓的自绘样件，不是提取的原版素材。
 

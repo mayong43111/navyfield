@@ -1,4 +1,4 @@
-const dataUrl = new URL('../resources/original-data/official-data.json', import.meta.url).href;
+const dataUrl = new URL('../content/data/legacy/official-data.json', import.meta.url).href;
 
 export const YAMATO_ID = 'nf-3-121';
 export const MUSASHI_ID = 'nf-3-415';

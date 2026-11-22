@@ -1,0 +1,9 @@
+RC suitable German Battleship Bismarck
+Author: MDSW
+Source: https://www.thingiverse.com/thing:5241416
+License: CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+
+Four native turret sections isolated. Original gun tubes re-seated into housings and assigned independent elevation/recoil nodes.
+Native assembly transforms; position-cell vertex clustering; collapsed/duplicate faces removed; normals regenerated.
+Original downloads remain unchanged. Source-page licensing is not a guarantee of upstream third-party rights; see source.json.

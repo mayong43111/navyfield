@@ -1,0 +1,9 @@
+{
+  "name": "Natural Earth 1:110m land polygons",
+  "file": "world-land.geojson",
+  "source": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson",
+  "license": "Public domain",
+  "terms": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "changes": "Original GeoJSON downloaded without changes. Runtime uses a Pacific-centered equirectangular projection; country borders are not shown.",
+  "historical_markers": "src/battles.ts lists dates and museum/naval-history sources. Marker coordinates denote approximate areas, not precise battle or wreck positions."
+}

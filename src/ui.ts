@@ -31,7 +31,7 @@ export function parseShipModelMatches(value: unknown): Map<string, ShipModelStat
 }
 
 export async function loadShipModelMatches(): Promise<Map<string, ShipModelStatus>> {
-  const url = new URL('../resources/models/catalog.json', import.meta.url);
+  const url = new URL('../content/manifests/ship-model-catalog.json', import.meta.url);
   const response = await fetch(url);
   if (!response.ok) throw new Error(`舰船模型清单读取失败：${response.status}`);
   return parseShipModelMatches(await response.json());

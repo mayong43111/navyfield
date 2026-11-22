@@ -1,0 +1,22 @@
+{
+  "title": "RC Scale USS YORKTOWN CV-5",
+  "author": "MDSW",
+  "authorPage": "https://www.thingiverse.com/mdsw/designs",
+  "source": "https://www.thingiverse.com/thing:5336549",
+  "filesPage": "https://www.thingiverse.com/thing:5336549/files",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "retrieved": "2026-11-22",
+  "status": "Converted and integrated into shipyard and formation previews; aircraft combat not implemented",
+  "runtimeFile": "yorktown.glb",
+  "downloadedFiles": ["Yorktown_All.stl"],
+  "files": {
+    "Yorktown_All.stl": "https://cdn.thingiverse.com/assets/09/87/3a/8b/2f/Yorktown_All.stl"
+  },
+  "sha256": {
+    "Yorktown_All.stl": "ef31296425e39087b4ac9c33fd022db32730ca5d367c838b13bc0bfde9d31e1b"
+  },
+  "triangles": 4537586,
+  "modifications": "Original download preserved. Complete STL normalized to game scale, position-cell vertex clustering applied, collapsed/duplicate faces removed, normals regenerated and materials recolored. No battleship turrets added. See conversion.json and LICENSE.txt.",
+  "accuracy": "Printable CV-5 model, not the later CV-10. Runtime mesh is reduced from 4,537,586 triangles. Upstream attribution still requires review."
+}

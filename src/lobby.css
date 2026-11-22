@@ -5,6 +5,7 @@
 .lobby-top { position: absolute; top: 0; left: 0; right: 0; height: 28px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; font-size: 10px; z-index: 3; }
 .lobby-top h1 { margin: 0; min-width: 230px; padding: 1px 12px; text-align: center; background: linear-gradient(#43667c,#142c3d); border: 2px ridge #9aa9a8; font-size: 14px; letter-spacing: 1px; }
 .lobby-top > b { font: normal 10px "Courier New",monospace; color: #e7d993; }
+.lobby-top > b a { margin-left: 12px; color: inherit; }
 .lobby button:disabled { cursor: not-allowed; opacity: .5; }
 .local-note { position: absolute; left: 10px; bottom: 6px; color: #a3b5bb; font-size: 9px; text-shadow: 1px 1px #14212b; }
 .channel-controls { position: absolute; top: 40px; left: 10px; right: 10px; display: flex; align-items: center; gap: 5px; padding: 5px 8px; }

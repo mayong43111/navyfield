@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "convert:yamato": "node tools/convert-yamato.mjs",
-    "convert:ships": "node tools/convert-ships.mjs",
+    "convert:yamato": "node tools/models/convert-yamato.mjs",
+    "convert:ships": "node tools/models/convert-ships.mjs",
+    "index:models": "node tools/models/index-models.mjs",
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test \"tests/**/*.test.mjs\""
   },
   "dependencies": {
     "three": "^0.187.0"

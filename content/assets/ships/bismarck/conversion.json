@@ -1,0 +1,40 @@
+{
+  "source": "https://www.thingiverse.com/thing:5241416",
+  "license": "CC BY 4.0",
+  "author": "MDSW",
+  "triangles": 90286,
+  "bytes": 1835396,
+  "key": "bismarck",
+  "hull": {
+    "length": 250.5,
+    "beam": 36.68665369853924,
+    "height": 13.398559061225598
+  },
+  "maxHeight": 50.566280364990234,
+  "barrels": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "rear": [
+    false,
+    false,
+    true,
+    true
+  ],
+  "bounds": {
+    "min": [
+      -18.343326568603516,
+      -9,
+      -130.17236328125
+    ],
+    "max": [
+      18.343326568603516,
+      50.566280364990234,
+      127.18354034423828
+    ]
+  },
+  "method": "Native assembly transforms; position-cell vertex clustering; collapsed/duplicate faces removed; normals regenerated.",
+  "modifications": "Four native turret sections isolated. Original gun tubes re-seated into housings and assigned independent elevation/recoil nodes."
+}

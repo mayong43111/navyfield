@@ -1,0 +1,37 @@
+{
+  "title": "RC Suitable Yamato Battleship 1:250",
+  "author": "MDSW",
+  "source": "https://www.thingiverse.com/thing:6251126",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "credits": ["MDSW", "PiotruchaWro", "M-Miller-97", "MotherbrainJr"],
+  "retrieved": "2026-11-21",
+  "status": "Native 3MF converted to yamato.glb and integrated in battle and shipyard",
+  "conversionInput": {
+    "file": "3MF_files.zip",
+    "sourcePage": "https://www.thingiverse.com/thing:6251126/files"
+  },
+  "downloadedFiles": ["hull.stl", "deck.stl", "superstructure.stl", "main-guns.stl", "3MF_files.zip"],
+  "modifications": "Restored print-layout offsets, changed axes, uniformly scaled hull length to 263 m, removed degenerate faces, recolored surfaces, separated original main-gun tubes and added yaw, elevation, recoil, muzzle and funnel nodes.",
+  "accuracy": "Printable RC model, not an exact year-specific reconstruction. Original proportions preserved; scaled hull beam is approximately 41.12 m, not the historical 38.9 m.",
+  "files": {
+    "hull.stl": "https://cdn.thingiverse.com/assets/39/45/70/38/1f/208ad8dd-9fd4-4b6e-8570-9b4bcf11a476.stl",
+    "deck.stl": "https://cdn.thingiverse.com/assets/24/2b/5d/73/27/7cf1ae8d-d909-4fdb-8f43-8c412d5eed0b.stl",
+    "superstructure.stl": "https://cdn.thingiverse.com/assets/de/19/68/3e/61/6dcb3f9d-2f81-4583-b870-1fe5d1357a77.stl",
+    "rear-deck.stl": "https://cdn.thingiverse.com/assets/ab/8e/75/8b/fa/f544a6b9-bfff-4e25-882f-5665d8e19b9f.stl",
+    "rear-deck-a.stl": "https://cdn.thingiverse.com/assets/2b/2c/45/df/f0/65af0464-d28b-4273-9f69-528737da8c2e.stl",
+    "rear-deck-b.stl": "https://cdn.thingiverse.com/assets/9f/b2/d1/e1/8f/e20f893b-a073-406d-a877-2be9e0da6084.stl",
+    "main-guns.stl": "https://cdn.thingiverse.com/assets/f3/40/5a/1a/85/deaf9be8-6662-4340-a038-ee511e97bd17.stl",
+    "secondary-guns.stl": "https://cdn.thingiverse.com/assets/4c/ae/82/6e/93/e4eee256-ddf2-4c55-858d-b1242eedbb66.stl",
+    "five-inch-guns.stl": "https://cdn.thingiverse.com/assets/68/ff/ca/b2/c9/f10d66e3-ff3d-4037-9d1f-3eebdd619716.stl",
+    "small-aa.stl": "https://cdn.thingiverse.com/assets/3d/e7/a3/0b/ca/a71caf10-68c2-4e4e-9797-7d696832f763.stl",
+    "type89-aa.stl": "https://cdn.thingiverse.com/assets/52/71/5c/d4/81/af82d706-d4f9-4107-afc9-d66b7999b02d.stl",
+    "large-aa.stl": "https://cdn.thingiverse.com/assets/3f/84/54/b9/da/095eb32d-94b2-442a-b2b1-da3eee76ee75.stl",
+    "aa-tubs.stl": "https://cdn.thingiverse.com/assets/48/aa/aa/bc/3a/e132afb4-a4f4-4700-85f6-42a4e99299e7.stl",
+    "directors.stl": "https://cdn.thingiverse.com/assets/6d/ca/d5/f2/82/36075448-b6f8-45e6-8bcd-4c1e7c711426.stl",
+    "antenna.stl": "https://cdn.thingiverse.com/assets/02/6c/b2/e2/96/28b55aa5-04e3-4815-a232-3b0e4d20fcde.stl",
+    "derrick.stl": "https://cdn.thingiverse.com/assets/8a/58/54/d5/27/0948fd2f-6a3c-4a26-ab3c-f3cefdb6f974.stl",
+    "anchor-chains.stl": "https://cdn.thingiverse.com/assets/33/38/13/6a/f8/3da854a1-9700-4f69-998e-332bb344e323.stl",
+    "catapults.stl": "https://cdn.thingiverse.com/assets/92/e0/1e/a1/7d/a4fb77be-dbff-46de-a445-144eedf26cc1.stl"
+  }
+}

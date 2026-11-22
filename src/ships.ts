@@ -15,9 +15,9 @@ export async function loadShipModels(): Promise<ReadonlyMap<string, THREE.Object
   const loader = new GLTFLoader();
   const [yamato, bismarck, california, yorktown] = await Promise.all([
     loadYamato(),
-    loader.loadAsync(new URL('../resources/models/bismarck/bismarck.glb', import.meta.url).href),
-    loader.loadAsync(new URL('../resources/models/california/california.glb', import.meta.url).href),
-    loader.loadAsync(new URL('../resources/models/yorktown/yorktown.glb', import.meta.url).href)
+    loader.loadAsync(new URL('../content/assets/ships/bismarck/bismarck.glb', import.meta.url).href),
+    loader.loadAsync(new URL('../content/assets/ships/california/california.glb', import.meta.url).href),
+    loader.loadAsync(new URL('../content/assets/ships/yorktown/yorktown.glb', import.meta.url).href)
   ]);
   return new Map([['yamato', yamato], ['bismarck', bismarck.scene], ['california', california.scene], ['yorktown', yorktown.scene]]);
 }

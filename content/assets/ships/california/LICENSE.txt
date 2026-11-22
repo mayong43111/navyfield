@@ -1,0 +1,9 @@
+RC suitable USS California BB-44
+Author: MDSW
+Source: https://www.thingiverse.com/thing:5239831
+License: CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+
+Hull/top mating surfaces aligned. Original twin gun housing/tubes scaled to native pads; one original tube duplicated centrally to provide four triple mounts. Unused printing fittings omitted.
+Native assembly transforms; position-cell vertex clustering; collapsed/duplicate faces removed; normals regenerated.
+Original downloads remain unchanged. Source-page licensing is not a guarantee of upstream third-party rights; see source.json.

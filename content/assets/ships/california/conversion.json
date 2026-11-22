@@ -1,0 +1,40 @@
+{
+  "source": "https://www.thingiverse.com/thing:5239831",
+  "license": "CC BY 4.0",
+  "author": "MDSW",
+  "triangles": 149397,
+  "bytes": 2487764,
+  "key": "california",
+  "hull": {
+    "length": 190.2,
+    "beam": 34.98991153214606,
+    "height": 13.937655631646084
+  },
+  "maxHeight": 47.00209045410156,
+  "barrels": [
+    3,
+    3,
+    3,
+    3
+  ],
+  "rear": [
+    false,
+    false,
+    true,
+    true
+  ],
+  "bounds": {
+    "min": [
+      -18.425565719604492,
+      -8,
+      -95.28460693359375
+    ],
+    "max": [
+      18.427597045898438,
+      47.00209045410156,
+      99.66615295410156
+    ]
+  },
+  "method": "Native assembly transforms; position-cell vertex clustering; collapsed/duplicate faces removed; normals regenerated.",
+  "modifications": "Hull/top mating surfaces aligned. Original twin gun housing/tubes scaled to native pads; one original tube duplicated centrally to provide four triple mounts. Unused printing fittings omitted."
+}

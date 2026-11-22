@@ -1,0 +1,9 @@
+RC Scale USS YORKTOWN CV-5
+Author: MDSW
+Source: https://www.thingiverse.com/thing:5336549
+License: CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+
+Complete CV-5 STL normalized and simplified. No battleship guns or aircraft combat added.
+Native assembly transforms; position-cell vertex clustering; collapsed/duplicate faces removed; normals regenerated.
+Original downloads remain unchanged. Source-page licensing is not a guarantee of upstream third-party rights; see source.json.

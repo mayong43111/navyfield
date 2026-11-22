@@ -19,6 +19,7 @@ import { createCombat, shellPower, applyImpact, resolveBattle, hullIntersection,
   dispersedTarget, enemyCourse, leadTarget, deploymentPoses, sinkingPose, gunBallistics, createBattleLayout, bulgeCapacity } from './combat.ts';
 import type { CombatState, Side, ShellPower, GunBallistics, BattleLayout } from './combat.ts';
 import { gaugeArtwork, magazineArtwork, selectorArtwork, mapFrameArtwork, enginePanelArtwork, tdaLampArtwork } from './instrument-art.ts';
+import { BATTLE_MIN_ZOOM, BATTLE_ZOOM, edgePan, positionBattleCamera, seaViewSize } from './camera.ts';
 import './style.css';
 import './interface.css';
 
@@ -56,13 +57,13 @@ async function start(): Promise<void> {
   const aspect = canvas.clientWidth / canvas.clientHeight;
   const camera = new THREE.OrthographicCamera(-halfHeight * aspect, halfHeight * aspect, halfHeight, -halfHeight, 1, 15000);
   const battleCameraOffset = new THREE.Vector3(775, 900, 1040);
-  const battleZoom = 0.66;
+  const battleCameraDirection = battleCameraOffset.clone().sub(new THREE.Vector3(0, 8, 0));
   camera.position.copy(battleCameraOffset);
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 8, 0);
   controls.enableDamping = true;
   controls.enablePan = false;
-  controls.minZoom = 0.55;
+  controls.minZoom = BATTLE_MIN_ZOOM;
   controls.maxZoom = 3.5;
   controls.maxPolarAngle = Math.PI * 0.47;
   controls.mouseButtons = { LEFT: null, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE };
@@ -534,6 +535,7 @@ async function start(): Promise<void> {
   let routeTarget: THREE.Vector3 | null = null;
   let routePlan: NavigationRoute | null = null;
   let following = true;
+  let battlePointer: { x: number; y: number } | null = null;
   let elapsed = 0;
   let wakeTimer = 0;
   let smokeTimer = 0;
@@ -778,7 +780,7 @@ async function start(): Promise<void> {
     updateAmmunition();
     keys.clear();
     clearEffects();
-    positionCamera(battleCameraOffset, battleZoom);
+    positionCamera(battleCameraOffset, BATTLE_ZOOM);
     if (mode === 'yard') setMode('yard');
   }
   function positionCamera(offset: THREE.Vector3, zoom: number): void {
@@ -792,6 +794,14 @@ async function start(): Promise<void> {
     camera.updateProjectionMatrix();
     controls.update();
     controls.enableDamping = damping;
+  }
+  function resizeBattleOcean(): void {
+    if (!battleLayout) return;
+    const view = seaViewSize(camera, BATTLE_MIN_ZOOM);
+    const width = Math.max(24000, battleLayout.width + view.width + 4000);
+    const height = Math.max(24000, battleLayout.height + view.height + 4000);
+    ocean.geometry.dispose();
+    ocean.geometry = new THREE.PlaneGeometry(width, height, 32, 32).rotateX(-Math.PI / 2);
   }
   function clearEffects(): void {
     routeTarget = null;
@@ -993,11 +1003,13 @@ async function start(): Promise<void> {
     navigation.throttle = 0;
     keys.clear();
     following = true;
+    battlePointer = null;
     controls.enableRotate = mode === 'yard';
     controls.enabled = mode === 'yard' || mode === 'battle';
     controls.enablePan = false;
-    controls.minZoom = mode === 'yard' ? 1.8 : 0.55;
+    controls.minZoom = mode === 'yard' ? 1.8 : mode === 'battle' ? BATTLE_MIN_ZOOM : 0.55;
     controls.maxZoom = mode === 'yard' ? 6.5 : 3.5;
+    camera.far = 15000;
     if (mode === 'battle') {
       removeVessel(enemy);
       enemyModel = createShip(models, activeBerth.typeId); enemy = enemyModel.ship;
@@ -1021,9 +1033,6 @@ async function start(): Promise<void> {
       }));
       battleLayout = createBattleLayout(maximumRange, deployment.slot);
       const poses = deploymentPoses(deployment, battleLayout);
-      ocean.geometry.dispose();
-      ocean.geometry = new THREE.PlaneGeometry(Math.max(24000, battleLayout.width + 8000),
-        Math.max(24000, battleLayout.height + 8000), 32, 32).rotateX(-Math.PI / 2);
       Object.assign(navigation, poses.player);
       Object.assign(enemyNavigation, poses.enemy);
       enemy.position.set(enemyNavigation.x, 0, enemyNavigation.z);
@@ -1067,11 +1076,23 @@ async function start(): Promise<void> {
       positionCamera(battleCameraOffset, 1.2);
       firingMessage = '';
     } else {
-      positionCamera(battleCameraOffset, battleZoom);
+      positionCamera(battleCameraOffset, BATTLE_ZOOM);
       firingMessage = '';
+    }
+    if (mode === 'battle') {
+      positionBattleCamera(camera, controls.target, battleCameraDirection);
+      resizeBattleOcean();
     }
   }
   function toggleCamera(): void {
+    if (mode === 'battle') {
+      following = true;
+      battlePointer = null;
+      positionCamera(battleCameraOffset, camera.zoom);
+      positionBattleCamera(camera, controls.target, battleCameraDirection);
+      firingMessage = '视角已返回本舰 · 边缘移屏 / C回舰';
+      return;
+    }
     if (mode !== 'yard') return;
     following = !following;
     controls.enablePan = !following;
@@ -1125,6 +1146,22 @@ async function start(): Promise<void> {
   function battleMapScale(): number {
     return battleLayout ? Math.max(battleLayout.width / 200, battleLayout.height / 130) : 80;
   }
+  window.addEventListener('pointermove', event => {
+    const target = event.target;
+    if (mode !== 'battle' || event.pointerType !== 'mouse' || event.buttons
+      || (target instanceof Element && target.closest('button,input,select,textarea,a,dialog,[role="button"],[contenteditable="true"]'))
+      || (target instanceof Node && (mapPanel.contains(target) || enginePanel.contains(target) || resultPanel.contains(target)))
+      || (target instanceof HTMLCanvasElement && target !== canvas)) {
+      battlePointer = null;
+      return;
+    }
+    const rect = canvas.getBoundingClientRect();
+    battlePointer = event.clientX >= rect.left && event.clientX <= rect.right
+      && event.clientY >= rect.top && event.clientY <= rect.bottom
+      ? { x: event.clientX - rect.left, y: event.clientY - rect.top } : null;
+  });
+  window.addEventListener('pointerdown', () => { battlePointer = null; });
+  window.addEventListener('pointerout', event => { if (!event.relatedTarget) battlePointer = null; });
   canvas.addEventListener('pointerdown', event => {
     if (mode !== 'battle' || (event.button !== 0 && event.button !== 2)) return;
     const rect = canvas.getBoundingClientRect();
@@ -1171,13 +1208,17 @@ async function start(): Promise<void> {
     }
   });
   window.addEventListener('keyup', event => keys.delete(event.code));
-  window.addEventListener('blur', () => keys.clear());
-  document.addEventListener('visibilitychange', () => { if (document.hidden) keys.clear(); });
+  window.addEventListener('blur', () => { keys.clear(); battlePointer = null; });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { keys.clear(); battlePointer = null; }
+  });
   new ResizeObserver(() => {
+    if (!canvas.clientWidth || !canvas.clientHeight) return;
     camera.left = -halfHeight * canvas.clientWidth / canvas.clientHeight;
     camera.right = -camera.left;
     camera.updateProjectionMatrix();
     renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+    if (mode === 'battle') resizeBattleOcean();
   }).observe(canvas);
   let lastTime = performance.now();
   function advanceEnemy(dt: number): void {
@@ -1295,6 +1336,22 @@ async function start(): Promise<void> {
       camera.position.z += navigation.z - oldZ;
       controls.target.x += navigation.x - oldX;
       controls.target.z += navigation.z - oldZ;
+    }
+    if (mode === 'battle' && battleLayout) {
+      positionBattleCamera(camera, controls.target, battleCameraDirection);
+      if (battlePointer && dt > 0 && canvas.clientWidth > 0 && canvas.clientHeight > 0) {
+        const delta = edgePan(camera, battlePointer, { width: canvas.clientWidth, height: canvas.clientHeight }, dt);
+        if (delta.lengthSq() > 0) {
+          if (following) firingMessage = '浏览远处 · C返回本舰';
+          following = false;
+          const oldTargetX = controls.target.x, oldTargetZ = controls.target.z;
+          const boundX = battleLayout.width / 2 + 1000, boundZ = battleLayout.height / 2 + 1000;
+          controls.target.x = THREE.MathUtils.clamp(oldTargetX + delta.x, Math.min(-boundX, oldTargetX), Math.max(boundX, oldTargetX));
+          controls.target.z = THREE.MathUtils.clamp(oldTargetZ + delta.z, Math.min(-boundZ, oldTargetZ), Math.max(boundZ, oldTargetZ));
+          camera.position.x += controls.target.x - oldTargetX;
+          camera.position.z += controls.target.z - oldTargetZ;
+        }
+      }
     }
     controls.update();
     clouds.position.set(navigation.x, 0, navigation.z);

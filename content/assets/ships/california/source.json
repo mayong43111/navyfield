@@ -1,0 +1,26 @@
+{
+  "title": "RC suitable USS California BB-44",
+  "author": "MDSW",
+  "authorPage": "https://www.thingiverse.com/mdsw/designs",
+  "source": "https://www.thingiverse.com/thing:5239831",
+  "filesPage": "https://www.thingiverse.com/thing:5239831/files",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "retrieved": "2026-11-22",
+  "status": "Assembled, converted and integrated into shipyard, previews and single-ship combat",
+  "runtimeFile": "california.glb",
+  "downloadedFiles": ["Cal-Hull.3mf", "California-top.3mf", "Cal-GMounts-plane-crane.3mf"],
+  "files": {
+    "Cal-Hull.3mf": "https://cdn.thingiverse.com/assets/c5/c6/a2/29/5a/Cal-Hull.3mf",
+    "California-top.3mf": "https://cdn.thingiverse.com/assets/88/bd/8f/92/4b/California-top.3mf",
+    "Cal-GMounts-plane-crane.3mf": "https://cdn.thingiverse.com/assets/55/b2/97/41/3d/Cal-GMounts-plane-crane.3mf"
+  },
+  "sha256": {
+    "Cal-Hull.3mf": "7690a1e4cc670a2306433d6775e85dd081e251f4e179c307d396062cf35d41c5",
+    "California-top.3mf": "d38a37b6006b504f67912f07718a1f81d6aee924638d33999bb577cabe7d2d58",
+    "Cal-GMounts-plane-crane.3mf": "24f206de0198527f6040b3ecb1fc99de2b54e431a7d7964bb36772a9560bd306"
+  },
+  "triangles": 909410,
+  "modifications": "Original downloads preserved. Hull/top mating surfaces aligned; original twin gun housing/tubes scaled to native pads, one original tube duplicated centrally for four triple mounts. Added yaw/elevation/recoil/muzzle/smoke nodes, game-scale normalization, vertex clustering and material recoloring. Unused printing fittings omitted. See conversion.json and LICENSE.txt.",
+  "accuracy": "Printable RC geometry with explicitly modified triple mounts, not an exact historical reconstruction. Upstream attribution and exact configuration still require review."
+}

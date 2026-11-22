@@ -12,7 +12,7 @@ function isPolygon(value: unknown): value is LandPolygon {
   return Array.isArray(value) && value.every(ring => Array.isArray(ring) && ring.every(isPoint));
 }
 export async function loadWorldLand(): Promise<LandPolygon[]> {
-  const response = await fetch(new URL('../resources/maps/world-land.geojson', import.meta.url));
+  const response = await fetch(new URL('../content/data/maps/world-land.geojson', import.meta.url));
   if (!response.ok) throw new Error(`无法读取世界海岸数据：HTTP ${response.status}`);
   const data: unknown = await response.json();
   if (!data || typeof data !== 'object' || !('features' in data) || !Array.isArray(data.features)) {

@@ -34,7 +34,7 @@ function node(root: THREE.Object3D, name: string): THREE.Object3D {
 }
 
 export async function loadYamato(): Promise<THREE.Group> {
-  const url = new URL('../resources/models/yamato/yamato.glb', import.meta.url);
+  const url = new URL('../content/assets/ships/yamato/yamato.glb', import.meta.url);
   const model = await new GLTFLoader().loadAsync(url.href);
   return model.scene;
 }
