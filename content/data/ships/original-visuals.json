@@ -1,0 +1,3386 @@
+{
+  "schemaVersion": 1,
+  "generator": "tools/models/generate-original-ships.mjs",
+  "generatorSha256": "93f2138c3927d4e2856c6e520e88ceeead81ebdb473d4fa7aacb90498491f332",
+  "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
+  "editableFields": [
+    "key",
+    "targetId",
+    "style",
+    "stern",
+    "shoulder",
+    "color",
+    "bridge",
+    "funnels",
+    "historicalApproximation",
+    "targetArmament"
+  ],
+  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "author": "navyfield project contributors",
+  "license": "CC-BY-4.0",
+  "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork.",
+  "numericFiringOriginNote": "Main TARGET projectile origins are the numerical mount plus lateral barrel offset (z=0), not the physical tube tip. Muzzle markers sit at physical forward tips; gameplay must retain its existing numerical firing formulas. Auxiliary manual and automatic origins are also numeric simulation points, not these cosmetic markers.",
+  "groupSchema": {
+    "location": "Ship.userData.visualWeaponGroups (separate from unchanged Ship.userData.shipModel)",
+    "grouping": "One entry per manual group or actual automatic bank; automatic banks sharing a controlId share WeaponGroup-<controlId> and use globally unique mount indices within that control. Main uses the mandatory Turret/Elevation/Barrel/Muzzle hierarchy.",
+    "names": "GLB names contain original controlId colons. Three GLTFLoader sanitizes them; use the recorded loaded* names after loading. Auxiliary roots are named WeaponGroup-<controlId>, containing Mount-<controlId>-<index> -> Pivot-<controlId>-<index> -> WeaponBarrel-<controlId>-<index>-<barrel> -> WeaponMuzzle-<controlId>-<index>-<barrel>.",
+    "aircraft": "Main aircraft entry has target counts but mounts=[]; distinct AircraftLaunch/AircraftRecovery local points replace visual gun mounts.",
+    "angles": "Radians; +Z forward; Mount absolute local yaw, Pivot.rotation.x=-elevation. baseYaw is rest orientation, not an extra angle to add to simulation absolute yaw.",
+    "recoil": "Each barrel group starts at local z=0. Apply recoil as negative local Z, restore to zero. Muzzle is a physical-tip child; it is not a numerical firing origin."
+  },
+  "ships": [
+    {
+      "key": "shimakaze",
+      "targetId": "scout_dd",
+      "style": "japanese-destroyer",
+      "stern": 0.22,
+      "shoulder": 0.18,
+      "color": "#737c80",
+      "bridge": [
+        0.14,
+        0.37,
+        0.45
+      ],
+      "funnels": [
+        [
+          0.065,
+          0.43,
+          0.2
+        ],
+        [
+          -0.12,
+          0.38,
+          0.18
+        ]
+      ],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Long Japanese destroyer hull, two raked funnels, compact bridge and three decorative quintuple torpedo banks distinguish the Shimakaze interpretation.",
+      "targetArmament": "TARGET has three single main guns, not the historical three twin mounts. Three quintuple torpedo banks are nonfunctional silhouette details: scout_dd has no TARGET torpedo group.",
+      "hull": {
+        "length": 110,
+        "beam": 12,
+        "height": 12
+      },
+      "runtimeFile": "content/assets/ships/shimakaze/shimakaze.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "078e02d8295958e1fb46190f8b9b4dc73e334db2b7efbc001bd398ce2d545f8c",
+      "geometrySha256": "f783d2b8190aaf239fd548b8a77296061ab15c14fe386644588b054e252f5e34",
+      "mainContract": {
+        "key": "shimakaze",
+        "hull": {
+          "length": 110,
+          "beam": 12,
+          "height": 12
+        },
+        "maxHeight": 26.853599973773957,
+        "barrels": [
+          1,
+          1,
+          1
+        ],
+        "rear": [
+          false,
+          false,
+          true
+        ]
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "scout_dd:main",
+          "weaponId": "gun_127",
+          "control": "manual",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 3,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Turret-0",
+              "pivot": "Elevation-0",
+              "barrelNodes": [
+                "Barrel-0-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-0-0"
+              ],
+              "position": [
+                0,
+                12,
+                27.5
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-0",
+              "loadedPivot": "Elevation-0",
+              "loadedBarrelNodes": [
+                "Barrel-0-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-0-0"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Turret-1",
+              "pivot": "Elevation-1",
+              "barrelNodes": [
+                "Barrel-1-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-1-0"
+              ],
+              "position": [
+                0,
+                12,
+                0
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-1",
+              "loadedPivot": "Elevation-1",
+              "loadedBarrelNodes": [
+                "Barrel-1-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-1-0"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Turret-2",
+              "pivot": "Elevation-2",
+              "barrelNodes": [
+                "Barrel-2-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-2-0"
+              ],
+              "position": [
+                0,
+                12,
+                -27.5
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-2",
+              "loadedPivot": "Elevation-2",
+              "loadedBarrelNodes": [
+                "Barrel-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-2-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "scout_dd:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "scout_aa40",
+          "groupNode": "WeaponGroup-scout_dd:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 1,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-scout_dd:light_aa-0",
+              "pivot": "Pivot-scout_dd:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-scout_dd:light_aa-0-0",
+                "WeaponBarrel-scout_dd:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-scout_dd:light_aa-0-0",
+                "WeaponMuzzle-scout_dd:light_aa-0-1"
+              ],
+              "position": [
+                -4.800000000000001,
+                10.08,
+                -31.679999999999996
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-scout_ddlight_aa-0",
+              "loadedPivot": "Pivot-scout_ddlight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-scout_ddlight_aa-0-0",
+                "WeaponBarrel-scout_ddlight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-scout_ddlight_aa-0-0",
+                "WeaponMuzzle-scout_ddlight_aa-0-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-scout_ddlight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "scout_dd:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "scout_aa20",
+          "groupNode": "WeaponGroup-scout_dd:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 2,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 1,
+              "node": "Mount-scout_dd:light_aa-1",
+              "pivot": "Pivot-scout_dd:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-scout_dd:light_aa-1-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-scout_dd:light_aa-1-0"
+              ],
+              "position": [
+                4.800000000000001,
+                10.08,
+                -4.619999999999998
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-scout_ddlight_aa-1",
+              "loadedPivot": "Pivot-scout_ddlight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-scout_ddlight_aa-1-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-scout_ddlight_aa-1-0"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Mount-scout_dd:light_aa-2",
+              "pivot": "Pivot-scout_dd:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-scout_dd:light_aa-2-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-scout_dd:light_aa-2-0"
+              ],
+              "position": [
+                -4.800000000000001,
+                10.08,
+                22.44000000000001
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-scout_ddlight_aa-2",
+              "loadedPivot": "Pivot-scout_ddlight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-scout_ddlight_aa-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-scout_ddlight_aa-2-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-scout_ddlight_aa"
+        }
+      ]
+    },
+    {
+      "key": "fletcher",
+      "targetId": "escort_dd",
+      "style": "us-destroyer",
+      "stern": 0.32,
+      "shoulder": 0.24,
+      "color": "#819397",
+      "bridge": [
+        0.205,
+        0.49,
+        0.47
+      ],
+      "funnels": [
+        [
+          0.005,
+          0.46,
+          0.23
+        ],
+        [
+          -0.205,
+          0.42,
+          0.21
+        ]
+      ],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. US destroyer deckhouses, two upright separated funnels, a compact enclosed bridge and a tripod mast recall USS Fletcher DD-445.",
+      "targetArmament": "Four single main mounts follow TARGET; the historical Fletcher silhouette had five single 5-inch positions. No fifth working or decorative gun is added.",
+      "hull": {
+        "length": 118,
+        "beam": 13,
+        "height": 13
+      },
+      "runtimeFile": "content/assets/ships/fletcher/fletcher.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "6d3352a66b5d865becb78159b10d33c94e9d84918a0b6206094d7573ea39a01d",
+      "geometrySha256": "c23df0de307d7dd6d2822826910888128b7cabcd34f1f6ba819af39db30c97c3",
+      "mainContract": {
+        "key": "fletcher",
+        "hull": {
+          "length": 118,
+          "beam": 13,
+          "height": 13
+        },
+        "maxHeight": 29.273400026226042,
+        "barrels": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "rear": [
+          false,
+          false,
+          true,
+          true
+        ]
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "escort_dd:main",
+          "weaponId": "gun_127_rapid",
+          "control": "manual",
+          "kind": "gun",
+          "availableModes": [
+            "surface",
+            "air"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 4,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Turret-0",
+              "pivot": "Elevation-0",
+              "barrelNodes": [
+                "Barrel-0-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-0-0"
+              ],
+              "position": [
+                0,
+                13,
+                35.4
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-0",
+              "loadedPivot": "Elevation-0",
+              "loadedBarrelNodes": [
+                "Barrel-0-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-0-0"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Turret-1",
+              "pivot": "Elevation-1",
+              "barrelNodes": [
+                "Barrel-1-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-1-0"
+              ],
+              "position": [
+                0,
+                13,
+                11.799999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-1",
+              "loadedPivot": "Elevation-1",
+              "loadedBarrelNodes": [
+                "Barrel-1-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-1-0"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Turret-2",
+              "pivot": "Elevation-2",
+              "barrelNodes": [
+                "Barrel-2-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-2-0"
+              ],
+              "position": [
+                0,
+                13,
+                -11.799999999999997
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-2",
+              "loadedPivot": "Elevation-2",
+              "loadedBarrelNodes": [
+                "Barrel-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-2-0"
+              ]
+            },
+            {
+              "index": 3,
+              "node": "Turret-3",
+              "pivot": "Elevation-3",
+              "barrelNodes": [
+                "Barrel-3-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-3-0"
+              ],
+              "position": [
+                0,
+                13,
+                -35.400000000000006
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-3",
+              "loadedPivot": "Elevation-3",
+              "loadedBarrelNodes": [
+                "Barrel-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-3-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "escort_dd:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "escort_aa40",
+          "groupNode": "WeaponGroup-escort_dd:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 2,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-escort_dd:light_aa-0",
+              "pivot": "Pivot-escort_dd:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-escort_dd:light_aa-0-0",
+                "WeaponBarrel-escort_dd:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-escort_dd:light_aa-0-0",
+                "WeaponMuzzle-escort_dd:light_aa-0-1"
+              ],
+              "position": [
+                -5.2,
+                10.92,
+                -33.983999999999995
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-escort_ddlight_aa-0",
+              "loadedPivot": "Pivot-escort_ddlight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-escort_ddlight_aa-0-0",
+                "WeaponBarrel-escort_ddlight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-escort_ddlight_aa-0-0",
+                "WeaponMuzzle-escort_ddlight_aa-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-escort_dd:light_aa-1",
+              "pivot": "Pivot-escort_dd:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-escort_dd:light_aa-1-0",
+                "WeaponBarrel-escort_dd:light_aa-1-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-escort_dd:light_aa-1-0",
+                "WeaponMuzzle-escort_dd:light_aa-1-1"
+              ],
+              "position": [
+                5.2,
+                10.92,
+                -4.955999999999998
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-escort_ddlight_aa-1",
+              "loadedPivot": "Pivot-escort_ddlight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-escort_ddlight_aa-1-0",
+                "WeaponBarrel-escort_ddlight_aa-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-escort_ddlight_aa-1-0",
+                "WeaponMuzzle-escort_ddlight_aa-1-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-escort_ddlight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "escort_dd:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "escort_aa20",
+          "groupNode": "WeaponGroup-escort_dd:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 4,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 2,
+              "node": "Mount-escort_dd:light_aa-2",
+              "pivot": "Pivot-escort_dd:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-escort_dd:light_aa-2-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-escort_dd:light_aa-2-0"
+              ],
+              "position": [
+                -5.2,
+                10.92,
+                24.07200000000001
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-escort_ddlight_aa-2",
+              "loadedPivot": "Pivot-escort_ddlight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-escort_ddlight_aa-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-escort_ddlight_aa-2-0"
+              ]
+            },
+            {
+              "index": 3,
+              "node": "Mount-escort_dd:light_aa-3",
+              "pivot": "Pivot-escort_dd:light_aa-3",
+              "barrelNodes": [
+                "WeaponBarrel-escort_dd:light_aa-3-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-escort_dd:light_aa-3-0"
+              ],
+              "position": [
+                5.2,
+                10.92,
+                -33.983999999999995
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-escort_ddlight_aa-3",
+              "loadedPivot": "Pivot-escort_ddlight_aa-3",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-escort_ddlight_aa-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-escort_ddlight_aa-3-0"
+              ]
+            },
+            {
+              "index": 4,
+              "node": "Mount-escort_dd:light_aa-4",
+              "pivot": "Pivot-escort_dd:light_aa-4",
+              "barrelNodes": [
+                "WeaponBarrel-escort_dd:light_aa-4-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-escort_dd:light_aa-4-0"
+              ],
+              "position": [
+                -5.2,
+                10.92,
+                -4.955999999999998
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-escort_ddlight_aa-4",
+              "loadedPivot": "Pivot-escort_ddlight_aa-4",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-escort_ddlight_aa-4-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-escort_ddlight_aa-4-0"
+              ]
+            },
+            {
+              "index": 5,
+              "node": "Mount-escort_dd:light_aa-5",
+              "pivot": "Pivot-escort_dd:light_aa-5",
+              "barrelNodes": [
+                "WeaponBarrel-escort_dd:light_aa-5-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-escort_dd:light_aa-5-0"
+              ],
+              "position": [
+                5.2,
+                10.92,
+                24.07200000000001
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-escort_ddlight_aa-5",
+              "loadedPivot": "Pivot-escort_ddlight_aa-5",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-escort_ddlight_aa-5-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-escort_ddlight_aa-5-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-escort_ddlight_aa"
+        }
+      ]
+    },
+    {
+      "key": "cleveland",
+      "targetId": "fast_cl",
+      "style": "us-light-cruiser",
+      "stern": 0.28,
+      "shoulder": 0.27,
+      "color": "#889593",
+      "bridge": [
+        0.135,
+        0.5,
+        0.76
+      ],
+      "funnels": [
+        [
+          -0.075,
+          0.46,
+          0.2
+        ],
+        [
+          -0.15,
+          0.4,
+          0.18
+        ]
+      ],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Broad US light-cruiser superstructure, a tall rectangular bridge, two funnels, and triple gun housings recall USS Cleveland CL-55.",
+      "targetArmament": "Three triple main mounts follow TARGET rather than the historical four triple 6-inch mounts. TARGET centerline anchor spacing supersedes historical turret positions.",
+      "hull": {
+        "length": 160,
+        "beam": 18,
+        "height": 18
+      },
+      "runtimeFile": "content/assets/ships/cleveland/cleveland.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "148c739ab82e90c0c7974b43c8b893c03c01c94ad98fb9197d4eac4057aa9f7c",
+      "geometrySha256": "fc7308591d8ee11b29bf39bbdb6e5a27525f3c23a7ab23f4ec513930c833fd70",
+      "mainContract": {
+        "key": "cleveland",
+        "hull": {
+          "length": 160,
+          "beam": 18,
+          "height": 18
+        },
+        "maxHeight": 44.18639999046325,
+        "barrels": [
+          3,
+          3,
+          3
+        ],
+        "rear": [
+          false,
+          false,
+          true
+        ]
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "fast_cl:main",
+          "weaponId": "gun_152",
+          "control": "manual",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 3,
+          "targetBarrels": 3,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Turret-0",
+              "pivot": "Elevation-0",
+              "barrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1",
+                "Barrel-0-2"
+              ],
+              "muzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1",
+                "Muzzle-0-2"
+              ],
+              "position": [
+                0,
+                18,
+                40
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-0",
+              "loadedPivot": "Elevation-0",
+              "loadedBarrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1",
+                "Barrel-0-2"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1",
+                "Muzzle-0-2"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Turret-1",
+              "pivot": "Elevation-1",
+              "barrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1",
+                "Barrel-1-2"
+              ],
+              "muzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1",
+                "Muzzle-1-2"
+              ],
+              "position": [
+                0,
+                18,
+                0
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-1",
+              "loadedPivot": "Elevation-1",
+              "loadedBarrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1",
+                "Barrel-1-2"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1",
+                "Muzzle-1-2"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Turret-2",
+              "pivot": "Elevation-2",
+              "barrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1",
+                "Barrel-2-2"
+              ],
+              "muzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1",
+                "Muzzle-2-2"
+              ],
+              "position": [
+                0,
+                18,
+                -40
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-2",
+              "loadedPivot": "Elevation-2",
+              "loadedBarrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1",
+                "Barrel-2-2"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1",
+                "Muzzle-2-2"
+              ]
+            }
+          ],
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "fast_cl:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "fast_aa40",
+          "groupNode": "WeaponGroup-fast_cl:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 2,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-fast_cl:light_aa-0",
+              "pivot": "Pivot-fast_cl:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-fast_cl:light_aa-0-0",
+                "WeaponBarrel-fast_cl:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-fast_cl:light_aa-0-0",
+                "WeaponMuzzle-fast_cl:light_aa-0-1"
+              ],
+              "position": [
+                -7.2,
+                15.12,
+                -46.08
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-fast_cllight_aa-0",
+              "loadedPivot": "Pivot-fast_cllight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-fast_cllight_aa-0-0",
+                "WeaponBarrel-fast_cllight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-fast_cllight_aa-0-0",
+                "WeaponMuzzle-fast_cllight_aa-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-fast_cl:light_aa-1",
+              "pivot": "Pivot-fast_cl:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-fast_cl:light_aa-1-0",
+                "WeaponBarrel-fast_cl:light_aa-1-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-fast_cl:light_aa-1-0",
+                "WeaponMuzzle-fast_cl:light_aa-1-1"
+              ],
+              "position": [
+                7.2,
+                15.12,
+                -6.719999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-fast_cllight_aa-1",
+              "loadedPivot": "Pivot-fast_cllight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-fast_cllight_aa-1-0",
+                "WeaponBarrel-fast_cllight_aa-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-fast_cllight_aa-1-0",
+                "WeaponMuzzle-fast_cllight_aa-1-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-fast_cllight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "fast_cl:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "fast_aa20",
+          "groupNode": "WeaponGroup-fast_cl:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 4,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 2,
+              "node": "Mount-fast_cl:light_aa-2",
+              "pivot": "Pivot-fast_cl:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-fast_cl:light_aa-2-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-fast_cl:light_aa-2-0"
+              ],
+              "position": [
+                -7.2,
+                15.12,
+                32.640000000000015
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-fast_cllight_aa-2",
+              "loadedPivot": "Pivot-fast_cllight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-fast_cllight_aa-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-fast_cllight_aa-2-0"
+              ]
+            },
+            {
+              "index": 3,
+              "node": "Mount-fast_cl:light_aa-3",
+              "pivot": "Pivot-fast_cl:light_aa-3",
+              "barrelNodes": [
+                "WeaponBarrel-fast_cl:light_aa-3-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-fast_cl:light_aa-3-0"
+              ],
+              "position": [
+                7.2,
+                15.12,
+                -46.08
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-fast_cllight_aa-3",
+              "loadedPivot": "Pivot-fast_cllight_aa-3",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-fast_cllight_aa-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-fast_cllight_aa-3-0"
+              ]
+            },
+            {
+              "index": 4,
+              "node": "Mount-fast_cl:light_aa-4",
+              "pivot": "Pivot-fast_cl:light_aa-4",
+              "barrelNodes": [
+                "WeaponBarrel-fast_cl:light_aa-4-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-fast_cl:light_aa-4-0"
+              ],
+              "position": [
+                -7.2,
+                15.12,
+                -6.719999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-fast_cllight_aa-4",
+              "loadedPivot": "Pivot-fast_cllight_aa-4",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-fast_cllight_aa-4-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-fast_cllight_aa-4-0"
+              ]
+            },
+            {
+              "index": 5,
+              "node": "Mount-fast_cl:light_aa-5",
+              "pivot": "Pivot-fast_cl:light_aa-5",
+              "barrelNodes": [
+                "WeaponBarrel-fast_cl:light_aa-5-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-fast_cl:light_aa-5-0"
+              ],
+              "position": [
+                7.2,
+                15.12,
+                32.640000000000015
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-fast_cllight_aa-5",
+              "loadedPivot": "Pivot-fast_cllight_aa-5",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-fast_cllight_aa-5-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-fast_cllight_aa-5-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-fast_cllight_aa"
+        }
+      ]
+    },
+    {
+      "key": "brooklyn",
+      "targetId": "support_cl",
+      "style": "us-prewar-cruiser",
+      "stern": 0.26,
+      "shoulder": 0.21,
+      "color": "#96978e",
+      "bridge": [
+        0.205,
+        0.42,
+        0.65
+      ],
+      "funnels": [
+        [
+          0,
+          0.39,
+          0.18
+        ],
+        [
+          -0.205,
+          0.36,
+          0.17
+        ]
+      ],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Stepped prewar bridge, two slim funnels, long forecastle and aft aviation handling deck recall USS Brooklyn CL-40. Its historical five triple-turret silhouette is intentionally not reproduced as five guns.",
+      "targetArmament": "Exactly four double main mounts follow TARGET instead of the historical five triple mounts. The fifth historical turret is omitted, not represented by a fake working gun.",
+      "hull": {
+        "length": 170,
+        "beam": 19,
+        "height": 19
+      },
+      "runtimeFile": "content/assets/ships/brooklyn/brooklyn.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "85d46daeed1df6f5b932737463ce652cc2b4d125b76e4ea9875af179d3702add",
+      "geometrySha256": "487ab4748ded9dace05b953eec0eee25fa1c50aa78a4fd49369ead068801d791",
+      "mainContract": {
+        "key": "brooklyn",
+        "hull": {
+          "length": 170,
+          "beam": 19,
+          "height": 19
+        },
+        "maxHeight": 45.178200042915336,
+        "barrels": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "rear": [
+          false,
+          false,
+          true,
+          true
+        ]
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "support_cl:main",
+          "weaponId": "gun_152_precision",
+          "control": "manual",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 4,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Turret-0",
+              "pivot": "Elevation-0",
+              "barrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1"
+              ],
+              "position": [
+                0,
+                19,
+                51
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-0",
+              "loadedPivot": "Elevation-0",
+              "loadedBarrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Turret-1",
+              "pivot": "Elevation-1",
+              "barrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1"
+              ],
+              "position": [
+                0,
+                19,
+                16.999999999999996
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-1",
+              "loadedPivot": "Elevation-1",
+              "loadedBarrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Turret-2",
+              "pivot": "Elevation-2",
+              "barrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1"
+              ],
+              "position": [
+                0,
+                19,
+                -16.999999999999996
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-2",
+              "loadedPivot": "Elevation-2",
+              "loadedBarrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1"
+              ]
+            },
+            {
+              "index": 3,
+              "node": "Turret-3",
+              "pivot": "Elevation-3",
+              "barrelNodes": [
+                "Barrel-3-0",
+                "Barrel-3-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-3-0",
+                "Muzzle-3-1"
+              ],
+              "position": [
+                0,
+                19,
+                -51.00000000000001
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-3",
+              "loadedPivot": "Elevation-3",
+              "loadedBarrelNodes": [
+                "Barrel-3-0",
+                "Barrel-3-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-3-0",
+                "Muzzle-3-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "support_cl:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "support_aa40",
+          "groupNode": "WeaponGroup-support_cl:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 3,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-support_cl:light_aa-0",
+              "pivot": "Pivot-support_cl:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-0-0",
+                "WeaponBarrel-support_cl:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-0-0",
+                "WeaponMuzzle-support_cl:light_aa-0-1"
+              ],
+              "position": [
+                -7.6000000000000005,
+                15.959999999999999,
+                -48.959999999999994
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-0",
+              "loadedPivot": "Pivot-support_cllight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-0-0",
+                "WeaponBarrel-support_cllight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-0-0",
+                "WeaponMuzzle-support_cllight_aa-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-support_cl:light_aa-1",
+              "pivot": "Pivot-support_cl:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-1-0",
+                "WeaponBarrel-support_cl:light_aa-1-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-1-0",
+                "WeaponMuzzle-support_cl:light_aa-1-1"
+              ],
+              "position": [
+                7.6000000000000005,
+                15.959999999999999,
+                -7.139999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-1",
+              "loadedPivot": "Pivot-support_cllight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-1-0",
+                "WeaponBarrel-support_cllight_aa-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-1-0",
+                "WeaponMuzzle-support_cllight_aa-1-1"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Mount-support_cl:light_aa-2",
+              "pivot": "Pivot-support_cl:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-2-0",
+                "WeaponBarrel-support_cl:light_aa-2-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-2-0",
+                "WeaponMuzzle-support_cl:light_aa-2-1"
+              ],
+              "position": [
+                -7.6000000000000005,
+                15.959999999999999,
+                34.680000000000014
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-2",
+              "loadedPivot": "Pivot-support_cllight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-2-0",
+                "WeaponBarrel-support_cllight_aa-2-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-2-0",
+                "WeaponMuzzle-support_cllight_aa-2-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-support_cllight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "support_cl:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "support_aa20",
+          "groupNode": "WeaponGroup-support_cl:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 6,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 3,
+              "node": "Mount-support_cl:light_aa-3",
+              "pivot": "Pivot-support_cl:light_aa-3",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-3-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-3-0"
+              ],
+              "position": [
+                7.6000000000000005,
+                15.959999999999999,
+                -48.959999999999994
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-3",
+              "loadedPivot": "Pivot-support_cllight_aa-3",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-3-0"
+              ]
+            },
+            {
+              "index": 4,
+              "node": "Mount-support_cl:light_aa-4",
+              "pivot": "Pivot-support_cl:light_aa-4",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-4-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-4-0"
+              ],
+              "position": [
+                -7.6000000000000005,
+                15.959999999999999,
+                -7.139999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-4",
+              "loadedPivot": "Pivot-support_cllight_aa-4",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-4-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-4-0"
+              ]
+            },
+            {
+              "index": 5,
+              "node": "Mount-support_cl:light_aa-5",
+              "pivot": "Pivot-support_cl:light_aa-5",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-5-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-5-0"
+              ],
+              "position": [
+                7.6000000000000005,
+                15.959999999999999,
+                34.680000000000014
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-5",
+              "loadedPivot": "Pivot-support_cllight_aa-5",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-5-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-5-0"
+              ]
+            },
+            {
+              "index": 6,
+              "node": "Mount-support_cl:light_aa-6",
+              "pivot": "Pivot-support_cl:light_aa-6",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-6-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-6-0"
+              ],
+              "position": [
+                -7.6000000000000005,
+                15.959999999999999,
+                -48.959999999999994
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-6",
+              "loadedPivot": "Pivot-support_cllight_aa-6",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-6-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-6-0"
+              ]
+            },
+            {
+              "index": 7,
+              "node": "Mount-support_cl:light_aa-7",
+              "pivot": "Pivot-support_cl:light_aa-7",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-7-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-7-0"
+              ],
+              "position": [
+                7.6000000000000005,
+                15.959999999999999,
+                -7.139999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-7",
+              "loadedPivot": "Pivot-support_cllight_aa-7",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-7-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-7-0"
+              ]
+            },
+            {
+              "index": 8,
+              "node": "Mount-support_cl:light_aa-8",
+              "pivot": "Pivot-support_cl:light_aa-8",
+              "barrelNodes": [
+                "WeaponBarrel-support_cl:light_aa-8-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-support_cl:light_aa-8-0"
+              ],
+              "position": [
+                -7.6000000000000005,
+                15.959999999999999,
+                34.680000000000014
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-support_cllight_aa-8",
+              "loadedPivot": "Pivot-support_cllight_aa-8",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-support_cllight_aa-8-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-support_cllight_aa-8-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-support_cllight_aa"
+        }
+      ]
+    },
+    {
+      "key": "admiral-hipper",
+      "targetId": "heavy_ca",
+      "style": "german-heavy-cruiser",
+      "stern": 0.27,
+      "shoulder": 0.3,
+      "color": "#80898b",
+      "bridge": [
+        0.205,
+        0.58,
+        0.92
+      ],
+      "funnels": [
+        [
+          0,
+          0.68,
+          0.3
+        ]
+      ],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Tall stepped German command tower, a heavy single funnel, two pole masts and four twin positions interpret Admiral Hipper specifically, not Prinz Eugen or an exact refit.",
+      "targetArmament": "Four twin 203-class main mounts match TARGET counts. Four automatic single 127-class secondary mounts are split into the actual ca_port and ca_starboard banks. Light AA is TARGET-defined, not a historical inventory.",
+      "hull": {
+        "length": 195,
+        "beam": 23,
+        "height": 23
+      },
+      "runtimeFile": "content/assets/ships/admiral-hipper/admiral-hipper.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "570bb972a464378f34ab1c5e99dc964c287c5dc9e646a683f863d4ff456be441",
+      "geometrySha256": "7200b23225628a21b7401090c3eafa53500febd137141287e1ceec947df09252",
+      "mainContract": {
+        "key": "admiral-hipper",
+        "hull": {
+          "length": 195,
+          "beam": 23,
+          "height": 23
+        },
+        "maxHeight": 59.036400014305116,
+        "barrels": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "rear": [
+          false,
+          false,
+          true,
+          true
+        ]
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "heavy_ca:main",
+          "weaponId": "gun_203",
+          "control": "manual",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 4,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Turret-0",
+              "pivot": "Elevation-0",
+              "barrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1"
+              ],
+              "position": [
+                0,
+                23,
+                58.5
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-0",
+              "loadedPivot": "Elevation-0",
+              "loadedBarrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Turret-1",
+              "pivot": "Elevation-1",
+              "barrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1"
+              ],
+              "position": [
+                0,
+                23,
+                19.499999999999996
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-1",
+              "loadedPivot": "Elevation-1",
+              "loadedBarrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Turret-2",
+              "pivot": "Elevation-2",
+              "barrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1"
+              ],
+              "position": [
+                0,
+                23,
+                -19.499999999999996
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-2",
+              "loadedPivot": "Elevation-2",
+              "loadedBarrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1"
+              ]
+            },
+            {
+              "index": 3,
+              "node": "Turret-3",
+              "pivot": "Elevation-3",
+              "barrelNodes": [
+                "Barrel-3-0",
+                "Barrel-3-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-3-0",
+                "Muzzle-3-1"
+              ],
+              "position": [
+                0,
+                23,
+                -58.50000000000001
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-3",
+              "loadedPivot": "Elevation-3",
+              "loadedBarrelNodes": [
+                "Barrel-3-0",
+                "Barrel-3-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-3-0",
+                "Muzzle-3-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "secondary",
+          "controlId": "heavy_ca:secondary",
+          "weaponId": "gun_127_auto",
+          "control": "automatic",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "bankId": "ca_port",
+          "groupNode": "WeaponGroup-heavy_ca:secondary",
+          "role": "surface",
+          "bearingDeg": 270,
+          "arcDeg": 180,
+          "targetMounts": 2,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-heavy_ca:secondary-0",
+              "pivot": "Pivot-heavy_ca:secondary-0",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:secondary-0-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:secondary-0-0"
+              ],
+              "position": [
+                -9.200000000000001,
+                19.32,
+                37.05
+              ],
+              "baseYaw": 4.71238898038469,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_casecondary-0",
+              "loadedPivot": "Pivot-heavy_casecondary-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_casecondary-0-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_casecondary-0-0"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-heavy_ca:secondary-1",
+              "pivot": "Pivot-heavy_ca:secondary-1",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:secondary-1-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:secondary-1-0"
+              ],
+              "position": [
+                -9.200000000000001,
+                19.32,
+                -37.05
+              ],
+              "baseYaw": 4.71238898038469,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_casecondary-1",
+              "loadedPivot": "Pivot-heavy_casecondary-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_casecondary-1-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_casecondary-1-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-heavy_casecondary"
+        },
+        {
+          "slot": "secondary",
+          "controlId": "heavy_ca:secondary",
+          "weaponId": "gun_127_auto",
+          "control": "automatic",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "bankId": "ca_starboard",
+          "groupNode": "WeaponGroup-heavy_ca:secondary",
+          "role": "surface",
+          "bearingDeg": 90,
+          "arcDeg": 180,
+          "targetMounts": 2,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 2,
+              "node": "Mount-heavy_ca:secondary-2",
+              "pivot": "Pivot-heavy_ca:secondary-2",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:secondary-2-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:secondary-2-0"
+              ],
+              "position": [
+                9.200000000000001,
+                19.32,
+                37.05
+              ],
+              "baseYaw": 1.5707963267948966,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_casecondary-2",
+              "loadedPivot": "Pivot-heavy_casecondary-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_casecondary-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_casecondary-2-0"
+              ]
+            },
+            {
+              "index": 3,
+              "node": "Mount-heavy_ca:secondary-3",
+              "pivot": "Pivot-heavy_ca:secondary-3",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:secondary-3-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:secondary-3-0"
+              ],
+              "position": [
+                9.200000000000001,
+                19.32,
+                -37.05
+              ],
+              "baseYaw": 1.5707963267948966,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_casecondary-3",
+              "loadedPivot": "Pivot-heavy_casecondary-3",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_casecondary-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_casecondary-3-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-heavy_casecondary"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "heavy_ca:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "ca_aa40",
+          "groupNode": "WeaponGroup-heavy_ca:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 3,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-heavy_ca:light_aa-0",
+              "pivot": "Pivot-heavy_ca:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:light_aa-0-0",
+                "WeaponBarrel-heavy_ca:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:light_aa-0-0",
+                "WeaponMuzzle-heavy_ca:light_aa-0-1"
+              ],
+              "position": [
+                -9.200000000000001,
+                19.32,
+                -56.16
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_calight_aa-0",
+              "loadedPivot": "Pivot-heavy_calight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_calight_aa-0-0",
+                "WeaponBarrel-heavy_calight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_calight_aa-0-0",
+                "WeaponMuzzle-heavy_calight_aa-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-heavy_ca:light_aa-1",
+              "pivot": "Pivot-heavy_ca:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:light_aa-1-0",
+                "WeaponBarrel-heavy_ca:light_aa-1-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:light_aa-1-0",
+                "WeaponMuzzle-heavy_ca:light_aa-1-1"
+              ],
+              "position": [
+                9.200000000000001,
+                19.32,
+                -8.189999999999996
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_calight_aa-1",
+              "loadedPivot": "Pivot-heavy_calight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_calight_aa-1-0",
+                "WeaponBarrel-heavy_calight_aa-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_calight_aa-1-0",
+                "WeaponMuzzle-heavy_calight_aa-1-1"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Mount-heavy_ca:light_aa-2",
+              "pivot": "Pivot-heavy_ca:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:light_aa-2-0",
+                "WeaponBarrel-heavy_ca:light_aa-2-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:light_aa-2-0",
+                "WeaponMuzzle-heavy_ca:light_aa-2-1"
+              ],
+              "position": [
+                -9.200000000000001,
+                19.32,
+                39.780000000000015
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_calight_aa-2",
+              "loadedPivot": "Pivot-heavy_calight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_calight_aa-2-0",
+                "WeaponBarrel-heavy_calight_aa-2-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_calight_aa-2-0",
+                "WeaponMuzzle-heavy_calight_aa-2-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-heavy_calight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "heavy_ca:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "ca_aa20",
+          "groupNode": "WeaponGroup-heavy_ca:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 4,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 3,
+              "node": "Mount-heavy_ca:light_aa-3",
+              "pivot": "Pivot-heavy_ca:light_aa-3",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:light_aa-3-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:light_aa-3-0"
+              ],
+              "position": [
+                9.200000000000001,
+                19.32,
+                -56.16
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_calight_aa-3",
+              "loadedPivot": "Pivot-heavy_calight_aa-3",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_calight_aa-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_calight_aa-3-0"
+              ]
+            },
+            {
+              "index": 4,
+              "node": "Mount-heavy_ca:light_aa-4",
+              "pivot": "Pivot-heavy_ca:light_aa-4",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:light_aa-4-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:light_aa-4-0"
+              ],
+              "position": [
+                -9.200000000000001,
+                19.32,
+                -8.189999999999996
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_calight_aa-4",
+              "loadedPivot": "Pivot-heavy_calight_aa-4",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_calight_aa-4-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_calight_aa-4-0"
+              ]
+            },
+            {
+              "index": 5,
+              "node": "Mount-heavy_ca:light_aa-5",
+              "pivot": "Pivot-heavy_ca:light_aa-5",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:light_aa-5-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:light_aa-5-0"
+              ],
+              "position": [
+                9.200000000000001,
+                19.32,
+                39.780000000000015
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_calight_aa-5",
+              "loadedPivot": "Pivot-heavy_calight_aa-5",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_calight_aa-5-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_calight_aa-5-0"
+              ]
+            },
+            {
+              "index": 6,
+              "node": "Mount-heavy_ca:light_aa-6",
+              "pivot": "Pivot-heavy_ca:light_aa-6",
+              "barrelNodes": [
+                "WeaponBarrel-heavy_ca:light_aa-6-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-heavy_ca:light_aa-6-0"
+              ],
+              "position": [
+                -9.200000000000001,
+                19.32,
+                -56.16
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-heavy_calight_aa-6",
+              "loadedPivot": "Pivot-heavy_calight_aa-6",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-heavy_calight_aa-6-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-heavy_calight_aa-6-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-heavy_calight_aa"
+        }
+      ]
+    },
+    {
+      "key": "kagero",
+      "targetId": "torpedo_dd",
+      "style": "japanese-torpedo-destroyer",
+      "stern": 0.2,
+      "shoulder": 0.2,
+      "color": "#697777",
+      "bridge": [
+        0.34,
+        0.42,
+        0.42
+      ],
+      "funnels": [
+        [
+          0.08,
+          0.41,
+          0.2
+        ],
+        [
+          -0.065,
+          0.36,
+          0.18
+        ]
+      ],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Raised Japanese forecastle bridge, two raked funnels, aft deckhouse and two quad torpedo banks recall Kagero.",
+      "targetArmament": "Three single main mounts replace historical twin gun mounts; two manual four-tube torpedo mounts follow TARGET. Secondary does not mean automatic.",
+      "hull": {
+        "length": 115,
+        "beam": 12,
+        "height": 12
+      },
+      "runtimeFile": "content/assets/ships/kagero/kagero.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "2c4862587adf4e5cc87a49feb0667fe543f580606891a01878c0b74319466493",
+      "geometrySha256": "968f43710e7fc5ddac0a9739096692d296503b30aed3f7d247182895699fa444",
+      "mainContract": {
+        "key": "kagero",
+        "hull": {
+          "length": 115,
+          "beam": 12,
+          "height": 12
+        },
+        "maxHeight": 26.601599973773958,
+        "barrels": [
+          1,
+          1,
+          1
+        ],
+        "rear": [
+          false,
+          false,
+          true
+        ]
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "torpedo_dd:main",
+          "weaponId": "gun_127",
+          "control": "manual",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 3,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Turret-0",
+              "pivot": "Elevation-0",
+              "barrelNodes": [
+                "Barrel-0-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-0-0"
+              ],
+              "position": [
+                0,
+                12,
+                28.75
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-0",
+              "loadedPivot": "Elevation-0",
+              "loadedBarrelNodes": [
+                "Barrel-0-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-0-0"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Turret-1",
+              "pivot": "Elevation-1",
+              "barrelNodes": [
+                "Barrel-1-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-1-0"
+              ],
+              "position": [
+                0,
+                12,
+                0
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-1",
+              "loadedPivot": "Elevation-1",
+              "loadedBarrelNodes": [
+                "Barrel-1-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-1-0"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Turret-2",
+              "pivot": "Elevation-2",
+              "barrelNodes": [
+                "Barrel-2-0"
+              ],
+              "muzzleNames": [
+                "Muzzle-2-0"
+              ],
+              "position": [
+                0,
+                12,
+                -28.75
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-2",
+              "loadedPivot": "Elevation-2",
+              "loadedBarrelNodes": [
+                "Barrel-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-2-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "secondary",
+          "controlId": "torpedo_dd:secondary",
+          "weaponId": "torpedo_fast",
+          "control": "manual",
+          "kind": "torpedo",
+          "availableModes": [
+            "surface"
+          ],
+          "bankId": null,
+          "groupNode": "WeaponGroup-torpedo_dd:secondary",
+          "targetMounts": 2,
+          "targetBarrels": 4,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-torpedo_dd:secondary-0",
+              "pivot": "Pivot-torpedo_dd:secondary-0",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_dd:secondary-0-0",
+                "WeaponBarrel-torpedo_dd:secondary-0-1",
+                "WeaponBarrel-torpedo_dd:secondary-0-2",
+                "WeaponBarrel-torpedo_dd:secondary-0-3"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_dd:secondary-0-0",
+                "WeaponMuzzle-torpedo_dd:secondary-0-1",
+                "WeaponMuzzle-torpedo_dd:secondary-0-2",
+                "WeaponMuzzle-torpedo_dd:secondary-0-3"
+              ],
+              "position": [
+                0,
+                12,
+                19.166666666666668
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_ddsecondary-0",
+              "loadedPivot": "Pivot-torpedo_ddsecondary-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_ddsecondary-0-0",
+                "WeaponBarrel-torpedo_ddsecondary-0-1",
+                "WeaponBarrel-torpedo_ddsecondary-0-2",
+                "WeaponBarrel-torpedo_ddsecondary-0-3"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_ddsecondary-0-0",
+                "WeaponMuzzle-torpedo_ddsecondary-0-1",
+                "WeaponMuzzle-torpedo_ddsecondary-0-2",
+                "WeaponMuzzle-torpedo_ddsecondary-0-3"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-torpedo_dd:secondary-1",
+              "pivot": "Pivot-torpedo_dd:secondary-1",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_dd:secondary-1-0",
+                "WeaponBarrel-torpedo_dd:secondary-1-1",
+                "WeaponBarrel-torpedo_dd:secondary-1-2",
+                "WeaponBarrel-torpedo_dd:secondary-1-3"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_dd:secondary-1-0",
+                "WeaponMuzzle-torpedo_dd:secondary-1-1",
+                "WeaponMuzzle-torpedo_dd:secondary-1-2",
+                "WeaponMuzzle-torpedo_dd:secondary-1-3"
+              ],
+              "position": [
+                0,
+                12,
+                -19.16666666666666
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_ddsecondary-1",
+              "loadedPivot": "Pivot-torpedo_ddsecondary-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_ddsecondary-1-0",
+                "WeaponBarrel-torpedo_ddsecondary-1-1",
+                "WeaponBarrel-torpedo_ddsecondary-1-2",
+                "WeaponBarrel-torpedo_ddsecondary-1-3"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_ddsecondary-1-0",
+                "WeaponMuzzle-torpedo_ddsecondary-1-1",
+                "WeaponMuzzle-torpedo_ddsecondary-1-2",
+                "WeaponMuzzle-torpedo_ddsecondary-1-3"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-torpedo_ddsecondary"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "torpedo_dd:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "kag_aa40",
+          "groupNode": "WeaponGroup-torpedo_dd:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 1,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-torpedo_dd:light_aa-0",
+              "pivot": "Pivot-torpedo_dd:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_dd:light_aa-0-0",
+                "WeaponBarrel-torpedo_dd:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_dd:light_aa-0-0",
+                "WeaponMuzzle-torpedo_dd:light_aa-0-1"
+              ],
+              "position": [
+                -4.800000000000001,
+                10.08,
+                -33.12
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_ddlight_aa-0",
+              "loadedPivot": "Pivot-torpedo_ddlight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_ddlight_aa-0-0",
+                "WeaponBarrel-torpedo_ddlight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_ddlight_aa-0-0",
+                "WeaponMuzzle-torpedo_ddlight_aa-0-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-torpedo_ddlight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "torpedo_dd:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "kag_aa20",
+          "groupNode": "WeaponGroup-torpedo_dd:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 2,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 1,
+              "node": "Mount-torpedo_dd:light_aa-1",
+              "pivot": "Pivot-torpedo_dd:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_dd:light_aa-1-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_dd:light_aa-1-0"
+              ],
+              "position": [
+                4.800000000000001,
+                10.08,
+                -4.829999999999998
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_ddlight_aa-1",
+              "loadedPivot": "Pivot-torpedo_ddlight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_ddlight_aa-1-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_ddlight_aa-1-0"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Mount-torpedo_dd:light_aa-2",
+              "pivot": "Pivot-torpedo_dd:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_dd:light_aa-2-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_dd:light_aa-2-0"
+              ],
+              "position": [
+                -4.800000000000001,
+                10.08,
+                23.460000000000008
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_ddlight_aa-2",
+              "loadedPivot": "Pivot-torpedo_ddlight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_ddlight_aa-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_ddlight_aa-2-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-torpedo_ddlight_aa"
+        }
+      ]
+    },
+    {
+      "key": "mogami",
+      "targetId": "torpedo_ca",
+      "style": "japanese-heavy-cruiser",
+      "stern": 0.24,
+      "shoulder": 0.32,
+      "color": "#778381",
+      "bridge": [
+        0.135,
+        0.45,
+        0.95
+      ],
+      "funnels": [
+        [
+          -0.075,
+          0.63,
+          0.23
+        ],
+        [
+          -0.15,
+          0.5,
+          0.2
+        ]
+      ],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Slender Japanese heavy-cruiser hull, tiered bridge, unequal raked funnels and recessed side torpedo bays interpret Mogami without specifying an exact wartime conversion.",
+      "targetArmament": "Three twin main mounts follow TARGET instead of the historical five twin heavy-cruiser positions. Two manual quad torpedo mounts are displayed in opposite side bays; numeric secondary origins remain unchanged.",
+      "hull": {
+        "length": 190,
+        "beam": 22,
+        "height": 22
+      },
+      "runtimeFile": "content/assets/ships/mogami/mogami.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "e13649c6a5bcea860a21265a7e2a0df68e6df5a8fd2bdfd6be8e67c2de25f5e7",
+      "geometrySha256": "406e4d00b046f2bd6a0b20eaaa72ab468c54888ea6d0ce7aded29fa91e39f84b",
+      "mainContract": {
+        "key": "mogami",
+        "hull": {
+          "length": 190,
+          "beam": 22,
+          "height": 22
+        },
+        "maxHeight": 56.931599961853024,
+        "barrels": [
+          2,
+          2,
+          2
+        ],
+        "rear": [
+          false,
+          false,
+          true
+        ]
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "torpedo_ca:main",
+          "weaponId": "gun_203",
+          "control": "manual",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 3,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Turret-0",
+              "pivot": "Elevation-0",
+              "barrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1"
+              ],
+              "position": [
+                0,
+                22,
+                47.5
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-0",
+              "loadedPivot": "Elevation-0",
+              "loadedBarrelNodes": [
+                "Barrel-0-0",
+                "Barrel-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-0-0",
+                "Muzzle-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Turret-1",
+              "pivot": "Elevation-1",
+              "barrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1"
+              ],
+              "position": [
+                0,
+                22,
+                0
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-1",
+              "loadedPivot": "Elevation-1",
+              "loadedBarrelNodes": [
+                "Barrel-1-0",
+                "Barrel-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-1-0",
+                "Muzzle-1-1"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Turret-2",
+              "pivot": "Elevation-2",
+              "barrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1"
+              ],
+              "muzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1"
+              ],
+              "position": [
+                0,
+                22,
+                -47.5
+              ],
+              "baseYaw": 3.141592653589793,
+              "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+              "loadedNode": "Turret-2",
+              "loadedPivot": "Elevation-2",
+              "loadedBarrelNodes": [
+                "Barrel-2-0",
+                "Barrel-2-1"
+              ],
+              "loadedMuzzleNames": [
+                "Muzzle-2-0",
+                "Muzzle-2-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "secondary",
+          "controlId": "torpedo_ca:secondary",
+          "weaponId": "torpedo_long",
+          "control": "manual",
+          "kind": "torpedo",
+          "availableModes": [
+            "surface"
+          ],
+          "bankId": null,
+          "groupNode": "WeaponGroup-torpedo_ca:secondary",
+          "targetMounts": 2,
+          "targetBarrels": 4,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-torpedo_ca:secondary-0",
+              "pivot": "Pivot-torpedo_ca:secondary-0",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:secondary-0-0",
+                "WeaponBarrel-torpedo_ca:secondary-0-1",
+                "WeaponBarrel-torpedo_ca:secondary-0-2",
+                "WeaponBarrel-torpedo_ca:secondary-0-3"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:secondary-0-0",
+                "WeaponMuzzle-torpedo_ca:secondary-0-1",
+                "WeaponMuzzle-torpedo_ca:secondary-0-2",
+                "WeaponMuzzle-torpedo_ca:secondary-0-3"
+              ],
+              "position": [
+                -8.14,
+                22,
+                31.66666666666667
+              ],
+              "baseYaw": -1.5707963267948966,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_casecondary-0",
+              "loadedPivot": "Pivot-torpedo_casecondary-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_casecondary-0-0",
+                "WeaponBarrel-torpedo_casecondary-0-1",
+                "WeaponBarrel-torpedo_casecondary-0-2",
+                "WeaponBarrel-torpedo_casecondary-0-3"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_casecondary-0-0",
+                "WeaponMuzzle-torpedo_casecondary-0-1",
+                "WeaponMuzzle-torpedo_casecondary-0-2",
+                "WeaponMuzzle-torpedo_casecondary-0-3"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-torpedo_ca:secondary-1",
+              "pivot": "Pivot-torpedo_ca:secondary-1",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:secondary-1-0",
+                "WeaponBarrel-torpedo_ca:secondary-1-1",
+                "WeaponBarrel-torpedo_ca:secondary-1-2",
+                "WeaponBarrel-torpedo_ca:secondary-1-3"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:secondary-1-0",
+                "WeaponMuzzle-torpedo_ca:secondary-1-1",
+                "WeaponMuzzle-torpedo_ca:secondary-1-2",
+                "WeaponMuzzle-torpedo_ca:secondary-1-3"
+              ],
+              "position": [
+                8.14,
+                22,
+                -31.66666666666666
+              ],
+              "baseYaw": 1.5707963267948966,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_casecondary-1",
+              "loadedPivot": "Pivot-torpedo_casecondary-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_casecondary-1-0",
+                "WeaponBarrel-torpedo_casecondary-1-1",
+                "WeaponBarrel-torpedo_casecondary-1-2",
+                "WeaponBarrel-torpedo_casecondary-1-3"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_casecondary-1-0",
+                "WeaponMuzzle-torpedo_casecondary-1-1",
+                "WeaponMuzzle-torpedo_casecondary-1-2",
+                "WeaponMuzzle-torpedo_casecondary-1-3"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-torpedo_casecondary"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "torpedo_ca:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "mog_aa40",
+          "groupNode": "WeaponGroup-torpedo_ca:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 2,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-torpedo_ca:light_aa-0",
+              "pivot": "Pivot-torpedo_ca:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:light_aa-0-0",
+                "WeaponBarrel-torpedo_ca:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:light_aa-0-0",
+                "WeaponMuzzle-torpedo_ca:light_aa-0-1"
+              ],
+              "position": [
+                -8.8,
+                18.48,
+                -54.72
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_calight_aa-0",
+              "loadedPivot": "Pivot-torpedo_calight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_calight_aa-0-0",
+                "WeaponBarrel-torpedo_calight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_calight_aa-0-0",
+                "WeaponMuzzle-torpedo_calight_aa-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-torpedo_ca:light_aa-1",
+              "pivot": "Pivot-torpedo_ca:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:light_aa-1-0",
+                "WeaponBarrel-torpedo_ca:light_aa-1-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:light_aa-1-0",
+                "WeaponMuzzle-torpedo_ca:light_aa-1-1"
+              ],
+              "position": [
+                8.8,
+                18.48,
+                -7.979999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_calight_aa-1",
+              "loadedPivot": "Pivot-torpedo_calight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_calight_aa-1-0",
+                "WeaponBarrel-torpedo_calight_aa-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_calight_aa-1-0",
+                "WeaponMuzzle-torpedo_calight_aa-1-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-torpedo_calight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "torpedo_ca:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "mog_aa20",
+          "groupNode": "WeaponGroup-torpedo_ca:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 4,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 2,
+              "node": "Mount-torpedo_ca:light_aa-2",
+              "pivot": "Pivot-torpedo_ca:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:light_aa-2-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:light_aa-2-0"
+              ],
+              "position": [
+                -8.8,
+                18.48,
+                38.76000000000001
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_calight_aa-2",
+              "loadedPivot": "Pivot-torpedo_calight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_calight_aa-2-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_calight_aa-2-0"
+              ]
+            },
+            {
+              "index": 3,
+              "node": "Mount-torpedo_ca:light_aa-3",
+              "pivot": "Pivot-torpedo_ca:light_aa-3",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:light_aa-3-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:light_aa-3-0"
+              ],
+              "position": [
+                8.8,
+                18.48,
+                -54.72
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_calight_aa-3",
+              "loadedPivot": "Pivot-torpedo_calight_aa-3",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_calight_aa-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_calight_aa-3-0"
+              ]
+            },
+            {
+              "index": 4,
+              "node": "Mount-torpedo_ca:light_aa-4",
+              "pivot": "Pivot-torpedo_ca:light_aa-4",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:light_aa-4-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:light_aa-4-0"
+              ],
+              "position": [
+                -8.8,
+                18.48,
+                -7.979999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_calight_aa-4",
+              "loadedPivot": "Pivot-torpedo_calight_aa-4",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_calight_aa-4-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_calight_aa-4-0"
+              ]
+            },
+            {
+              "index": 5,
+              "node": "Mount-torpedo_ca:light_aa-5",
+              "pivot": "Pivot-torpedo_ca:light_aa-5",
+              "barrelNodes": [
+                "WeaponBarrel-torpedo_ca:light_aa-5-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-torpedo_ca:light_aa-5-0"
+              ],
+              "position": [
+                8.8,
+                18.48,
+                38.76000000000001
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-torpedo_calight_aa-5",
+              "loadedPivot": "Pivot-torpedo_calight_aa-5",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-torpedo_calight_aa-5-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-torpedo_calight_aa-5-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-torpedo_calight_aa"
+        }
+      ]
+    },
+    {
+      "key": "independence",
+      "targetId": "light_cv",
+      "style": "ww2-light-carrier",
+      "stern": 0.3,
+      "shoulder": 0.26,
+      "color": "#849194",
+      "bridge": [
+        0.08,
+        0.19,
+        0.57
+      ],
+      "funnels": [],
+      "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Long narrow straight WW2 flight deck, small offset starboard island, four starboard exhaust uptakes and open bow/stern gallery support interpret USS Independence CVL-22, not a modern Independence-class LCS.",
+      "targetArmament": "Aircraft main armament creates no gun turrets, barrels or fake main muzzles. AircraftLaunch and AircraftRecovery are distinct local deck points. Two automatic single secondary guns use the actual ind_port and ind_starboard banks; AA counts follow TARGET.",
+      "hull": {
+        "length": 210,
+        "beam": 27,
+        "height": 27
+      },
+      "runtimeFile": "content/assets/ships/independence/independence.glb",
+      "license": "CC-BY-4.0",
+      "glbSha256": "57976de0726501e9145518f9c5f9347950b0587b98f3280b3db4a3ac99b0a27d",
+      "geometrySha256": "e1c1a5c809361797f3f41cd5795685b1811e0c1a7d2d57e7ba933ca4bdb90bad",
+      "mainContract": {
+        "key": "independence",
+        "hull": {
+          "length": 210,
+          "beam": 27,
+          "height": 27
+        },
+        "maxHeight": 64.34099998569488,
+        "barrels": [],
+        "rear": []
+      },
+      "visualWeaponGroups": [
+        {
+          "slot": "main",
+          "controlId": "light_cv:main",
+          "weaponId": "aircraft_fast",
+          "control": "manual",
+          "kind": "aircraft",
+          "availableModes": [
+            "surface"
+          ],
+          "groupNode": "Ship",
+          "bankId": null,
+          "targetMounts": 1,
+          "targetBarrels": 3,
+          "mounts": [],
+          "aircraftLaunch": "AircraftLaunch",
+          "aircraftRecovery": "AircraftRecovery",
+          "note": "Aircraft squadron counts are not visual gun barrels.",
+          "loadedGroupNode": "Ship"
+        },
+        {
+          "slot": "secondary",
+          "controlId": "light_cv:secondary",
+          "weaponId": "gun_127_auto",
+          "control": "automatic",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "bankId": "ind_port",
+          "groupNode": "WeaponGroup-light_cv:secondary",
+          "role": "surface",
+          "bearingDeg": 270,
+          "arcDeg": 180,
+          "targetMounts": 1,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-light_cv:secondary-0",
+              "pivot": "Pivot-light_cv:secondary-0",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:secondary-0-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:secondary-0-0"
+              ],
+              "position": [
+                -10.8,
+                27.134999999999998,
+                -54.6
+              ],
+              "baseYaw": 4.71238898038469,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvsecondary-0",
+              "loadedPivot": "Pivot-light_cvsecondary-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvsecondary-0-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvsecondary-0-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-light_cvsecondary"
+        },
+        {
+          "slot": "secondary",
+          "controlId": "light_cv:secondary",
+          "weaponId": "gun_127_auto",
+          "control": "automatic",
+          "kind": "gun",
+          "availableModes": [
+            "surface"
+          ],
+          "bankId": "ind_starboard",
+          "groupNode": "WeaponGroup-light_cv:secondary",
+          "role": "surface",
+          "bearingDeg": 90,
+          "arcDeg": 180,
+          "targetMounts": 1,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 1,
+              "node": "Mount-light_cv:secondary-1",
+              "pivot": "Pivot-light_cv:secondary-1",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:secondary-1-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:secondary-1-0"
+              ],
+              "position": [
+                10.8,
+                27.134999999999998,
+                -54.6
+              ],
+              "baseYaw": 1.5707963267948966,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvsecondary-1",
+              "loadedPivot": "Pivot-light_cvsecondary-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvsecondary-1-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvsecondary-1-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-light_cvsecondary"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "light_cv:light_aa",
+          "weaponId": "aa_40",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "ind_aa40",
+          "groupNode": "WeaponGroup-light_cv:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 3,
+          "targetBarrels": 2,
+          "mounts": [
+            {
+              "index": 0,
+              "node": "Mount-light_cv:light_aa-0",
+              "pivot": "Pivot-light_cv:light_aa-0",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-0-0",
+                "WeaponBarrel-light_cv:light_aa-0-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-0-0",
+                "WeaponMuzzle-light_cv:light_aa-0-1"
+              ],
+              "position": [
+                -10.8,
+                27.134999999999998,
+                -60.48
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-0",
+              "loadedPivot": "Pivot-light_cvlight_aa-0",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-0-0",
+                "WeaponBarrel-light_cvlight_aa-0-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-0-0",
+                "WeaponMuzzle-light_cvlight_aa-0-1"
+              ]
+            },
+            {
+              "index": 1,
+              "node": "Mount-light_cv:light_aa-1",
+              "pivot": "Pivot-light_cv:light_aa-1",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-1-0",
+                "WeaponBarrel-light_cv:light_aa-1-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-1-0",
+                "WeaponMuzzle-light_cv:light_aa-1-1"
+              ],
+              "position": [
+                10.8,
+                27.134999999999998,
+                -8.819999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-1",
+              "loadedPivot": "Pivot-light_cvlight_aa-1",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-1-0",
+                "WeaponBarrel-light_cvlight_aa-1-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-1-0",
+                "WeaponMuzzle-light_cvlight_aa-1-1"
+              ]
+            },
+            {
+              "index": 2,
+              "node": "Mount-light_cv:light_aa-2",
+              "pivot": "Pivot-light_cv:light_aa-2",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-2-0",
+                "WeaponBarrel-light_cv:light_aa-2-1"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-2-0",
+                "WeaponMuzzle-light_cv:light_aa-2-1"
+              ],
+              "position": [
+                -10.8,
+                27.134999999999998,
+                42.84000000000002
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-2",
+              "loadedPivot": "Pivot-light_cvlight_aa-2",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-2-0",
+                "WeaponBarrel-light_cvlight_aa-2-1"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-2-0",
+                "WeaponMuzzle-light_cvlight_aa-2-1"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-light_cvlight_aa"
+        },
+        {
+          "slot": "light_aa",
+          "controlId": "light_cv:light_aa",
+          "weaponId": "aa_20",
+          "control": "automatic",
+          "kind": "aa",
+          "availableModes": [
+            "air"
+          ],
+          "bankId": "ind_aa20",
+          "groupNode": "WeaponGroup-light_cv:light_aa",
+          "role": "aa",
+          "bearingDeg": 0,
+          "arcDeg": 360,
+          "targetMounts": 6,
+          "targetBarrels": 1,
+          "mounts": [
+            {
+              "index": 3,
+              "node": "Mount-light_cv:light_aa-3",
+              "pivot": "Pivot-light_cv:light_aa-3",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-3-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-3-0"
+              ],
+              "position": [
+                10.8,
+                27.134999999999998,
+                -60.48
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-3",
+              "loadedPivot": "Pivot-light_cvlight_aa-3",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-3-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-3-0"
+              ]
+            },
+            {
+              "index": 4,
+              "node": "Mount-light_cv:light_aa-4",
+              "pivot": "Pivot-light_cv:light_aa-4",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-4-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-4-0"
+              ],
+              "position": [
+                -10.8,
+                27.134999999999998,
+                -8.819999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-4",
+              "loadedPivot": "Pivot-light_cvlight_aa-4",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-4-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-4-0"
+              ]
+            },
+            {
+              "index": 5,
+              "node": "Mount-light_cv:light_aa-5",
+              "pivot": "Pivot-light_cv:light_aa-5",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-5-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-5-0"
+              ],
+              "position": [
+                10.8,
+                27.134999999999998,
+                42.84000000000002
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-5",
+              "loadedPivot": "Pivot-light_cvlight_aa-5",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-5-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-5-0"
+              ]
+            },
+            {
+              "index": 6,
+              "node": "Mount-light_cv:light_aa-6",
+              "pivot": "Pivot-light_cv:light_aa-6",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-6-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-6-0"
+              ],
+              "position": [
+                -10.8,
+                27.134999999999998,
+                -60.48
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-6",
+              "loadedPivot": "Pivot-light_cvlight_aa-6",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-6-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-6-0"
+              ]
+            },
+            {
+              "index": 7,
+              "node": "Mount-light_cv:light_aa-7",
+              "pivot": "Pivot-light_cv:light_aa-7",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-7-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-7-0"
+              ],
+              "position": [
+                10.8,
+                27.134999999999998,
+                -8.819999999999997
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-7",
+              "loadedPivot": "Pivot-light_cvlight_aa-7",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-7-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-7-0"
+              ]
+            },
+            {
+              "index": 8,
+              "node": "Mount-light_cv:light_aa-8",
+              "pivot": "Pivot-light_cv:light_aa-8",
+              "barrelNodes": [
+                "WeaponBarrel-light_cv:light_aa-8-0"
+              ],
+              "muzzleNames": [
+                "WeaponMuzzle-light_cv:light_aa-8-0"
+              ],
+              "position": [
+                -10.8,
+                27.134999999999998,
+                42.84000000000002
+              ],
+              "baseYaw": 0,
+              "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+              "loadedNode": "Mount-light_cvlight_aa-8",
+              "loadedPivot": "Pivot-light_cvlight_aa-8",
+              "loadedBarrelNodes": [
+                "WeaponBarrel-light_cvlight_aa-8-0"
+              ],
+              "loadedMuzzleNames": [
+                "WeaponMuzzle-light_cvlight_aa-8-0"
+              ]
+            }
+          ],
+          "loadedGroupNode": "WeaponGroup-light_cvlight_aa"
+        }
+      ]
+    }
+  ]
+}

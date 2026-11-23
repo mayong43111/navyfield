@@ -11,6 +11,7 @@ import { sinkingPose } from '../simulation/combat.ts';
 import { createBattleStage } from './stage.ts';
 import { createEnvironment } from './environment.ts';
 import { createBattleEffects } from './battle-effects.ts';
+import { updateVisualWeaponGroups } from './ships/weapon-rig.ts';
 import { BATTLE_MIN_ZOOM, BATTLE_ZOOM, positionBattleCamera, seaViewSize, edgePan } from './camera.ts';
 
 export interface Projection { x: number; y: number; visible: boolean }
@@ -19,7 +20,8 @@ export interface ViewFrame {
   ship: Projection; enemy: Projection; aimLabel: Projection; departure: Projection; pins: Projection[];
   browsing: boolean;
 }
-export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<typeof createShip>[0]) {
+export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<typeof createShip>[0],
+  createVessel: (typeId: string) => ShipInstance = typeId => createShip(models, typeId)) {
   const { renderer, scene, camera, controls, halfHeight, battleCameraOffset, battleCameraDirection,
     sunlight, ocean, oceanMaterial } = createBattleStage(canvas);
   const environment = createEnvironment(scene, oceanMaterial);
@@ -30,6 +32,9 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
   let navigation: Readonly<NavigationState> = { x: 0, z: 0, heading: Math.PI / 2, speed: 0, throttle: 0 };
   let config: DeepReadonly<BattleConfig> | null = null;
   const lastSinking = { player: 0, enemy: 0 };
+  const aircraftMarkers = new Map<string, THREE.Mesh>();
+  const aircraftGeometry = new THREE.ConeGeometry(9, 24, 3).rotateX(Math.PI / 2);
+  const aircraftMaterials = { player: new THREE.MeshBasicMaterial({ color: '#74e0c4' }), enemy: new THREE.MeshBasicMaterial({ color: '#ff946f' }) };
   const raycaster = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
   const corners = [new THREE.Vector2(-1, -1), new THREE.Vector2(1, -1), new THREE.Vector2(1, 1), new THREE.Vector2(-1, 1)];
   const marker = (radius: number, width: number, segments: number, color: string, depthTest = true) => {
@@ -55,7 +60,7 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
     if (cached && cached.typeId !== typeId) { environment.remove(cached.instance.ship); vessels.delete(id); }
     let entry = vessels.get(id);
     if (!entry) {
-      entry = { typeId, instance: createShip(models, typeId) }; vessels.set(id, entry); environment.add(entry.instance);
+      entry = { typeId, instance: createVessel(typeId) }; vessels.set(id, entry); environment.add(entry.instance);
     }
     player = entry.instance; player.ship.visible = mode === 'yard' || mode === 'battle';
     environment.appearance(mode === 'battle' || mode === 'prepare');
@@ -71,7 +76,7 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
   function contract(typeId: string): DeepReadonly<VesselVisualContract> {
     let value = contracts.get(typeId);
     if (!value) {
-      const model = createShip(models, typeId);
+      const model = createVessel(typeId);
       value = freeze({ modelKey: model.modelKey as ShipModelId, modelName: model.modelName, dimensions: { ...model.dimensions },
         mounts: model.turrets.map(t => ({ rear: t.rear, barrelCount: t.barrels.length })) });
       contracts.set(typeId, value);
@@ -79,12 +84,14 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
     return value;
   }
   function preview(typeId: string): string {
-    const model = createShip(models, typeId), cached = previews.get(model.modelKey);
+    const model = createVessel(typeId), cached = previews.get(typeId);
     if (cached) return cached;
-    const value = renderShipPreview(renderer, model.ship).toDataURL('image/png'); previews.set(model.modelKey, value); return value;
+    const value = renderShipPreview(renderer, model.ship).toDataURL('image/png'); previews.set(typeId, value); return value;
   }
   function clear(): void {
     effects.clear(); wakeTimer = smokeTimer = 0; lastSinking.player = lastSinking.enemy = 0;
+    for (const mesh of aircraftMarkers.values()) scene.remove(mesh);
+    aircraftMarkers.clear();
     routeLine.visible = routeMarker.visible = false;
     for (const model of [player, enemy]) for (const turret of model?.turrets ?? []) {
       turret.group.rotation.set(0, turret.rear ? Math.PI : 0, 0); turret.elevation.rotation.set(0, 0, 0); turret.recoil = 0;
@@ -107,7 +114,7 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
   function show(screen: Screen, battleConfig: DeepReadonly<BattleConfig> | null, observation: Observation | null): void {
     if (screen === 'battle' && battleConfig && battleConfig !== config) {
       if (enemy) environment.remove(enemy.ship);
-      enemy = createShip(models, battleConfig.ships.find(ship => ship.side === 'enemy')!.definitionId);
+      enemy = createVessel(battleConfig.ships.find(ship => ship.side === 'enemy')!.definitionId);
       environment.add(enemy);
     }
     clear(); mode = screen; config = battleConfig; following = true;
@@ -146,11 +153,13 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
     return { x: (p.x + 1) * canvas.clientWidth / 2, y: (1 - p.y) * canvas.clientHeight / 2,
       visible: Math.abs(p.x) <= 1 && Math.abs(p.y) <= 1 };
   }
-  function waterPoint(x: number, y: number): Point | null {
+  function aimPoint(x: number, y: number, height = 0): Point | null {
     raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
-    const point = raycaster.ray.intersectPlane(plane, new THREE.Vector3());
+    const aimPlane = height === 0 ? plane : new THREE.Plane(new THREE.Vector3(0, 1, 0), -height);
+    const point = raycaster.ray.intersectPlane(aimPlane, new THREE.Vector3());
     return point ? { x: point.x, y: point.y, z: point.z } : null;
   }
+  function waterPoint(x: number, y: number): Point | null { return aimPoint(x, y); }
   function render(observation: Observation | null, selectedWeapon: number, dt: number,
     pointer: { x: number; y: number } | null): ViewFrame {
     const model = instance(), oldX = navigation.x, oldZ = navigation.z;
@@ -188,10 +197,12 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
         ship.ship.rotation.set(0, state.navigation.heading, 0);
       }
       for (const [index, turret] of ship.turrets.entries()) {
-        const weapon = state.weapons[index]!;
+        const weapon = state.weapons[index];
+        if (!weapon) continue;
         turret.group.rotation.y = weapon.yaw; turret.elevation.rotation.x = -weapon.elevation; turret.recoil = weapon.recoil;
         for (const barrel of turret.barrels) barrel.position.z = -weapon.recoil;
       }
+      updateVisualWeaponGroups(ship.auxiliaryGroups ?? [], state.side, observation!);
       const combat = observation!.combat[state.side];
       if (combat.hp <= 0) {
         const before = lastSinking[state.side]; lastSinking[state.side] = combat.sinking;
@@ -243,6 +254,15 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
       const velocity = new THREE.Vector3(0, 0, -Math.sign(navigation.speed) * 1.2).applyAxisAngle(new THREE.Vector3(0, 1, 0), navigation.heading);
       effects.particle(position, velocity, '#b5d9d5', 2.5, 8, 0.9);
     }
+    const currentAircraft = new Set(observation?.aircraft?.map(a => a.id) ?? []);
+    for (const [id, mesh] of aircraftMarkers) if (!currentAircraft.has(id)) { scene.remove(mesh); aircraftMarkers.delete(id); }
+    for (const aircraft of observation?.aircraft ?? []) {
+      let mesh = aircraftMarkers.get(aircraft.id);
+      if (!mesh) { mesh = new THREE.Mesh(aircraftGeometry, aircraftMaterials[aircraft.owner]); aircraftMarkers.set(aircraft.id, mesh); scene.add(mesh); }
+      mesh.position.set(aircraft.position.x, aircraft.position.y, aircraft.position.z);
+      mesh.rotation.y = Math.atan2(aircraft.velocity.x, aircraft.velocity.z);
+      mesh.visible = mode === 'battle';
+    }
     effects.update(dt, observation);
     const frame: ViewFrame = { navigation, aim: target, browsing,
       corners: corners.flatMap(p => { const hit = waterPoint(p.x, p.y); return hit ? [hit] : []; }),
@@ -259,9 +279,11 @@ export function createBattleView(canvas: HTMLCanvasElement, models: Parameters<t
     renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); resizeOcean();
   });
   resize.observe(canvas);
-  function dispose(): void { resize.disconnect(); clear(); controls.dispose(); renderer.dispose(); }
+  function dispose(): void { resize.disconnect(); clear(); aircraftGeometry.dispose();
+    for (const material of Object.values(aircraftMaterials)) material.dispose();
+    controls.dispose(); renderer.dispose(); }
   function resetPortView(): void {
     navigation = { x: 0, z: 0, heading: Math.PI / 2, speed: 0, throttle: 0 }; show('yard', null, null);
   }
-  return { selectVessel, contract, preview, show, present, render, returnCamera, waterPoint, resetPortView, dispose };
+  return { selectVessel, contract, preview, show, present, render, returnCamera, waterPoint, aimPoint, resetPortView, dispose };
 }

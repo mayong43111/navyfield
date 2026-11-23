@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { createYamato, loadYamato } from './yamato.ts';
 import type { ShipInstance, Turret } from './yamato.ts';
 import { loadCompressedResource } from '../../adapters/content/resource-loader.ts';
+import { bindVisualWeaponGroups } from './weapon-rig.ts';
 
 const types = new Map([
   ['nf-3-121', ['yamato', '大和']], ['nf-3-415', ['yamato', '大和（武藏同级参考）']],
@@ -20,7 +21,21 @@ export async function loadShipModels(): Promise<ReadonlyMap<string, THREE.Object
     loadCompressedResource(new URL('../../../content/assets/ships/california/california.glb.gz.bin', import.meta.url)).then(bytes => loader.parseAsync(bytes, '')),
     loadCompressedResource(new URL('../../../content/assets/ships/yorktown/yorktown.glb.gz.bin', import.meta.url)).then(bytes => loader.parseAsync(bytes, ''))
   ]);
-  return new Map([['yamato', yamato], ['bismarck', bismarck.scene], ['california', california.scene], ['yorktown', yorktown.scene]]);
+  const originals = await Promise.all([
+    ['shimakaze', new URL('../../../content/assets/ships/shimakaze/shimakaze.glb.gz.bin', import.meta.url)],
+    ['fletcher', new URL('../../../content/assets/ships/fletcher/fletcher.glb.gz.bin', import.meta.url)],
+    ['cleveland', new URL('../../../content/assets/ships/cleveland/cleveland.glb.gz.bin', import.meta.url)],
+    ['brooklyn', new URL('../../../content/assets/ships/brooklyn/brooklyn.glb.gz.bin', import.meta.url)],
+    ['admiral-hipper', new URL('../../../content/assets/ships/admiral-hipper/admiral-hipper.glb.gz.bin', import.meta.url)],
+    ['kagero', new URL('../../../content/assets/ships/kagero/kagero.glb.gz.bin', import.meta.url)],
+    ['mogami', new URL('../../../content/assets/ships/mogami/mogami.glb.gz.bin', import.meta.url)],
+    ['independence', new URL('../../../content/assets/ships/independence/independence.glb.gz.bin', import.meta.url)]
+  ].map(async ([key, url]) => {
+    const gltf = await loader.parseAsync(await loadCompressedResource(url as URL), '');
+    return [key as string, gltf.scene] as const;
+  }));
+  return new Map<string, THREE.Object3D>([['yamato', yamato], ['bismarck', bismarck.scene],
+    ['california', california.scene], ['yorktown', yorktown.scene], ...originals]);
 }
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -38,7 +53,7 @@ function node(root: THREE.Object3D, name: string): THREE.Object3D {
 }
 
 export function createShip(models: ReadonlyMap<string, THREE.Object3D>, typeId: string): ShipInstance {
-  const [key = 'yamato', modelName = '大和（占位）'] = types.get(typeId) ?? [];
+  const [key = 'yamato', modelName = '大和（占位）'] = types.get(typeId) ?? (models.has(typeId) ? [typeId, typeId] : []);
   const model = models.get(key);
   if (!model) throw new Error(`舰船模型未加载：${key}`);
   if (key === 'yamato') return { ...createYamato(model), modelName };
@@ -68,6 +83,8 @@ export function createShip(models: ReadonlyMap<string, THREE.Object3D>, typeId: 
     return { group, elevation, barrels, muzzles, rear: isRear, recoil: 0 };
   });
   return { ship, turrets, funnel: node(ship, 'FunnelSmoke'), modelKey: key, modelName,
+    auxiliaryGroups: bindVisualWeaponGroups(ship), aircraftLaunch: ship.getObjectByName('AircraftLaunch'),
+    aircraftRecovery: ship.getObjectByName('AircraftRecovery'),
     dimensions: { length: metadata['hull']['length'], beam: metadata['hull']['beam'], height: metadata['hull']['height'] },
     maxHeight: metadata['maxHeight'] };
 }

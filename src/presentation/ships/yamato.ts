@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { context2d } from '../../ui/legacy-helpers.ts';
 import { loadCompressedResource } from '../../adapters/content/resource-loader.ts';
+import type { VisualWeaponGroup } from './weapon-rig.ts';
 
 export interface Turret {
   group: THREE.Object3D;
@@ -20,6 +21,9 @@ export interface ShipInstance {
   modelName: string;
   dimensions: { length: number; beam: number; height: number };
   maxHeight: number;
+  auxiliaryGroups?: VisualWeaponGroup[];
+  aircraftLaunch?: THREE.Object3D | undefined;
+  aircraftRecovery?: THREE.Object3D | undefined;
 }
 
 export function turretMuzzle(turret: Turret): THREE.Vector3 {

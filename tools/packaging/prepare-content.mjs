@@ -2,8 +2,9 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
 const root = new URL('../../content/', import.meta.url);
+const catalog = JSON.parse(readFileSync(new URL('manifests/ship-model-catalog.json', root), 'utf8'));
 const files = [
-  ...['yamato', 'bismarck', 'california', 'yorktown'].map(key => `assets/ships/${key}/${key}.glb`),
+  ...catalog.targetModels.filter(model => model.runtimeAsset).map(model => model.runtimeAsset.replace(/^content\//, '')),
   'data/legacy/official-data.json',
   'data/maps/world-land.geojson'
 ];

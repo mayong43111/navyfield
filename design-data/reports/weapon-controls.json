@@ -1,0 +1,1368 @@
+{
+  "control_revision": 1,
+  "numerical_rule_version": "target-v1.3.0",
+  "input_sha256": "3e3b647a3bf36afed0822f7a51c89e5ebadbec1405fda5f040d8e430357341b8",
+  "model": "command-resource-replay-not-ballistics",
+  "cases": [
+    {
+      "id": "shared-reload",
+      "ship": "escort_dd",
+      "events": [
+        {
+          "time_s": 6,
+          "action": "fire",
+          "value": "ship",
+          "result": [],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 0.0,
+            "next_trigger_s": 0.0,
+            "ready_by_barrel_s": [
+              7.0,
+              7.0,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              140,
+              140,
+              140,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 7,
+          "action": "fire",
+          "value": "ship",
+          "result": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 0.0,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              10.5,
+              10.5,
+              10.5
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 8,
+          "action": "set_mode",
+          "value": "air",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              10.5,
+              10.5,
+              10.5
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.4,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              10.5,
+              10.5,
+              10.5
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.5,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 11,
+          "action": "select_shell",
+          "value": "AP",
+          "error": "shell is not available for this weapon mode",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 11,
+          "action": "set_mode",
+          "value": "surface",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 13.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 13.5,
+          "action": "fire",
+          "value": "ship",
+          "result": [],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 13.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 14,
+          "action": "fire",
+          "value": "ship",
+          "result": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 13.5,
+            "next_trigger_s": 14.875,
+            "ready_by_barrel_s": [
+              17.5,
+              17.5,
+              17.5,
+              17.5
+            ],
+            "ammo_by_barrel": [
+              137,
+              137,
+              137,
+              137
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gradual-no-reset",
+      "ship": "escort_dd",
+      "events": [
+        {
+          "time_s": 0,
+          "action": "set_mode",
+          "value": "air",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 0.0,
+            "ready_by_barrel_s": [
+              7.0,
+              7.0,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              140,
+              140,
+              140,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 0,
+          "action": "set_firing",
+          "value": "gradual",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "gradual",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 0.0,
+            "ready_by_barrel_s": [
+              7.0,
+              7.0,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              140,
+              140,
+              140,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 7,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            0
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "gradual",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              7.0,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              139,
+              140,
+              140,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 7.1,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "gradual",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              7.0,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              139,
+              140,
+              140,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 7.875,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            1
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "gradual",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 8.75,
+            "ready_by_barrel_s": [
+              10.5,
+              11.375,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              140,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 8.75,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            2
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "gradual",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 9.625,
+            "ready_by_barrel_s": [
+              10.5,
+              11.375,
+              12.25,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 9.625,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            3
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "gradual",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 10.5,
+            "ready_by_barrel_s": [
+              10.5,
+              11.375,
+              12.25,
+              13.125
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.5,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            0
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "gradual",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              11.375,
+              12.25,
+              13.125
+            ],
+            "ammo_by_barrel": [
+              138,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.5,
+          "action": "set_firing",
+          "value": "salvo",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              11.375,
+              12.25,
+              13.125
+            ],
+            "ammo_by_barrel": [
+              138,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.5,
+          "action": "select_mount",
+          "value": 1,
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": 1,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              11.375,
+              12.25,
+              13.125
+            ],
+            "ammo_by_barrel": [
+              138,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.5,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": 1,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              11.375,
+              12.25,
+              13.125
+            ],
+            "ammo_by_barrel": [
+              138,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 11.375,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            1
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": 1,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 12.25,
+            "ready_by_barrel_s": [
+              14.0,
+              14.875,
+              12.25,
+              13.125
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              139,
+              139
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "shell-and-target",
+      "ship": "escort_dd",
+      "events": [
+        {
+          "time_s": 0,
+          "action": "select_shell",
+          "value": "HE",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 0.0,
+            "ready_by_barrel_s": [
+              7.0,
+              7.0,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              140,
+              140,
+              140,
+              140
+            ]
+          }
+        },
+        {
+          "time_s": 7,
+          "action": "fire",
+          "value": "ship",
+          "result": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 2.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              10.5,
+              10.5,
+              10.5
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 8,
+          "action": "set_mode",
+          "value": "air",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              10.5,
+              10.5,
+              10.5
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 8,
+          "action": "set_mode",
+          "value": "air",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              10.5,
+              10.5,
+              10.5
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.5,
+          "action": "fire",
+          "value": "ship",
+          "result": [],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 7.875,
+            "ready_by_barrel_s": [
+              10.5,
+              10.5,
+              10.5,
+              10.5
+            ],
+            "ammo_by_barrel": [
+              139,
+              139,
+              139,
+              139
+            ]
+          }
+        },
+        {
+          "time_s": 10.5,
+          "action": "fire",
+          "value": "aircraft",
+          "result": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "air",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 10.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 11,
+          "action": "set_mode",
+          "value": "surface",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "HE",
+            "firing": "salvo",
+            "switch_ready_s": 13.5,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 13.5,
+          "action": "select_shell",
+          "value": "AP",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 16.0,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 14,
+          "action": "fire",
+          "value": "ship",
+          "result": [],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 16.0,
+            "next_trigger_s": 11.375,
+            "ready_by_barrel_s": [
+              14.0,
+              14.0,
+              14.0,
+              14.0
+            ],
+            "ammo_by_barrel": [
+              138,
+              138,
+              138,
+              138
+            ]
+          }
+        },
+        {
+          "time_s": 16,
+          "action": "fire",
+          "value": "ship",
+          "result": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface",
+              "air"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 16.0,
+            "next_trigger_s": 16.875,
+            "ready_by_barrel_s": [
+              19.5,
+              19.5,
+              19.5,
+              19.5
+            ],
+            "ammo_by_barrel": [
+              137,
+              137,
+              137,
+              137
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "automatic-inspection",
+      "ship": "yamato",
+      "events": [
+        {
+          "time_s": 0,
+          "action": "select_slot",
+          "value": "secondary",
+          "result": "accepted",
+          "status": {
+            "slot": "secondary",
+            "control": "automatic",
+            "available_modes": [
+              "surface"
+            ],
+            "mount": null,
+            "banks": [
+              {
+                "id": "yam_port",
+                "enabled": true,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              },
+              {
+                "id": "yam_starboard",
+                "enabled": true,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              }
+            ]
+          }
+        },
+        {
+          "time_s": 0,
+          "action": "fire",
+          "value": "ship",
+          "error": "selected slot is not a manual gun; no automatic takeover or aircraft/torpedo firing",
+          "status": {
+            "slot": "secondary",
+            "control": "automatic",
+            "available_modes": [
+              "surface"
+            ],
+            "mount": null,
+            "banks": [
+              {
+                "id": "yam_port",
+                "enabled": true,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              },
+              {
+                "id": "yam_starboard",
+                "enabled": true,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              }
+            ]
+          }
+        },
+        {
+          "time_s": 0,
+          "action": "set_automatic",
+          "value": false,
+          "result": "accepted",
+          "status": {
+            "slot": "secondary",
+            "control": "automatic",
+            "available_modes": [
+              "surface"
+            ],
+            "mount": null,
+            "banks": [
+              {
+                "id": "yam_port",
+                "enabled": false,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              },
+              {
+                "id": "yam_starboard",
+                "enabled": false,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              }
+            ]
+          }
+        },
+        {
+          "time_s": 1,
+          "action": "select_slot",
+          "value": "light_aa",
+          "result": "accepted",
+          "status": {
+            "slot": "light_aa",
+            "control": "automatic",
+            "available_modes": [
+              "air"
+            ],
+            "mount": null,
+            "banks": [
+              {
+                "id": "yam_aa40",
+                "enabled": true,
+                "ammo_per_barrel": 1200,
+                "next_fire_s": 0.0,
+                "target": null
+              },
+              {
+                "id": "yam_aa20",
+                "enabled": true,
+                "ammo_per_barrel": 3000,
+                "next_fire_s": 0.0,
+                "target": null
+              }
+            ]
+          }
+        },
+        {
+          "time_s": 1,
+          "action": "set_automatic",
+          "value": false,
+          "result": "accepted",
+          "status": {
+            "slot": "light_aa",
+            "control": "automatic",
+            "available_modes": [
+              "air"
+            ],
+            "mount": null,
+            "banks": [
+              {
+                "id": "yam_aa40",
+                "enabled": false,
+                "ammo_per_barrel": 1200,
+                "next_fire_s": 0.0,
+                "target": null
+              },
+              {
+                "id": "yam_aa20",
+                "enabled": false,
+                "ammo_per_barrel": 3000,
+                "next_fire_s": 0.0,
+                "target": null
+              }
+            ]
+          }
+        },
+        {
+          "time_s": 2,
+          "action": "select_slot",
+          "value": "main",
+          "result": "accepted",
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 0.0,
+            "next_trigger_s": 0.0,
+            "ready_by_barrel_s": [
+              7.0,
+              7.0,
+              7.0,
+              7.0,
+              7.0,
+              7.0,
+              7.0,
+              7.0,
+              7.0
+            ],
+            "ammo_by_barrel": [
+              60,
+              60,
+              60,
+              60,
+              60,
+              60,
+              60,
+              60,
+              60
+            ]
+          }
+        },
+        {
+          "time_s": 7,
+          "action": "fire",
+          "value": "ship",
+          "result": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "status": {
+            "slot": "main",
+            "control": "manual",
+            "available_modes": [
+              "surface"
+            ],
+            "mount": null,
+            "mode": "surface",
+            "shell": "AP",
+            "firing": "salvo",
+            "switch_ready_s": 0.0,
+            "next_trigger_s": 9.666666666666666,
+            "ready_by_barrel_s": [
+              31.0,
+              31.0,
+              31.0,
+              31.0,
+              31.0,
+              31.0,
+              31.0,
+              31.0,
+              31.0
+            ],
+            "ammo_by_barrel": [
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59
+            ]
+          }
+        },
+        {
+          "time_s": 8,
+          "action": "select_slot",
+          "value": "secondary",
+          "result": "accepted",
+          "status": {
+            "slot": "secondary",
+            "control": "automatic",
+            "available_modes": [
+              "surface"
+            ],
+            "mount": null,
+            "banks": [
+              {
+                "id": "yam_port",
+                "enabled": false,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              },
+              {
+                "id": "yam_starboard",
+                "enabled": false,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              }
+            ]
+          }
+        },
+        {
+          "time_s": 8,
+          "action": "set_automatic",
+          "value": true,
+          "result": "accepted",
+          "status": {
+            "slot": "secondary",
+            "control": "automatic",
+            "available_modes": [
+              "surface"
+            ],
+            "mount": null,
+            "banks": [
+              {
+                "id": "yam_port",
+                "enabled": true,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              },
+              {
+                "id": "yam_starboard",
+                "enabled": true,
+                "ammo_per_barrel": 180,
+                "next_fire_s": 0.0,
+                "target": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

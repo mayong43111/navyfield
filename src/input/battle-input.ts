@@ -12,6 +12,8 @@ export function bindBattleKeyboard(options: {
   send: (command: BattleCommand) => void;
   action: (code: string) => void;
   clearPointer: () => void;
+  release?: (code: string) => void;
+  clearActions?: () => void;
 }): () => void {
   const steer = () => { if (options.isBattle()) options.send(steeringCommand(options.keys)); };
   const keydown = (event: KeyboardEvent) => {
@@ -25,9 +27,11 @@ export function bindBattleKeyboard(options: {
     if (!event.repeat) options.action(event.code);
   };
   const keyup = (event: KeyboardEvent) => {
-    if (options.keys.delete(event.code) && ['KeyF', 'KeyV', 'KeyA', 'KeyD'].includes(event.code)) steer();
+    const wasHeld = options.keys.delete(event.code);
+    if (wasHeld && ['KeyF', 'KeyV', 'KeyA', 'KeyD'].includes(event.code)) steer();
+    if (wasHeld) options.release?.(event.code);
   };
-  const clear = () => { options.keys.clear(); steer(); options.clearPointer(); };
+  const clear = () => { options.keys.clear(); steer(); options.clearActions?.(); options.clearPointer(); };
   const visibility = () => { if (document.hidden) clear(); };
   window.addEventListener('keydown', keydown); window.addEventListener('keyup', keyup);
   window.addEventListener('blur', clear); document.addEventListener('visibilitychange', visibility);

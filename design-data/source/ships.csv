@@ -1,0 +1,13 @@
+id,name,phase,class,hp,length_u,beam_u,speed_u_s,initial_speed_u_s,acceleration_u_s2,turn_radius_u,armor_id,bulge_hp,main_weapon_id,main_mounts,main_barrels,secondary_weapon_id,secondary_mounts,secondary_barrels,aircraft_capacity,source
+scout_dd,岛风（Shimakaze）,1,DD,12000,110,12,24,12,0.8,150,light,0,gun_127,3,1,,0,0,0,self-designed
+escort_dd,弗莱彻（USS Fletcher DD-445）,1,DD,14500,118,13,22,11,0.7,170,light,1000,gun_127_rapid,4,1,,0,0,0,self-designed
+fast_cl,克利夫兰（USS Cleveland CL-55）,1,CL,22000,160,18,21,10.5,0.6,240,light,1000,gun_152,3,3,,0,0,0,self-designed
+support_cl,布鲁克林（USS Brooklyn CL-40）,1,CL,26000,170,19,19,9.5,0.55,260,medium,1500,gun_152_precision,4,2,,0,0,0,self-designed
+heavy_ca,希佩尔海军上将（Admiral Hipper）,1,CA,36000,195,23,18,9,0.5,320,medium,2000,gun_203,4,2,gun_127_auto,4,1,0,self-designed
+california,加利福尼亚（USS California BB-44）,1,BB,62000,190.2,32,12,6,0.3,450,heavy,6000,gun_356,4,3,gun_127_auto,4,1,0,self-designed-model-reference
+bismarck,俾斯麦（Bismarck）,1,BB,68000,250.5,36,15,7.5,0.35,500,heavy,6500,gun_380,4,2,gun_152_auto,4,2,0,self-designed-model-reference
+yamato,大和（Yamato）,1,BB,76000,263,38,13,6.5,0.3,560,heavy,8000,gun_460,3,3,gun_152_auto,2,2,0,self-designed-model-reference
+torpedo_dd,阳炎（Kagero）,2,DD,12500,115,12,23,11.5,0.8,160,light,500,gun_127,3,1,torpedo_fast,2,4,0,self-designed
+torpedo_ca,最上（Mogami）,2,CA,33000,190,22,19,9.5,0.5,300,medium,2000,gun_203,3,2,torpedo_long,2,4,0,self-designed
+yorktown,约克镇（USS Yorktown CV-5）,3,CV,50000,251,33,17,8.5,0.4,460,medium,3500,aircraft_bomber,2,3,gun_127_auto,4,1,36,self-designed-model-reference
+light_cv,独立（USS Independence CVL-22）,3,CV,36000,210,27,19,9.5,0.45,380,light,2000,aircraft_fast,1,3,gun_127_auto,2,1,24,self-designed

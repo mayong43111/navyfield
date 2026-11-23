@@ -1,0 +1,9 @@
+id,defender,carrier,runs,planes,approach_s,mean_survivors,mean_kills,mean_aircraft_damage,aa_shots,aa_hits,expected_raid_damage,no_aa_raid_damage
+escort_heavy_raid,escort_dd,yorktown,300,6,13.0769,5.9867,0.0133,803.9533,50368,7564,14817.0,14850.0
+escort_light_raid,escort_dd,light_cv,300,3,10.625,3,0,630.5133,40800,6192,5280.0,5280.0
+cal_heavy_raid,california,yorktown,300,6,13.0769,5.0333,0.9667,1397.0867,91352,13880,12457.5,14850.0
+cal_light_raid,california,light_cv,300,3,10.625,2.4267,0.5733,1160.2533,76496,11457,4270.9333,5280.0
+bis_heavy_raid,bismarck,yorktown,300,6,13.0769,5.16,0.84,1268.4133,92896,12359,12771.0,14850.0
+bis_light_raid,bismarck,light_cv,300,3,10.625,2.61,0.39,1081.4267,78176,10535,4593.6,5280.0
+yam_heavy_raid,yamato,yorktown,300,6,13.0769,5.0367,0.9633,1403.1333,91480,13888,12465.75,14850.0
+yam_light_raid,yamato,light_cv,300,3,10.625,2.3967,0.6033,1162.6,76200,11472,4218.1333,5280.0

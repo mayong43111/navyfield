@@ -1,4 +1,4 @@
-import { copyFileSync, mkdirSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
@@ -14,7 +14,8 @@ export default defineConfig({
     },
     closeBundle() {
       if (!root || !output) throw new Error('Runtime credits require a resolved build directory');
-      for (const key of ['yamato', 'bismarck', 'california', 'yorktown']) {
+      const catalog = JSON.parse(readFileSync(join(root, 'content', 'manifests', 'ship-model-catalog.json'), 'utf8'));
+      for (const { modelId: key } of catalog.targetModels.filter(model => model.runtimeAsset)) {
         const directory = join(output, 'credits', 'models', key);
         mkdirSync(directory, { recursive: true });
         for (const file of ['LICENSE.txt', 'source.json', 'conversion.json']) {

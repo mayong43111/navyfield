@@ -1,0 +1,7 @@
+id,defender_id,attacker_id,accuracy,altitude_u,formation_spacing_u,aim_error_deg,lead_error_s,fuse_error_s,source
+fletcher-yorktown-ideal,escort_dd,yorktown,ideal,120,80,0,0,0,self-designed-assumption
+fletcher-yorktown-practiced,escort_dd,yorktown,practiced,120,80,1,0.2,0.1,self-designed-assumption
+fletcher-yorktown-rough,escort_dd,yorktown,rough,120,80,3,0.5,0.3,self-designed-assumption
+fletcher-independence-ideal,escort_dd,light_cv,ideal,120,80,0,0,0,self-designed-assumption
+fletcher-independence-practiced,escort_dd,light_cv,practiced,120,80,1,0.2,0.1,self-designed-assumption
+fletcher-independence-rough,escort_dd,light_cv,rough,120,80,3,0.5,0.3,self-designed-assumption

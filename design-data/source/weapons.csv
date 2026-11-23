@@ -1,0 +1,17 @@
+id,name,phase,kind,reload_s,muzzle_u_s,max_elevation_deg,damage,penetration_mm,ammo_per_barrel,dispersion_long_base_u,dispersion_long_ratio,dispersion_cross_base_u,dispersion_cross_ratio,range_u,travel_u_s,source
+gun_127,127级舰炮,1,gun,5,170,30,650,100,100,12,0.055,6,0.018,0,0,self-designed
+gun_152,152级舰炮,1,gun,7,185,32,1100,155,90,16,0.06,8,0.02,0,0,self-designed
+gun_203,203级舰炮,1,gun,10,200,35,2100,240,80,20,0.065,10,0.023,0,0,self-designed
+gun_356,356级密集齐射炮,1,gun,16,215,35,4000,420,60,28,0.07,14,0.025,0,0,self-designed
+gun_380,380级快速装填炮,1,gun,12,225,35,4700,460,60,28,0.07,14,0.025,0,0,self-designed
+gun_460,460级远程重弹炮,1,gun,24,235,35,6500,560,60,30,0.075,15,0.028,0,0,self-designed
+gun_127_rapid,127级近程速射炮,1,gun,3.5,165,28,450,90,140,12,0.055,6,0.018,0,0,self-designed
+gun_152_precision,152级远程精度炮,1,gun,10,205,34,1250,175,75,10,0.042,5,0.014,0,0,self-designed
+torpedo_fast,近程快速鱼雷,2,torpedo,90,0,0,16000,0,3,0,0,0,0,1400,38,self-designed
+torpedo_long,远程鱼雷,2,torpedo,110,0,0,14000,0,3,0,0,0,0,2400,30,self-designed
+aircraft_bomber,远程重型轰炸编队,3,aircraft,75,0,0,4500,0,0,0,0,0,0,6000,65,self-designed
+aircraft_fast,快速轻型攻击编队,3,aircraft,50,0,0,3200,0,0,0,0,0,0,5000,80,self-designed
+gun_127_auto,127级自动近防副炮,1,gun,3,170,30,500,100,240,12,0.0375,6,0.0135,0,0,self-designed
+gun_152_auto,152级自动近防副炮,1,gun,4,185,32,750,155,180,15,0.045,7.5,0.015,0,0,self-designed
+aa_40,40级中程防空炮,1,aa,0.5,0,0,50,0,1200,0,0,0,0,1200,900,self-designed
+aa_20,20级近程防空炮,1,aa,0.2,0,0,12,0,3000,0,0,0,0,600,900,self-designed

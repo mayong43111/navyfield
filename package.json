@@ -6,6 +6,7 @@
   "scripts": {
     "convert:yamato": "node tools/models/convert-yamato.mjs",
     "convert:ships": "node tools/models/convert-ships.mjs",
+    "generate:ships": "node tools/models/generate-original-ships.mjs && node tools/models/register-original-ships.mjs",
     "index:models": "node tools/models/index-models.mjs",
     "prepare:content": "node tools/packaging/prepare-content.mjs",
     "predev": "npm run prepare:content",

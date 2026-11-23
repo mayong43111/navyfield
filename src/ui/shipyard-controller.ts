@@ -14,6 +14,8 @@ export function createShipyardController(options: {
   command: (command: PortCommand) => void;
   durability: (current: number, maximum: number) => void; protection: (current: number, maximum: number) => void;
   message: (message: string) => void;
+  particulars?: (typeId: string) => readonly (readonly [string, string])[];
+  protectionValue?: (typeId: string) => number;
 }) {
   const hullType = element('yard-ship-type', HTMLSelectElement), bulgeLevel = element('yard-bulge-level', HTMLInputElement);
   const dialog = element('berth-dialog', HTMLDialogElement), search = element('berth-search', HTMLInputElement);
@@ -32,7 +34,7 @@ export function createShipyardController(options: {
     if (displayed === key) return;
     displayed = key;
     const vessel = findOriginalShip(options.data, active.typeId), model = options.contract(active.typeId);
-    const protection = bulgeCapacity(options.data, vessel.nation, active.bulgeLevel);
+    const protection = options.protectionValue?.(active.typeId) ?? bulgeCapacity(options.data, vessel.nation, active.bulgeLevel);
     if (protection === null) throw new Error('该舰防雷装甲资料未取得');
     if (vessel.durability === null) throw new Error('舰体耐久资料缺失。');
     bulgeLevel.value = String(active.bulgeLevel); hullType.value = vessel.id;
@@ -41,7 +43,7 @@ export function createShipyardController(options: {
     element('yard-vessel-class', HTMLElement).textContent = `${nationNames[vessel.nation]} · ${shipClassNames[vessel.shipClass] ?? '其他'}`;
     element('yard-portrait', HTMLImageElement).src = options.preview(vessel.id);
     const particulars = element('yard-particulars', HTMLElement); particulars.replaceChildren();
-    for (const [label, value] of [
+    for (const [label, value] of options.particulars?.(active.typeId) ?? [
       ['舰体耐久', vessel.raw['ShipDurabillity']], ['等级', vessel.raw['ShipLevel']],
       ['标准排水', vessel.raw['ShipDisplacementStandard']], ['最大排水', vessel.raw['ShipDisplacementMaximum']],
       ['转向性能', vessel.raw['ShipTurningForce']], ['结构强度', vessel.raw['ShipStructuralStrength']],

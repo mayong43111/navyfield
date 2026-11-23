@@ -1,16 +1,17 @@
 import type { BattleCommand, BattleConfig, BattleSession, Observation, SessionUpdate } from '../../domain/battle.ts';
 import { BattleSimulation, STEP_SECONDS } from '../../simulation/battle.ts';
+import { TargetBattleSimulation } from '../../simulation/target-battle.ts';
 import { freeze } from '../../simulation/config.ts';
 
 export class LocalBattleSession implements BattleSession {
-  private readonly simulation: BattleSimulation;
+  private readonly simulation: BattleSimulation | TargetBattleSimulation;
   private accumulator = 0;
   private pending = new Map<number, BattleCommand[]>();
   private listeners = new Set<(update: SessionUpdate) => void>();
   private current: Observation;
   private phase: BattleSession['status'] = 'running';
   constructor(config: BattleConfig) {
-    this.simulation = new BattleSimulation(config);
+    this.simulation = config.rulesVersion === 'target-v1.3.0' ? new TargetBattleSimulation(config) : new BattleSimulation(config);
     this.current = freeze(structuredClone(this.simulation.state));
   }
   get status(): BattleSession['status'] { return this.phase; }

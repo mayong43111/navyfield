@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "title": "阳炎（Kagero） — original low-poly interpretation",
+  "key": "kagero",
+  "targetId": "torpedo_dd",
+  "author": "navyfield project contributors",
+  "status": "original-procedural",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "runtimeFile": "kagero.glb",
+  "generator": "tools/models/generate-original-ships.mjs",
+  "generatorSha256": "93f2138c3927d4e2856c6e520e88ceeead81ebdb473d4fa7aacb90498491f332",
+  "visualInput": "content/data/ships/original-visuals.json",
+  "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
+  "targetInput": "content/data/ships/target.json",
+  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Raised Japanese forecastle bridge, two raked funnels, aft deckhouse and two quad torpedo banks recall Kagero.",
+  "targetArmament": "Three single main mounts replace historical twin gun mounts; two manual four-tube torpedo mounts follow TARGET. Secondary does not mean automatic.",
+  "references": [
+    "TARGET ship name and general public historical facts about nationality, class, hull, bridge, funnel and armament silhouettes; no source artwork reconstructed."
+  ],
+  "externalMeshes": [],
+  "externalTextures": [],
+  "downloadedFiles": [],
+  "glbSha256": "2c4862587adf4e5cc87a49feb0667fe543f580606891a01878c0b74319466493",
+  "geometrySha256": "968f43710e7fc5ddac0a9739096692d296503b30aed3f7d247182895699fa444",
+  "numericFiringOriginNote": "Main TARGET projectile origins are the numerical mount plus lateral barrel offset (z=0), not the physical tube tip. Muzzle markers sit at physical forward tips; gameplay must retain its existing numerical firing formulas. Auxiliary manual and automatic origins are also numeric simulation points, not these cosmetic markers."
+}

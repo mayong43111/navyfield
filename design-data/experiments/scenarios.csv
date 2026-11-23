@@ -1,0 +1,13 @@
+id,attacker_id,target_id,shell_id,range_u,target_heading_deg,impact_obliquity_deg,salvos,source
+dd_close,scout_dd,scout_dd,HE,600,90,0,10000,self-designed
+cl_mid,fast_cl,fast_cl,HE,1000,90,0,10000,self-designed
+ca_ap,heavy_ca,heavy_ca,AP,1200,90,0,10000,self-designed
+california_ap,california,california,AP,1600,90,0,10000,self-designed
+bismarck_ap,bismarck,bismarck,AP,1600,90,0,10000,self-designed
+yamato_ap,yamato,yamato,AP,1600,90,0,10000,self-designed
+yamato_he,yamato,yamato,HE,1600,90,0,10000,self-designed
+yamato_bow,yamato,yamato,AP,1600,0,60,10000,self-designed
+yamato_long,yamato,yamato,AP,2800,90,0,10000,self-designed
+bb_vs_dd_he,yamato,scout_dd,HE,1000,90,0,10000,self-designed
+bb_vs_dd_ap,yamato,scout_dd,AP,1000,90,0,10000,self-designed
+dd_vs_bb_ap,scout_dd,yamato,AP,1000,90,0,10000,self-designed

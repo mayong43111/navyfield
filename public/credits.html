@@ -13,6 +13,17 @@
   <a href="./">返回游戏</a>
   <h1>舰船模型署名与许可</h1>
   <p>这是非官方、自研的单机原型，与 Navy Field 官方无隶属关系。界面、甲板纹理和特效自行制作；网站不分发收集的游戏截图、手册、原始 STL / 3MF 或授权未确认的候选模型。</p>
+  <p>当前目标版使用8艘原创低模和大和、俾斯麦、加利福尼亚与约克镇4个既存参考模型。旧模型上游母本、附加部件或舰载机的权利链尚未完整核实，页面许可为来源声明，不等于正式分发清权。运行飞机使用自研几何示意。</p>
+  <section>
+    <h2>八艘原创低模</h2>
+    <p>岛风、弗莱彻、克利夫兰、布鲁克林、希佩尔海军上将、阳炎、最上、独立CVL-22：navyfield project contributors 原创程序化几何，<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>。未使用外部网格或贴图；仅概括一般历史轮廓并按自研数值减装，不是精确史实复原。Three.js代码仍按其MIT许可。</p>
+    <p>各舰署名及来源：
+      <a href="./credits/models/shimakaze/LICENSE.txt">岛风</a> · <a href="./credits/models/fletcher/LICENSE.txt">弗莱彻</a> ·
+      <a href="./credits/models/cleveland/LICENSE.txt">克利夫兰</a> · <a href="./credits/models/brooklyn/LICENSE.txt">布鲁克林</a> ·
+      <a href="./credits/models/admiral-hipper/LICENSE.txt">希佩尔</a> · <a href="./credits/models/kagero/LICENSE.txt">阳炎</a> ·
+      <a href="./credits/models/mogami/LICENSE.txt">最上</a> · <a href="./credits/models/independence/LICENSE.txt">独立</a>。
+      每个目录同时提供source.json和conversion.json，记录资产哈希、生成器、数值输入及配装偏差。</p>
+  </section>
   <section>
     <h2>大和、武藏与1945大和参考外形</h2>
     <p><a href="https://www.thingiverse.com/thing:6251126">RC Suitable Yamato Battleship 1:250</a>，作者 MDSW，<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>。保留作者原有署名：源于 <a href="https://www.thingiverse.com/thing:3445642">PiotruchaWro 的 Yamato 1945</a>，并致谢 M-Miller-97、MotherbrainJr。</p>
@@ -31,12 +42,12 @@
   </section>
   <section>
     <h2>约克镇 CV-5</h2>
-    <p><a href="https://www.thingiverse.com/thing:5336549">RC Scale USS YORKTOWN CV-5</a>，作者 MDSW，<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>。完整舰体统一比例、减面并重建法线；只接入外观，未添加战列舰主炮或航空战斗。</p>
+    <p><a href="https://www.thingiverse.com/thing:5336549">RC Scale USS YORKTOWN CV-5</a>，作者 MDSW，<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>。完整舰体统一比例、减面并重建法线；船体模型保持静态，没有添加战列舰主炮或真实起降节点；当前目标版的航空出动、投弹与返航由独立数值内核和几何示意实现。</p>
     <a href="./credits/models/yorktown/LICENSE.txt">署名及修改说明</a> · <a href="./credits/models/yorktown/source.json">来源记录</a>
   </section>
   <section>
     <h2>地图、数据与图形库</h2>
-    <p>陆地多边形来自 <a href="https://www.naturalearthdata.com/">Natural Earth</a>，属于<a href="https://www.naturalearthdata.com/about/terms-of-use/">公共领域</a>；<a href="./credits/world-land-source.json">来源记录</a>。船型、武器和弹药基础事实取自 <a href="https://www.navyfield.com/">Navy Field 官网</a>，原始来源链接随运行数据保留；战斗换算与散布是本项目自研规则，不宣称官方算法。</p>
+    <p>陆地多边形来自 <a href="https://www.naturalearthdata.com/">Natural Earth</a>，属于<a href="https://www.naturalearthdata.com/about/terms-of-use/">公共领域</a>；<a href="./credits/world-land-source.json">来源记录</a>。旧兼容资料中的船型、武器和弹药基础事实取自 <a href="https://www.navyfield.com/">Navy Field 官网</a>，来源链接保留；当前12舰目标战斗数值、配装、弹道和散布来自本项目自研CSV，不宣称官方算法或史实参数。</p>
     <p>图形库 <a href="https://threejs.org/">Three.js</a>，Copyright © 2010-2026 three.js authors，<a href="./credits/three-LICENSE.txt">MIT 许可全文</a>。</p>
   </section>
   <small>上述模型页面的许可声明不构成对上游第三方权利的保证。保留署名不代表原作者为本项目背书。</small>

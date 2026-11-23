@@ -1,3 +1,5 @@
+import type { AircraftState, FiringPattern, TargetConfigData, TargetControlState, TargetMode, TargetSlot } from './target-content.ts';
+
 export type ShipDefinitionId = string & { readonly __kind: 'ship-definition' };
 export type ShipId = string & { readonly __kind: 'ship-instance' };
 export type ShipModelId = string & { readonly __kind: 'ship-model' };
@@ -50,7 +52,8 @@ export interface SpawnRegion {
 }
 export interface BattleLayout { range: number; gap: number; width: number; height: number; regions: SpawnRegion[] }
 export interface BattleConfig {
-  rulesVersion: 'single-ship-v1';
+  rulesVersion: 'single-ship-v1' | 'target-v1.3.0';
+  target?: TargetConfigData;
   seed: number;
   ships: ShipDefinition[];
   layout: BattleLayout;
@@ -67,10 +70,16 @@ export interface ShipState {
 export interface ProjectileState {
   id: ProjectileId; owner: Side; position: Point; velocity: Point;
   shellType: ShellType; power: ShellPower; elevation: number;
+  kind?: 'shell' | 'torpedo' | 'bomb' | 'aa';
+  weaponId?: string; targetId?: string; fuseRemaining?: number;
+  rangeRemaining?: number; traveled?: number; burstRadius?: number; damageMultiplier?: number;
+  hitProbability?: number; launchPosition?: Point;
 }
 export interface WorldState {
   tick: number; randomState: number; ships: ShipState[]; projectiles: ProjectileState[];
   combat: CombatState; aim: Point; tda: boolean; drive: number; rudder: number; resultSeconds: number;
+  target?: TargetControlState;
+  aircraft?: AircraftState[];
 }
 export type DeepReadonly<T> = T extends string | number | boolean | null | undefined ? T :
   T extends object ? { readonly [K in keyof T]: DeepReadonly<T[K]> } : T;
@@ -83,12 +92,22 @@ export type BattleCommand =
   | { type: 'tda'; enabled: boolean }
   | { type: 'locker'; weapon: number; locker: Locker }
   | { type: 'shell-type'; weapon: number; locker: Locker; shellType: ShellType }
-  | { type: 'fire' };
+  | { type: 'fire' }
+  | { type: 'weapon-slot'; slot: TargetSlot }
+  | { type: 'weapon-mount'; mount: number | null }
+  | { type: 'weapon-mode'; mode: TargetMode }
+  | { type: 'firing-pattern'; pattern: FiringPattern }
+  | { type: 'automatic'; slot: TargetSlot; enabled: boolean }
+  | { type: 'fire-hold'; enabled: boolean };
 export type BattleEvent = { id: EventId; tick: number } & (
   | { type: 'launched'; projectile: DeepReadonly<ProjectileState>; weapon: number }
   | { type: 'fired'; owner: Side; weapon: number; position: Point }
   | { type: 'impact'; owner: Side; target: Side; position: Point; shellType: ShellType; damage: number }
   | { type: 'splash'; position: Point; shellType: ShellType; projectileId: ProjectileId }
+  | { type: 'aircraft-launched'; aircraft: DeepReadonly<AircraftState> }
+  | { type: 'aircraft-dropped'; aircraftId: string; position: Point }
+  | { type: 'aircraft-shot-down'; aircraftId: string; owner: Side; position: Point }
+  | { type: 'aircraft-hit'; aircraftId: string; owner: Side; position: Point; damage: number }
   | { type: 'sunk'; side: Side }
   | { type: 'result'; result: BattleResult }
   | { type: 'message'; message: string }

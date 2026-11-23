@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "title": "独立（USS Independence CVL-22） — original low-poly interpretation",
+  "key": "independence",
+  "targetId": "light_cv",
+  "author": "navyfield project contributors",
+  "status": "original-procedural",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "runtimeFile": "independence.glb",
+  "generator": "tools/models/generate-original-ships.mjs",
+  "generatorSha256": "93f2138c3927d4e2856c6e520e88ceeead81ebdb473d4fa7aacb90498491f332",
+  "visualInput": "content/data/ships/original-visuals.json",
+  "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
+  "targetInput": "content/data/ships/target.json",
+  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Long narrow straight WW2 flight deck, small offset starboard island, four starboard exhaust uptakes and open bow/stern gallery support interpret USS Independence CVL-22, not a modern Independence-class LCS.",
+  "targetArmament": "Aircraft main armament creates no gun turrets, barrels or fake main muzzles. AircraftLaunch and AircraftRecovery are distinct local deck points. Two automatic single secondary guns use the actual ind_port and ind_starboard banks; AA counts follow TARGET.",
+  "references": [
+    "TARGET ship name and general public historical facts about nationality, class, hull, bridge, funnel and armament silhouettes; no source artwork reconstructed."
+  ],
+  "externalMeshes": [],
+  "externalTextures": [],
+  "downloadedFiles": [],
+  "glbSha256": "57976de0726501e9145518f9c5f9347950b0587b98f3280b3db4a3ac99b0a27d",
+  "geometrySha256": "e1c1a5c809361797f3f41cd5795685b1811e0c1a7d2d57e7ba933ca4bdb90bad",
+  "numericFiringOriginNote": "Main TARGET projectile origins are the numerical mount plus lateral barrel offset (z=0), not the physical tube tip. Muzzle markers sit at physical forward tips; gameplay must retain its existing numerical firing formulas. Auxiliary manual and automatic origins are also numeric simulation points, not these cosmetic markers."
+}

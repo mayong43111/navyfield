@@ -1,0 +1,25 @@
+Original procedural geometry — navyfield project contributors
+
+Copyright navyfield project contributors.
+This newly generated original geometry and its procedural design are licensed
+under Creative Commons Attribution 4.0 International (SPDX: CC-BY-4.0).
+License: https://creativecommons.org/licenses/by/4.0/
+Legal terms: https://creativecommons.org/licenses/by/4.0/legalcode
+
+You may share and adapt this geometry, including commercially, subject to the
+license terms. Give appropriate credit to 'navyfield project contributors',
+provide a link to the license, and indicate if changes were made. No endorsement
+is implied. No additional restrictions may be imposed contrary to the license.
+
+Suggested attribution: Original low-poly ship interpretation by navyfield project
+contributors, generated with tools/models/generate-original-ships.mjs, CC-BY-4.0.
+
+These are original non-exact interpretations based only on general historical
+silhouette facts and TARGET ship names. They are not historical reconstructions.
+No third-party/game meshes, textures, source artwork, or scans were downloaded,
+copied, traced, converted or embedded. Materials are untextured original colors.
+TARGET armament and scale differ from historical vessels; see source.json.
+
+This license does NOT relicense Three.js, GLTFExporter, jsdom, Node.js, or other
+third-party tools; each retains its own license. Generator provenance and
+geometry/GLB digests are retained in source.json and conversion.json.

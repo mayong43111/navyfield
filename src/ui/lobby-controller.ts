@@ -11,11 +11,14 @@ import type { Screen, Area, Flagship, BattleDeployment } from '../game/lobby-sta
 import { findOriginalShip, shipClassNames, nationNames, YAMATO_ID } from '../original-data.ts';
 import type { OriginalData } from '../original-data.ts';
 import '../lobby.css';
+import type { TargetRoom } from '../domain/target-content.ts';
 
 export function createLobby(navigate: (screen: Screen, deployment?: BattleDeployment) => void, land: readonly LandPolygon[], shipPreview: string | ((typeId: string) => string),
-  flagship: () => Flagship, data: OriginalData, launchError: (typeId: string) => string | null): {
+  flagship: () => Flagship, data: OriginalData, launchError: (typeId: string) => string | null,
+  options: { room?: TargetRoom } = {}): {
   show: (screen: Screen) => void;
   getStatus: () => string;
+  dispose: () => void;
 } {
   const state = createLobbyState();
   let screen: Screen = 'warzone';
@@ -84,7 +87,12 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
     }
     shipType.append(group);
   }
-  shipType.value = YAMATO_ID;
+  shipType.value = data.ships.some(ship => ship.id === YAMATO_ID) ? YAMATO_ID : data.ships[0]!.id;
+  let countdown: ReturnType<typeof setTimeout> | null = null;
+  let remainingCountdown = 0;
+  const cancelCountdown = () => { if (countdown !== null) clearTimeout(countdown); countdown = null; remainingCountdown = 0; };
+  if (options.room) root.querySelector<HTMLElement>('.formation-help')!.textContent =
+    `目标版单机1对1 · 地图${options.room.map_width_u}×${options.room.map_height_u}u · 初始间隔${options.room.center_gap_u}u · 建议准备预算${options.room.ready_budget_s}s · 出击倒计时${options.room.countdown_s}s · 战斗上限${options.room.combat_limit_s}s。编队其他舰不参战。`;
   const pages = (['warzone', 'prepare'] as const).map(name => ({ name, node: element(`${name}-page`, HTMLElement) }));
 
   function record(text: string): void {
@@ -183,8 +191,10 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
     element('prep-empty', HTMLDivElement).hidden = !!room;
     ready.disabled = !room || ships.length === 0;
     exit.disabled = !room;
-    start.disabled = !canStart(state);
-    start.hidden = start.disabled;
+    if (!canStart(state)) cancelCountdown();
+    start.disabled = !canStart(state) || remainingCountdown > 0;
+    start.hidden = !canStart(state);
+    start.textContent = remainingCountdown > 0 ? `出击 ${remainingCountdown}s` : '出击';
     ready.classList.toggle('active', state.ready);
     ready.setAttribute('aria-pressed', String(state.ready));
     ready.textContent = state.ready ? '已准备' : '准备';
@@ -358,7 +368,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
   ready.addEventListener('click', () => inputAction(() => {
     toggleReady(state); record(state.ready ? '当前编队已准备。' : '编队取消准备。'); render();
   }));
-  start.addEventListener('click', () => inputAction(() => {
+  function launch(): void {
     const room = joinedRoom(state);
     const selected = room.ships.find(ship => ship.id === state.selectedShipId) ?? room.ships[0];
     if (!selected) throw new LobbyInputError('请先选择出击舰艇。');
@@ -366,6 +376,19 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
     if (error) throw new LobbyInputError(error);
     beginBattle(state); record('舰艇已出击。'); render();
     navigate('battle', { team: selected.team, slot: selected.slot });
+  }
+  start.addEventListener('click', () => inputAction(() => {
+    if (!options.room?.countdown_s) { launch(); return; }
+    if (remainingCountdown) return;
+    remainingCountdown = options.room.countdown_s;
+    const tick = () => inputAction(() => {
+      countdown = null;
+      if (!canStart(state) || screen !== 'prepare') { cancelCountdown(); render(); return; }
+      remainingCountdown--;
+      if (remainingCountdown <= 0) { launch(); return; }
+      countdown = setTimeout(tick, 1000); render();
+    });
+    countdown = setTimeout(tick, 1000); render();
   }));
   exit.addEventListener('click', () => {
     leaveRoom(state); record('已退出房间，阵型已保留。'); navigate('warzone');
@@ -399,6 +422,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
   return {
     show(next): void {
       screen = next;
+      if (next !== 'prepare') cancelCountdown();
       const isLobby = next === 'warzone' || next === 'prepare';
       root.hidden = !isLobby;
       for (const page of pages) {
@@ -412,6 +436,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
       render();
       if (next === 'warzone') paintLobby(map, land);
     },
-    getStatus: () => message
+    getStatus: () => message,
+    dispose: () => { cancelCountdown(); observer.disconnect(); root.remove(); }
   };
 }

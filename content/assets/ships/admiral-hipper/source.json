@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "title": "希佩尔海军上将（Admiral Hipper） — original low-poly interpretation",
+  "key": "admiral-hipper",
+  "targetId": "heavy_ca",
+  "author": "navyfield project contributors",
+  "status": "original-procedural",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "runtimeFile": "admiral-hipper.glb",
+  "generator": "tools/models/generate-original-ships.mjs",
+  "generatorSha256": "93f2138c3927d4e2856c6e520e88ceeead81ebdb473d4fa7aacb90498491f332",
+  "visualInput": "content/data/ships/original-visuals.json",
+  "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
+  "targetInput": "content/data/ships/target.json",
+  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Tall stepped German command tower, a heavy single funnel, two pole masts and four twin positions interpret Admiral Hipper specifically, not Prinz Eugen or an exact refit.",
+  "targetArmament": "Four twin 203-class main mounts match TARGET counts. Four automatic single 127-class secondary mounts are split into the actual ca_port and ca_starboard banks. Light AA is TARGET-defined, not a historical inventory.",
+  "references": [
+    "TARGET ship name and general public historical facts about nationality, class, hull, bridge, funnel and armament silhouettes; no source artwork reconstructed."
+  ],
+  "externalMeshes": [],
+  "externalTextures": [],
+  "downloadedFiles": [],
+  "glbSha256": "570bb972a464378f34ab1c5e99dc964c287c5dc9e646a683f863d4ff456be441",
+  "geometrySha256": "7200b23225628a21b7401090c3eafa53500febd137141287e1ceec947df09252",
+  "numericFiringOriginNote": "Main TARGET projectile origins are the numerical mount plus lateral barrel offset (z=0), not the physical tube tip. Muzzle markers sit at physical forward tips; gameplay must retain its existing numerical firing formulas. Auxiliary manual and automatic origins are also numeric simulation points, not these cosmetic markers."
+}

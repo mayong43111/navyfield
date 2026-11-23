@@ -1,0 +1,5 @@
+id,name,phase,ships_per_team,map_width_u,map_height_u,spawn_width_u,spawn_height_u,center_gap_u,ready_budget_s,countdown_s,combat_limit_s,initial_reload_s,source
+duel,单舰练习,1,1,10000,6000,1200,1800,4400,30,3,600,7,self-designed
+skirmish,小队遭遇,1,4,12000,8000,1200,2400,5400,45,3,900,7,self-designed
+fleet,标准舰队,1,8,16000,10000,1600,3200,6400,60,5,1200,7,self-designed
+carrier,航空扩展,3,8,22000,14000,1800,4000,9000,60,5,1500,7,self-designed

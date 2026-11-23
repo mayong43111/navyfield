@@ -92,6 +92,9 @@ export function createBattleEffects(scene: THREE.Scene, cloudTexture: THREE.Text
         const projectile = event.projectile;
         const muzzle = new THREE.Vector3(projectile.position.x, projectile.position.y, projectile.position.z);
         const mesh = new THREE.Mesh(shellGeometry, shellMaterials[projectile.shellType]); mesh.position.copy(muzzle);
+        if (projectile.kind === 'torpedo') mesh.scale.set(2, 2, 9);
+        else if (projectile.kind === 'bomb') mesh.scale.setScalar(3);
+        else if (projectile.kind === 'aa') mesh.scale.setScalar(1.5);
         const trail = new THREE.Line(new THREE.BufferGeometry().setFromPoints([muzzle, muzzle]),
           new THREE.LineBasicMaterial({ color: shellColors[projectile.shellType], transparent: true, opacity: 0.6 }));
         scene.add(mesh, trail);
@@ -114,6 +117,15 @@ export function createBattleEffects(scene: THREE.Scene, cloudTexture: THREE.Text
         break;
       }
       case 'splash': splash(new THREE.Vector3(event.position.x, event.position.y, event.position.z), event.shellType); break;
+      case 'aircraft-hit': {
+        particle(new THREE.Vector3(event.position.x, event.position.y, event.position.z), new THREE.Vector3(), '#ffeac0', 3, 0.3, 5, 0, 'spark'); break;
+      }
+      case 'aircraft-shot-down': {
+        impact(new THREE.Vector3(event.position.x, event.position.y, event.position.z), 'HE', 0.5); break;
+      }
+      case 'aircraft-dropped': {
+        particle(new THREE.Vector3(event.position.x, event.position.y, event.position.z), new THREE.Vector3(0, -3, 0), '#ffcb6b', 3, 0.5, 2); break;
+      }
       case 'sunk': {
         const instance = vessel(event.side), ship = instance.ship; ship.updateMatrixWorld(true);
         for (const z of [-instance.dimensions.length / 4, 0, instance.dimensions.length / 4]) {

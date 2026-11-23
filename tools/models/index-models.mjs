@@ -53,8 +53,12 @@ const csv = '\uFEFF' + rows.map(row =>
 writeFileSync(join(directory, 'ship-model-coverage.csv'), csv + '\r\n');
 const manifests = new URL('../../content/manifests/', import.meta.url);
 mkdirSync(manifests, { recursive: true });
-writeFileSync(new URL('ship-model-catalog.json', manifests), JSON.stringify({
-  updated: catalog.updated,
+const manifestFile = new URL('ship-model-catalog.json', manifests);
+const previousManifest = existsSync(manifestFile) ? JSON.parse(readFileSync(manifestFile, 'utf8')) : {};
+const targetFields = Object.fromEntries(Object.entries(previousManifest).filter(([key]) => key.startsWith('target')));
+writeFileSync(manifestFile, JSON.stringify({
+  updated: Object.keys(targetFields).length ? [catalog.updated, previousManifest.updated ?? ''].sort().at(-1) : catalog.updated,
+  ...targetFields,
   models: models.map(({ id, shipIds, status, notes }) => ({ id, shipIds, status, notes }))
 }, null, 2) + '\n');
 console.log(JSON.stringify({ ships: data.ships.length, matched, downloadedOrSharedReference: downloaded,

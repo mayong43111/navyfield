@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "title": "克利夫兰（USS Cleveland CL-55） — original low-poly interpretation",
+  "key": "cleveland",
+  "targetId": "fast_cl",
+  "author": "navyfield project contributors",
+  "status": "original-procedural",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "runtimeFile": "cleveland.glb",
+  "generator": "tools/models/generate-original-ships.mjs",
+  "generatorSha256": "93f2138c3927d4e2856c6e520e88ceeead81ebdb473d4fa7aacb90498491f332",
+  "visualInput": "content/data/ships/original-visuals.json",
+  "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
+  "targetInput": "content/data/ships/target.json",
+  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Broad US light-cruiser superstructure, a tall rectangular bridge, two funnels, and triple gun housings recall USS Cleveland CL-55.",
+  "targetArmament": "Three triple main mounts follow TARGET rather than the historical four triple 6-inch mounts. TARGET centerline anchor spacing supersedes historical turret positions.",
+  "references": [
+    "TARGET ship name and general public historical facts about nationality, class, hull, bridge, funnel and armament silhouettes; no source artwork reconstructed."
+  ],
+  "externalMeshes": [],
+  "externalTextures": [],
+  "downloadedFiles": [],
+  "glbSha256": "148c739ab82e90c0c7974b43c8b893c03c01c94ad98fb9197d4eac4057aa9f7c",
+  "geometrySha256": "fc7308591d8ee11b29bf39bbdb6e5a27525f3c23a7ab23f4ec513930c833fd70",
+  "numericFiringOriginNote": "Main TARGET projectile origins are the numerical mount plus lateral barrel offset (z=0), not the physical tube tip. Muzzle markers sit at physical forward tips; gameplay must retain its existing numerical firing formulas. Auxiliary manual and automatic origins are also numeric simulation points, not these cosmetic markers."
+}

@@ -1,0 +1,13 @@
+id,attacker,target,shell,range_u,shots,hits,hit_rate,hit_ci95_low,hit_ci95_high,zone,outcome,damage_per_hit,expected_salvo_damage,expected_dps,mean_energy_ttk_s,flight_s,magazine_duration_s
+dd_close,scout_dd,scout_dd,HE,600.0,30000,4999,0.1666,0.1625,0.1709,belt,blast,500,249.95,49.99,240.048,3.5806,495.0
+cl_mid,fast_cl,fast_cl,HE,1000.0,90000,13495,0.1499,0.1476,0.1523,belt,blast,846,1141.677,163.0967,134.8893,5.5693,623.0
+ca_ap,heavy_ca,heavy_ca,AP,1200.0,80000,12113,0.1514,0.1489,0.1539,belt,penetration,2205,2670.9165,267.0917,134.7852,6.193,790.0
+california_ap,california,california,AP,1600.0,120000,17510,0.1459,0.1439,0.1479,belt,penetration,4200,7354.2,459.6375,134.8889,7.7742,944.0
+bismarck_ap,bismarck,bismarck,AP,1600.0,80000,13049,0.1631,0.1606,0.1657,belt,penetration,4935,6439.6815,536.6401,126.7143,7.3685,708.0
+yamato_ap,yamato,yamato,AP,1600.0,90000,14584,0.162,0.1597,0.1645,belt,penetration,6825,9953.58,414.7325,183.2506,7.0111,1416.0
+yamato_he,yamato,yamato,HE,1600.0,90000,14486,0.161,0.1586,0.1634,belt,blast,1625,2353.975,98.0823,774.8595,7.0111,1416.0
+yamato_bow,yamato,yamato,AP,1600.0,90000,32143,0.3571,0.354,0.3603,belt,blocked,683,2195.3669,91.4736,830.8406,7.0111,1416.0
+yamato_long,yamato,yamato,AP,2800.0,90000,9086,0.101,0.099,0.1029,deck,penetration,6825,6201.195,258.3831,294.1369,13.3853,1416.0
+bb_vs_dd_he,yamato,scout_dd,HE,1000.0,90000,6670,0.0741,0.0724,0.0758,belt,blast,5000,3335.0,138.9583,86.3568,4.3017,1416.0
+bb_vs_dd_ap,yamato,scout_dd,AP,1000.0,90000,6596,0.0733,0.0716,0.075,belt,overpenetration,1706,1125.2776,46.8866,255.9368,4.3017,1416.0
+dd_vs_bb_ap,scout_dd,yamato,AP,1000.0,30000,10597,0.3532,0.3478,0.3587,belt,blocked,68,72.0596,14.4119,5273.4126,6.1449,495.0

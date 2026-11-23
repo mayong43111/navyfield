@@ -1,0 +1,11 @@
+id,value,unit,source
+seed,43111,integer,self-designed
+duel_runs,300,count,self-designed
+duel_limit_s,900,s,self-designed
+trait_range_u,1000,u,self-designed
+trait_salvos,10000,count,self-designed
+trait_target_id,heavy_ca,id,self-designed
+auto_runs,300,count,self-designed
+auto_limit_s,180,s,self-designed
+auto_step_s,0.1,s,self-designed
+aa_attack_distance_u,350,u,self-designed

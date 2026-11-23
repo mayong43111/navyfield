@@ -1,0 +1,5 @@
+id,name,belt_mm,deck_mm,he_resistance_mm,torpedo_reduction,source
+none,无附加装甲,0,0,100,0,self-designed
+light,轻型装甲,30,15,100,0.1,self-designed
+medium,巡洋舰装甲,120,50,100,0.2,self-designed
+heavy,战列舰装甲,300,120,100,0.3,self-designed

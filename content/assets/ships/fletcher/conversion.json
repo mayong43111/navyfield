@@ -1,0 +1,1862 @@
+{
+  "schemaVersion": 1,
+  "method": "Original deterministic procedural construction using Three primitives and authored polygon hulls; GLTFExporter binary glTF 2.0; no imported geometry or textures.",
+  "generator": "tools/models/generate-original-ships.mjs",
+  "generatorSha256": "93f2138c3927d4e2856c6e520e88ceeead81ebdb473d4fa7aacb90498491f332",
+  "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
+  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "key": "fletcher",
+  "hull": {
+    "length": 118,
+    "beam": 13,
+    "height": 13
+  },
+  "maxHeight": 29.273400026226042,
+  "barrels": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "rear": [
+    false,
+    false,
+    true,
+    true
+  ],
+  "bytes": 138756,
+  "glbSha256": "6d3352a66b5d865becb78159b10d33c94e9d84918a0b6206094d7573ea39a01d",
+  "bounds": {
+    "min": [
+      -6.759999942779541,
+      -3.640000104904175,
+      -59
+    ],
+    "max": [
+      6.759999942779541,
+      29.273400026226042,
+      59
+    ]
+  },
+  "triangles": 1332,
+  "meshCount": 55,
+  "geometrySha256": "c23df0de307d7dd6d2822826910888128b7cabcd34f1f6ba819af39db30c97c3",
+  "meshes": [
+    {
+      "name": "UnderwaterHull",
+      "triangles": 48,
+      "vertices": 26,
+      "positionSha256": "3e5fd4d3a2801da049e3089d7f38b713da6ddae6bda6147ce232ad2c12848059",
+      "indexSha256": "3766fb1dfc2275f3700579375af45d82ed0778dd09a42bf2f35236beb3629415",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "material": "original-underwater-hull",
+      "color": "74453c"
+    },
+    {
+      "name": "Freeboard",
+      "triangles": 48,
+      "vertices": 26,
+      "positionSha256": "65d64af08a475e13ad0ba103b3dc3cac4ba076291ff49723292664718cc962bb",
+      "indexSha256": "3766fb1dfc2275f3700579375af45d82ed0778dd09a42bf2f35236beb3629415",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Waterline",
+      "triangles": 48,
+      "vertices": 26,
+      "positionSha256": "cebbf2f847596407f48f2e07cd2324e08c6cef142f192f1ab69aa0d366b2b47e",
+      "indexSha256": "3766fb1dfc2275f3700579375af45d82ed0778dd09a42bf2f35236beb3629415",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Deck",
+      "triangles": 48,
+      "vertices": 26,
+      "positionSha256": "99cb9dc0d7c4e701f3f6b2eec84469df4c7542832418aaacdbe25e79ad71e61e",
+      "indexSha256": "3766fb1dfc2275f3700579375af45d82ed0778dd09a42bf2f35236beb3629415",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "material": "original-flat-deck",
+      "color": "afa997"
+    },
+    {
+      "name": "Forecastle",
+      "triangles": 24,
+      "vertices": 14,
+      "positionSha256": "2d26ef832dabdfe83f2b72f3804e36d98f8350da6eca49b6134fafb75ab1c756",
+      "indexSha256": "80dbb43b2792517a671ee23da5126286ab278b404999d44f864979264b2c18ff",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "material": "original-flat-deck",
+      "color": "afa997"
+    },
+    {
+      "name": "AftDeckhouse",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "2fe2dae59fc5f7a16cbcea47b7cecdbe301124be0a4a6897c44e13b80a93b1a1",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        10.595,
+        -46.61,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Lifeboat--1",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "6aa048d54fa48e7f4b7ebadbc4196e7d73aaca147a9edfcfcc816eb4bcaddaca",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1.5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -4.16,
+        11.57,
+        7.08,
+        1
+      ],
+      "material": "original-flat-deck",
+      "color": "afa997"
+    },
+    {
+      "name": "Anchor--1",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "e693c1ee903b95fd51be484443550e7c5373c1cbf5a2c28216a6541bb22d24be",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -1.82,
+        7.67,
+        54.28,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Lifeboat-1",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "6aa048d54fa48e7f4b7ebadbc4196e7d73aaca147a9edfcfcc816eb4bcaddaca",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1.5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        4.16,
+        11.57,
+        7.08,
+        1
+      ],
+      "material": "original-flat-deck",
+      "color": "afa997"
+    },
+    {
+      "name": "Anchor-1",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "e693c1ee903b95fd51be484443550e7c5373c1cbf5a2c28216a6541bb22d24be",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1.82,
+        7.67,
+        54.28,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Bridge-Foundation",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "9b09cd8e0c45574c13afc8d668d7f4ac05364fa6eb8ab1cb673cc023ae7d2c7b",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        10.6431,
+        24.19,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Bridge-Command",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "dc31c345f7fcd62f6d917eac4dba09d647567867a9d5de9b379a8aaf5d5f7dc8",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        12.9038,
+        25.134,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Bridge-Windows",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "bd2535f4afd07bb60d169b6a480afcdf9c16b9cd8d0a1129af71f176912bdf9b",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        13.5148,
+        28.438,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Bridge-Roof",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "9d10a34c2722f972b17fd4e0e71d530497536dc1f1468610b0242eb461c54f4c",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        14.0036,
+        25.134,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Foremast-Pole",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "44901e776fffe4db5ee3023320274a28ee12957c0f2a28efeef9e959e1666a10",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        21.307,
+        21.24,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Foremast-Yard",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "4b16865d67d50127d1e3db7b4c04be90af974af778dff75dde1c8582df00cdcf",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        25.142,
+        21.24,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Foremast-Radar",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "b719337ce30c2eba0cbf4455cc79ed2866cefcd965aebb7747748c0541edceff",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        28.3634,
+        21.24,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Foremast-Brace--1",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "ded06641396215c968050485eadb49ee14619643d60948c8404a2b3e551a6e7e",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        0.978963007,
+        -0.202950427,
+        -0.021036993,
+        0,
+        0.202950427,
+        0.957926014,
+        0.202950427,
+        0,
+        -0.021036993,
+        -0.202950427,
+        0.978963007,
+        0,
+        -1.17,
+        19.1594,
+        20.07,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Foremast-Brace-1",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "ded06641396215c968050485eadb49ee14619643d60948c8404a2b3e551a6e7e",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        0.978963007,
+        0.202950427,
+        0.021036993,
+        0,
+        -0.202950427,
+        0.957926014,
+        0.202950427,
+        0,
+        0.021036993,
+        -0.202950427,
+        0.978963007,
+        0,
+        1.17,
+        19.1594,
+        20.07,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Funnel-0-Body",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "6d84ae286f57db976bb7bb0c0ceab54189fc943b6110b4e5ee90242c522eb73b",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        14.17,
+        0.59,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Funnel-0-Cap",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "c00ec1dd07e849db41fcaec3232316f041809012ad446cbbd3e03390555d2d9d",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        17.16,
+        0.59,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Funnel-1-Body",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "ff99ec31a1b2a81dab63061cecef53c179a7aa526ec1b451e683bb31ab372be0",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        13.91,
+        -24.19,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Funnel-1-Cap",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "1b06cfb4f7ea403c8d00cb003588fbfa6a0b406edbe3da8535b477cbb74ab06b",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        16.64,
+        -24.19,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Main-Pedestal-0",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "71cdfc38d4ebb1b5345cd9f403e485ff45b5b6ab4cb8fe996701867f8cb2b596",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        10.4,
+        35.4,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Casing-0",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "4bc27a2e52c65b08b12ca8bb63d9f99a3d37ac314b7de7431891dff3e733d92a",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        12.805,
+        35.205,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Tube-0-0",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "e62b9a2f415ff901c5d3bcb56807cc4309a19a864b2f480a1ddb18fe85238a88",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        13,
+        38.91,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Main-Pedestal-1",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "71cdfc38d4ebb1b5345cd9f403e485ff45b5b6ab4cb8fe996701867f8cb2b596",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        10.4,
+        11.8,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Casing-1",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "4bc27a2e52c65b08b12ca8bb63d9f99a3d37ac314b7de7431891dff3e733d92a",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        12.805,
+        11.605,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Tube-1-0",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "e62b9a2f415ff901c5d3bcb56807cc4309a19a864b2f480a1ddb18fe85238a88",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        13,
+        15.31,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Main-Pedestal-2",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "71cdfc38d4ebb1b5345cd9f403e485ff45b5b6ab4cb8fe996701867f8cb2b596",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        -1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        10.4,
+        -11.8,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Casing-2",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "4bc27a2e52c65b08b12ca8bb63d9f99a3d37ac314b7de7431891dff3e733d92a",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        -1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        12.805,
+        -11.605,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Tube-2-0",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "e62b9a2f415ff901c5d3bcb56807cc4309a19a864b2f480a1ddb18fe85238a88",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        13,
+        -15.31,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Main-Pedestal-3",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "71cdfc38d4ebb1b5345cd9f403e485ff45b5b6ab4cb8fe996701867f8cb2b596",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        -1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        10.4,
+        -35.4,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Casing-3",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "4bc27a2e52c65b08b12ca8bb63d9f99a3d37ac314b7de7431891dff3e733d92a",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        -1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        12.805,
+        -35.205,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Main-Tube-3-0",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "e62b9a2f415ff901c5d3bcb56807cc4309a19a864b2f480a1ddb18fe85238a88",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        13,
+        -38.91,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Shield-escort_dd:light_aa-0",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "cfbc83482e58bb37e568f754a86d2ac038f61812329db1b8d166816ca8e3e750",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -5.2,
+        11.115,
+        -33.984,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-0-0",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -5.4925,
+        10.92,
+        -32.424,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-0-1",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -4.9075,
+        10.92,
+        -32.424,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Pedestal-escort_dd:light_aa-0",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "15798522861f9c3c95841b1f1050414cc7c87f54b382e1a30a656a3ea260aea5",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -5.2,
+        10.335,
+        -33.984,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Shield-escort_dd:light_aa-1",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "cfbc83482e58bb37e568f754a86d2ac038f61812329db1b8d166816ca8e3e750",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        5.2,
+        11.115,
+        -4.956,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-1-0",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        4.9075,
+        10.92,
+        -3.396,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-1-1",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        5.4925,
+        10.92,
+        -3.396,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Pedestal-escort_dd:light_aa-1",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "15798522861f9c3c95841b1f1050414cc7c87f54b382e1a30a656a3ea260aea5",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        5.2,
+        10.335,
+        -4.956,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Shield-escort_dd:light_aa-2",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "cfbc83482e58bb37e568f754a86d2ac038f61812329db1b8d166816ca8e3e750",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -5.2,
+        11.115,
+        24.072,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-2-0",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -5.2,
+        10.92,
+        25.632,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Pedestal-escort_dd:light_aa-2",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "15798522861f9c3c95841b1f1050414cc7c87f54b382e1a30a656a3ea260aea5",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -5.2,
+        10.335,
+        24.072,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Shield-escort_dd:light_aa-3",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "cfbc83482e58bb37e568f754a86d2ac038f61812329db1b8d166816ca8e3e750",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        5.2,
+        11.115,
+        -33.984,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-3-0",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        5.2,
+        10.92,
+        -32.424,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Pedestal-escort_dd:light_aa-3",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "15798522861f9c3c95841b1f1050414cc7c87f54b382e1a30a656a3ea260aea5",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        5.2,
+        10.335,
+        -33.984,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Shield-escort_dd:light_aa-4",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "cfbc83482e58bb37e568f754a86d2ac038f61812329db1b8d166816ca8e3e750",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -5.2,
+        11.115,
+        -4.956,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-4-0",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -5.2,
+        10.92,
+        -3.396,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Pedestal-escort_dd:light_aa-4",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "15798522861f9c3c95841b1f1050414cc7c87f54b382e1a30a656a3ea260aea5",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -5.2,
+        10.335,
+        -4.956,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Shield-escort_dd:light_aa-5",
+      "triangles": 12,
+      "vertices": 24,
+      "positionSha256": "cfbc83482e58bb37e568f754a86d2ac038f61812329db1b8d166816ca8e3e750",
+      "indexSha256": "4bed417cfd7cfcb1ebbdbcc295995f208f4d35ff5dd2aa2e5ae81bb70ad37a44",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        5.2,
+        11.115,
+        24.072,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    },
+    {
+      "name": "Aux-Tube-escort_dd:light_aa-5-0",
+      "triangles": 24,
+      "vertices": 40,
+      "positionSha256": "2552cbc19aa988084c6116f0006138b322a48b0e14f7296f4d477f42523c3b42",
+      "indexSha256": "cf71189f8265f2b9cdf31f4829728dc58d3ff670e8fdf02cb3293a44c1f06da2",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        5.2,
+        10.92,
+        25.632,
+        1
+      ],
+      "material": "original-dark-fittings",
+      "color": "303a3b"
+    },
+    {
+      "name": "Aux-Pedestal-escort_dd:light_aa-5",
+      "triangles": 32,
+      "vertices": 52,
+      "positionSha256": "15798522861f9c3c95841b1f1050414cc7c87f54b382e1a30a656a3ea260aea5",
+      "indexSha256": "9d66de54923a1ae034846ab9cefea8adb21f528895180c93cbe50d74a5ae95fd",
+      "transform": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        5.2,
+        10.335,
+        24.072,
+        1
+      ],
+      "material": "original-hull-steel",
+      "color": "819397"
+    }
+  ],
+  "visualWeaponGroups": [
+    {
+      "slot": "main",
+      "controlId": "escort_dd:main",
+      "weaponId": "gun_127_rapid",
+      "control": "manual",
+      "kind": "gun",
+      "availableModes": [
+        "surface",
+        "air"
+      ],
+      "groupNode": "Ship",
+      "bankId": null,
+      "targetMounts": 4,
+      "targetBarrels": 1,
+      "mounts": [
+        {
+          "index": 0,
+          "node": "Turret-0",
+          "pivot": "Elevation-0",
+          "barrelNodes": [
+            "Barrel-0-0"
+          ],
+          "muzzleNames": [
+            "Muzzle-0-0"
+          ],
+          "position": [
+            0,
+            13,
+            35.4
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+          "loadedNode": "Turret-0",
+          "loadedPivot": "Elevation-0",
+          "loadedBarrelNodes": [
+            "Barrel-0-0"
+          ],
+          "loadedMuzzleNames": [
+            "Muzzle-0-0"
+          ]
+        },
+        {
+          "index": 1,
+          "node": "Turret-1",
+          "pivot": "Elevation-1",
+          "barrelNodes": [
+            "Barrel-1-0"
+          ],
+          "muzzleNames": [
+            "Muzzle-1-0"
+          ],
+          "position": [
+            0,
+            13,
+            11.799999999999997
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+          "loadedNode": "Turret-1",
+          "loadedPivot": "Elevation-1",
+          "loadedBarrelNodes": [
+            "Barrel-1-0"
+          ],
+          "loadedMuzzleNames": [
+            "Muzzle-1-0"
+          ]
+        },
+        {
+          "index": 2,
+          "node": "Turret-2",
+          "pivot": "Elevation-2",
+          "barrelNodes": [
+            "Barrel-2-0"
+          ],
+          "muzzleNames": [
+            "Muzzle-2-0"
+          ],
+          "position": [
+            0,
+            13,
+            -11.799999999999997
+          ],
+          "baseYaw": 3.141592653589793,
+          "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+          "loadedNode": "Turret-2",
+          "loadedPivot": "Elevation-2",
+          "loadedBarrelNodes": [
+            "Barrel-2-0"
+          ],
+          "loadedMuzzleNames": [
+            "Muzzle-2-0"
+          ]
+        },
+        {
+          "index": 3,
+          "node": "Turret-3",
+          "pivot": "Elevation-3",
+          "barrelNodes": [
+            "Barrel-3-0"
+          ],
+          "muzzleNames": [
+            "Muzzle-3-0"
+          ],
+          "position": [
+            0,
+            13,
+            -35.400000000000006
+          ],
+          "baseYaw": 3.141592653589793,
+          "recoilAxis": "local +Z; translate barrel local Z negatively from zero",
+          "loadedNode": "Turret-3",
+          "loadedPivot": "Elevation-3",
+          "loadedBarrelNodes": [
+            "Barrel-3-0"
+          ],
+          "loadedMuzzleNames": [
+            "Muzzle-3-0"
+          ]
+        }
+      ],
+      "loadedGroupNode": "Ship"
+    },
+    {
+      "slot": "light_aa",
+      "controlId": "escort_dd:light_aa",
+      "weaponId": "aa_40",
+      "control": "automatic",
+      "kind": "aa",
+      "availableModes": [
+        "air"
+      ],
+      "bankId": "escort_aa40",
+      "groupNode": "WeaponGroup-escort_dd:light_aa",
+      "role": "aa",
+      "bearingDeg": 0,
+      "arcDeg": 360,
+      "targetMounts": 2,
+      "targetBarrels": 2,
+      "mounts": [
+        {
+          "index": 0,
+          "node": "Mount-escort_dd:light_aa-0",
+          "pivot": "Pivot-escort_dd:light_aa-0",
+          "barrelNodes": [
+            "WeaponBarrel-escort_dd:light_aa-0-0",
+            "WeaponBarrel-escort_dd:light_aa-0-1"
+          ],
+          "muzzleNames": [
+            "WeaponMuzzle-escort_dd:light_aa-0-0",
+            "WeaponMuzzle-escort_dd:light_aa-0-1"
+          ],
+          "position": [
+            -5.2,
+            10.92,
+            -33.983999999999995
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+          "loadedNode": "Mount-escort_ddlight_aa-0",
+          "loadedPivot": "Pivot-escort_ddlight_aa-0",
+          "loadedBarrelNodes": [
+            "WeaponBarrel-escort_ddlight_aa-0-0",
+            "WeaponBarrel-escort_ddlight_aa-0-1"
+          ],
+          "loadedMuzzleNames": [
+            "WeaponMuzzle-escort_ddlight_aa-0-0",
+            "WeaponMuzzle-escort_ddlight_aa-0-1"
+          ]
+        },
+        {
+          "index": 1,
+          "node": "Mount-escort_dd:light_aa-1",
+          "pivot": "Pivot-escort_dd:light_aa-1",
+          "barrelNodes": [
+            "WeaponBarrel-escort_dd:light_aa-1-0",
+            "WeaponBarrel-escort_dd:light_aa-1-1"
+          ],
+          "muzzleNames": [
+            "WeaponMuzzle-escort_dd:light_aa-1-0",
+            "WeaponMuzzle-escort_dd:light_aa-1-1"
+          ],
+          "position": [
+            5.2,
+            10.92,
+            -4.955999999999998
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+          "loadedNode": "Mount-escort_ddlight_aa-1",
+          "loadedPivot": "Pivot-escort_ddlight_aa-1",
+          "loadedBarrelNodes": [
+            "WeaponBarrel-escort_ddlight_aa-1-0",
+            "WeaponBarrel-escort_ddlight_aa-1-1"
+          ],
+          "loadedMuzzleNames": [
+            "WeaponMuzzle-escort_ddlight_aa-1-0",
+            "WeaponMuzzle-escort_ddlight_aa-1-1"
+          ]
+        }
+      ],
+      "loadedGroupNode": "WeaponGroup-escort_ddlight_aa"
+    },
+    {
+      "slot": "light_aa",
+      "controlId": "escort_dd:light_aa",
+      "weaponId": "aa_20",
+      "control": "automatic",
+      "kind": "aa",
+      "availableModes": [
+        "air"
+      ],
+      "bankId": "escort_aa20",
+      "groupNode": "WeaponGroup-escort_dd:light_aa",
+      "role": "aa",
+      "bearingDeg": 0,
+      "arcDeg": 360,
+      "targetMounts": 4,
+      "targetBarrels": 1,
+      "mounts": [
+        {
+          "index": 2,
+          "node": "Mount-escort_dd:light_aa-2",
+          "pivot": "Pivot-escort_dd:light_aa-2",
+          "barrelNodes": [
+            "WeaponBarrel-escort_dd:light_aa-2-0"
+          ],
+          "muzzleNames": [
+            "WeaponMuzzle-escort_dd:light_aa-2-0"
+          ],
+          "position": [
+            -5.2,
+            10.92,
+            24.07200000000001
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+          "loadedNode": "Mount-escort_ddlight_aa-2",
+          "loadedPivot": "Pivot-escort_ddlight_aa-2",
+          "loadedBarrelNodes": [
+            "WeaponBarrel-escort_ddlight_aa-2-0"
+          ],
+          "loadedMuzzleNames": [
+            "WeaponMuzzle-escort_ddlight_aa-2-0"
+          ]
+        },
+        {
+          "index": 3,
+          "node": "Mount-escort_dd:light_aa-3",
+          "pivot": "Pivot-escort_dd:light_aa-3",
+          "barrelNodes": [
+            "WeaponBarrel-escort_dd:light_aa-3-0"
+          ],
+          "muzzleNames": [
+            "WeaponMuzzle-escort_dd:light_aa-3-0"
+          ],
+          "position": [
+            5.2,
+            10.92,
+            -33.983999999999995
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+          "loadedNode": "Mount-escort_ddlight_aa-3",
+          "loadedPivot": "Pivot-escort_ddlight_aa-3",
+          "loadedBarrelNodes": [
+            "WeaponBarrel-escort_ddlight_aa-3-0"
+          ],
+          "loadedMuzzleNames": [
+            "WeaponMuzzle-escort_ddlight_aa-3-0"
+          ]
+        },
+        {
+          "index": 4,
+          "node": "Mount-escort_dd:light_aa-4",
+          "pivot": "Pivot-escort_dd:light_aa-4",
+          "barrelNodes": [
+            "WeaponBarrel-escort_dd:light_aa-4-0"
+          ],
+          "muzzleNames": [
+            "WeaponMuzzle-escort_dd:light_aa-4-0"
+          ],
+          "position": [
+            -5.2,
+            10.92,
+            -4.955999999999998
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+          "loadedNode": "Mount-escort_ddlight_aa-4",
+          "loadedPivot": "Pivot-escort_ddlight_aa-4",
+          "loadedBarrelNodes": [
+            "WeaponBarrel-escort_ddlight_aa-4-0"
+          ],
+          "loadedMuzzleNames": [
+            "WeaponMuzzle-escort_ddlight_aa-4-0"
+          ]
+        },
+        {
+          "index": 5,
+          "node": "Mount-escort_dd:light_aa-5",
+          "pivot": "Pivot-escort_dd:light_aa-5",
+          "barrelNodes": [
+            "WeaponBarrel-escort_dd:light_aa-5-0"
+          ],
+          "muzzleNames": [
+            "WeaponMuzzle-escort_dd:light_aa-5-0"
+          ],
+          "position": [
+            5.2,
+            10.92,
+            24.07200000000001
+          ],
+          "baseYaw": 0,
+          "recoilAxis": "local +Z; translate WeaponBarrel local Z negatively from zero",
+          "loadedNode": "Mount-escort_ddlight_aa-5",
+          "loadedPivot": "Pivot-escort_ddlight_aa-5",
+          "loadedBarrelNodes": [
+            "WeaponBarrel-escort_ddlight_aa-5-0"
+          ],
+          "loadedMuzzleNames": [
+            "WeaponMuzzle-escort_ddlight_aa-5-0"
+          ]
+        }
+      ],
+      "loadedGroupNode": "WeaponGroup-escort_ddlight_aa"
+    }
+  ],
+  "animationConventions": "Forward is local +Z, up is +Y. Main Turret yaw is absolute ship-local yaw; Elevation rotation.x = -elevation. Auxiliary Mount stores rest baseYaw; animate Mount to absolute ship-local yaw and Pivot.rotation.x = -elevation. Rear/rest bank yaw must not be added twice. Recoil translates barrel local Z negatively from zero; never translate the pivot or muzzle independently.",
+  "numericFiringOriginNote": "Main TARGET projectile origins are the numerical mount plus lateral barrel offset (z=0), not the physical tube tip. Muzzle markers sit at physical forward tips; gameplay must retain its existing numerical firing formulas. Auxiliary manual and automatic origins are also numeric simulation points, not these cosmetic markers.",
+  "naming": "GLB node names retain controlId colons; Three GLTFLoader sanitizes colons. Use loadedNode/loadedPivot/loadedMuzzleNames after loading (or userData.name for original names)."
+}

@@ -8,6 +8,8 @@ import { fileURLToPath } from 'node:url';
 import config from '../../vite.config.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
+const modelKeys = ['yamato', 'bismarck', 'california', 'yorktown', 'shimakaze', 'fletcher',
+  'cleveland', 'brooklyn', 'admiral-hipper', 'kagero', 'mogami', 'independence'];
 function temporary(t) {
   const directory = mkdtempSync(join(tmpdir(), 'navyfield-publish-'));
   t.after(() => rmSync(directory, { recursive: true, force: true }));
@@ -20,8 +22,9 @@ test('Git permits only approved runtime resources, not original downloads or res
   copyFileSync(join(root, '.gitignore'), join(directory, '.gitignore'));
   const allowed = ['content/manifests/ship-model-catalog.json', 'content/data/maps/world-land.geojson',
     'content/data/maps/source.json', 'content/data/legacy/official-data.json',
+    'content/data/ships/target.json', 'content/data/ships/original-visuals.json',
     'content/assets/README.md', 'art/models/README.md', 'audio/music/README.md'];
-  for (const key of ['yamato', 'bismarck', 'california', 'yorktown']) {
+  for (const key of modelKeys) {
     allowed.push(...[`${key}.glb`, 'LICENSE.txt', 'source.json', 'conversion.json'].map(file => `content/assets/ships/${key}/${file}`));
   }
   const blocked = ['resources/manuals/NavyField_Full_Manual.pdf', 'resources/official-screenshots/ship.jpg',
@@ -63,7 +66,7 @@ test('build copies attribution only, and respects the resolved output directory'
   assert.equal(existsSync(join(directory, 'resources')), false);
   const credits = join(directory, 'credits');
   assert.deepEqual(readdirSync(credits).sort(), ['models', 'three-LICENSE.txt', 'world-land-source.json']);
-  assert.deepEqual(readdirSync(join(credits, 'models')).sort(), ['bismarck', 'california', 'yamato', 'yorktown']);
+  assert.deepEqual(readdirSync(join(credits, 'models')).sort(), [...modelKeys].sort());
   for (const key of readdirSync(join(credits, 'models'))) {
     assert.deepEqual(readdirSync(join(credits, 'models', key)).sort(), ['LICENSE.txt', 'conversion.json', 'source.json']);
   }
