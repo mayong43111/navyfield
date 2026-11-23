@@ -8,7 +8,9 @@ import { freeze } from '../simulation/config.ts';
 
 export class ApplicationController {
   private session: BattleSession | null = null;
-  private screen: Screen = 'warzone';
+  private screen: Screen = 'home';
+  private preparation: DeepReadonly<BattleConfig> | null = null;
+  private deployment: BattleDeployment = { team: 'alpha', slot: 0 };
   private message = '';
   private listeners = new Set<(update: ApplicationUpdate) => void>();
   readonly port: PortController;
@@ -22,7 +24,7 @@ export class ApplicationController {
   }
   observe(): Readonly<ApplicationState> {
     return freeze({ screen: this.screen, port: this.port.observe(), battle: this.session?.observe() ?? null,
-      config: this.session?.config ?? null, message: this.message });
+      config: this.session?.config ?? this.preparation, message: this.message });
   }
   subscribe(listener: (update: ApplicationUpdate) => void): () => void {
     this.listeners.add(listener); return () => this.listeners.delete(listener);
@@ -33,12 +35,21 @@ export class ApplicationController {
   }
   setMessage(message: string): void { this.message = message; this.publish(); }
   navigate(next: Screen, deployment?: BattleDeployment): void {
-    if (next === 'battle' && !deployment) throw new Error('出击缺少所选舰阵位');
-    const session = next === 'battle' ? this.sessionFactory(this.battleConfig(this.port.observe(), deployment!)) : null;
+    if (next === 'results') throw new Error('战果页只能由战斗结算进入');
+    if (next === 'battle' && !deployment && !this.preparation) throw new Error('出击缺少所选舰阵位');
     const inventory = this.session?.observe().ships.find(s => s.side === 'player')?.weapons;
+    const port = this.port.observe();
+    // Build replacements before ending the old session; failed launches remain atomic.
+    const loadout = inventory ? { ...port, active: { ...port.active, guns: inventory } } : port;
+    const chosen = deployment ?? (next === 'briefing' ? { team: 'alpha' as const, slot: 0 } : this.deployment);
+    const config = next === 'briefing' ? this.battleConfig(loadout, chosen) :
+      next === 'battle' ? this.preparation ?? this.battleConfig(loadout, chosen) : null;
+    const session = next === 'battle' ? this.sessionFactory(structuredClone(config!) as BattleConfig) : null;
     this.session?.end(); this.session = null;
+    this.screen = next; this.preparation = next === 'briefing' ? freeze(config!) : null;
+    this.deployment = chosen; this.session = session;
     if (inventory) this.port.acceptBattleInventory(inventory);
-    this.screen = next; this.session = session; this.message = next === 'yard' ? '右键旋转，滚轮缩放' : '';
+    this.message = next === 'yard' ? '选择泊位与配装 · 右键旋转，滚轮缩放 · R 重置整备' : '';
     session?.subscribe(update => {
       for (const event of update.events) {
         if (event.type === 'message' || event.type === 'rejected') this.message = event.message;
@@ -46,15 +57,17 @@ export class ApplicationController {
           ? `命中敌舰 · 伤害 ${event.damage}` : `本舰中弹 · 损失 ${event.damage}`;
       }
       if (update.observation.combat.result) {
+        this.screen = 'results'; session?.pause(true);
         this.message = update.observation.combat.result === 'victory' ? '敌舰已击沉' :
-          update.observation.combat.result === 'defeat' ? '本舰已沉没' : '双方舰艇均已沉没';
+          update.observation.combat.result === 'defeat' ? '本舰已沉没' : update.observation.combat.player.hp <= 0 && update.observation.combat.enemy.hp <= 0 ? '双方舰艇均已沉没' : '演习时限已到 · 平局';
       }
       this.publish(update.events);
     });
     this.publish();
   }
   advance(seconds: number, paused: boolean): void {
-    this.session?.pause(paused); this.session?.advance(paused ? 0 : seconds);
+    const stopped = paused || this.screen !== 'battle';
+    this.session?.pause(stopped); this.session?.advance(stopped ? 0 : seconds);
   }
   send(command: BattleCommand): void {
     if (this.screen === 'battle') this.session?.send(command);
@@ -91,5 +104,9 @@ export class ApplicationController {
     if (this.screen === 'battle') { this.setMessage('战斗中不能重置舰艇'); return; }
     if (this.screen === 'yard') { this.port.send({ type: 'reset-ammunition' }); this.navigate('yard'); }
   }
-  end(): void { this.session?.end(); this.session = null; this.listeners.clear(); }
+  retry(): void {
+    if (this.screen !== 'results') return;
+    this.navigate('briefing', this.deployment);
+  }
+  end(): void { this.session?.end(); this.session = null; this.preparation = null; this.listeners.clear(); }
 }

@@ -44,12 +44,32 @@ export function setTargetShell(content: TargetContent, definition: TargetGroupDe
   group.switchReadyAt = time + content.controls[definition.controlId]!.mode_switch_s;
   return true;
 }
+export function cycleTargetAmmo(content: TargetContent, definition: TargetGroupDefinition,
+  group: TargetWeaponGroupState, time: number): boolean {
+  if (group.control !== 'manual' || content.weapons[group.weaponId]!.kind !== 'gun') throw new Error('该武器没有手动舰炮弹种切换');
+  const choices: { mode: TargetMode; shellType: ShellType }[] = [];
+  for (const mode of ['surface', 'air'] as const) {
+    if (!group.availableModes.includes(mode)) continue;
+    const policy = Object.values(content.weapon_modes).find(m => m.weapon_id === group.weaponId && m.mode === mode)?.shell_policy;
+    if (!policy) continue;
+    for (const shellType of ['HE', 'AP'] as const) {
+      if (shellAllowed(policy, shellType) && (mode !== 'air' || shellType === 'HE')) choices.push({ mode, shellType });
+    }
+  }
+  const index = choices.findIndex(c => c.mode === group.mode && c.shellType === group.shellType);
+  const next = choices[(index + 1) % choices.length];
+  if (!next || choices.length < 2) return false;
+  const modeChanged = setTargetMode(content, definition, group, next.mode, time);
+  const shellChanged = setTargetShell(content, definition, group, next.shellType, time);
+  return modeChanged || shellChanged;
+}
 export function readyTargetTubes(content: TargetContent, definition: TargetGroupDefinition,
-  group: TargetWeaponGroupState, mount: number | null, time: number): number[] {
+  group: TargetWeaponGroupState, mount: number | null, time: number, battery: 'all' | 'fore' | 'aft' = 'all'): number[] {
   if (time + 1e-9 < group.switchReadyAt) throw new Error('用途或弹种切换中');
   if (time + 1e-9 < group.nextRequestAt) throw new Error('发射节拍或初始整备等待中');
   const candidates = group.tubes.map((tube, index) => ({ tube, index })).filter(({ tube }) =>
-    definition.installedMounts[tube.mount] && (mount === null || tube.mount === mount));
+    definition.installedMounts[tube.mount] && (mount === null || tube.mount === mount) &&
+    (battery === 'all' || (tube.mount >= Math.ceil(group.mounts / 2) ? 'aft' : 'fore') === battery));
   if (!candidates.length) throw new Error('选中炮座未装备');
   const ready = (index: number): boolean => group.tubes[index]!.remaining > 0 && group.tubes[index]!.readyAt <= time + 1e-9;
   if (group.pattern === 'salvo') {

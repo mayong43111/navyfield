@@ -9,6 +9,7 @@ import { LocalBattleSession } from '../../src/adapters/local/battle-session.ts';
 import { ApplicationController } from '../../src/app/controller.ts';
 import { createTargetWeaponPanel } from '../../src/ui/target-weapons.ts';
 import { bindBattleKeyboard } from '../../src/input/battle-input.ts';
+import { createBattleControls } from '../../src/ui/battle-controls.ts';
 import { createMissingModel } from '../../src/presentation/ships/missing-model.ts';
 const content = parseTargetContent(JSON.parse(readFileSync(new URL('../../content/data/ships/target.json', import.meta.url), 'utf8')));
 function application() {
@@ -21,7 +22,7 @@ function application() {
 function environment(t) {
   const dom = new JSDOM(readFileSync(new URL('../../index.html', import.meta.url), 'utf8'));
   const saved = new Map();
-  for (const name of ['window', 'document', 'HTMLElement', 'HTMLDivElement', 'HTMLSelectElement', 'HTMLParagraphElement', 'HTMLInputElement', 'Option']) {
+  for (const name of ['window', 'document', 'HTMLElement', 'HTMLDivElement', 'HTMLSelectElement', 'HTMLParagraphElement', 'HTMLInputElement', 'HTMLButtonElement', 'Option']) {
     saved.set(name, Object.getOwnPropertyDescriptor(globalThis, name));
     Object.defineProperty(globalThis, name, { value: dom.window[name], configurable: true });
   }
@@ -70,6 +71,25 @@ test('target panel distinguishes manual dual-purpose main guns from automatic ba
   app.advance(0.1, false); panel.render(app.observe());
   assert.equal(panel.panel.querySelector('[data-control="automatic"]').hidden, false);
   assert.equal(panel.panel.querySelector('[data-control="pattern"]').disabled, true);
+  panel.dispose(); app.end();
+});
+test('battery panel and independent mount selection stay synchronized, and camera button has a real action', t => {
+  const window = environment(t), app = application();
+  app.navigate('yard'); app.portCommand({ type: 'equip-hull', typeId: 'escort_dd' });
+  app.navigate('battle', { team: 'alpha', slot: 0 });
+  const panel = createTargetWeaponPanel({ content, state: () => app.observe(), send: command => app.send(command), portCommand: command => app.portCommand(command) });
+  const battery = panel.panel.querySelector('[data-control="battery"]'), mount = panel.panel.querySelector('[data-control="mount"]');
+  panel.render(app.observe()); assert.equal(battery.value, 'all'); assert.equal(battery.disabled, false);
+  battery.value = 'aft'; battery.dispatchEvent(new window.Event('change')); app.advance(0.1, false); panel.render(app.observe());
+  assert.equal(app.observe().battle.target.selectedBattery, 'aft'); assert.equal(mount.value, '');
+  assert.match(panel.panel.querySelector('[data-control="readout"]').textContent, /后炮组/);
+  mount.value = '3'; mount.dispatchEvent(new window.Event('change')); app.advance(0.1, false); panel.render(app.observe());
+  assert.equal(battery.value, 'all'); assert.equal(app.observe().battle.target.selectedMount, 3);
+  assert.match(panel.panel.querySelector('[data-control="readout"]').textContent, /4号独立炮座/);
+  let returned = 0;
+  const controls = createBattleControls({ navigate: () => {}, fire: () => {}, tda: () => {}, power: () => {}, resupply: () => {}, returnCamera: () => returned++ });
+  document.querySelector('#camera-return').click(); assert.equal(returned, 1);
+  controls.dispose(); document.querySelector('#camera-return').click(); assert.equal(returned, 1);
   panel.dispose(); app.end();
 });
 test('keyboard releases gradual fire on keyup and focus loss, without repeated presses', t => {

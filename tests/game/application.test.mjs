@@ -79,7 +79,7 @@ test('missing deployment and failed replacement launch leave the active session 
     return configuration(state);
   }, config => new LocalBattleSession(config));
   assert.throws(() => controller.navigate('battle'), /阵位/);
-  assert.equal(controller.observe().screen, 'warzone');
+  assert.equal(controller.observe().screen, 'home');
   controller.navigate('battle', deployment); controller.advance(1 / 30, false);
   const before = controller.observe().battle;
   reject = true;

@@ -9,20 +9,22 @@ export function createTargetWeaponPanel(options: {
   send: (command: BattleCommand) => void; portCommand: (command: PortCommand) => void;
 }) {
   const root = document.createElement('section'); root.className = 'target-weapons';
-  root.setAttribute('aria-label', '目标版武器控制');
+  root.setAttribute('aria-label', '舰载武器控制');
   root.innerHTML = `<strong>武器控制 · 共享备弹</strong>
     <label>炮位组<select data-control="slot"><option value="main">主武器</option><option value="secondary">第二武器 / 副炮</option><option value="light_aa">小口径防空</option></select></label>
-    <label>炮座<select data-control="mount"></select></label>
+    <label>前后炮组（C）<select data-control="battery"><option value="all">全部</option><option value="fore">前炮组</option><option value="aft">后炮组</option></select></label>
+    <label>独立炮座<select data-control="mount"></select></label>
     <label>用途<select data-control="mode"><option value="surface">对舰</option><option value="air">手动对空</option></select></label>
-    <label>发射<select data-control="pattern"><option value="salvo">齐射</option><option value="gradual">渐次</option></select></label>
+    <label>发射（X）<select data-control="pattern"><option value="salvo">齐射</option><option value="gradual">渐次</option></select></label>
     <label>炮弹<select data-control="shell"><option value="HE">HE 高爆</option><option value="AP">AP 穿甲</option></select></label>
     <button data-control="automatic" type="button">自动开关</button>
     <label>对空预瞄高度<input data-control="height" type="number" min="1" max="3000" step="10" value="120"> u</label>
     <button data-control="aircraft" type="button">预瞄最近敌机当前位置</button>
     <button data-control="hold" type="button">按住渐次开火（空格）</button>
-    <p data-control="readout" role="status"></p><small>选组/换用途后重新左键预瞄；对空使用HE定时球爆。副炮与自动小AA无需手动开火。</small>`;
+    <p data-control="readout" role="status"></p><small>C：全部→前→后炮组；Z：按舰炮可用弹种/用途切换；X：齐射/渐次。换用途/按Z后重新左键预瞄；对空使用共享备弹的HE定时球爆。独立选炮座会退出前后炮组选择；自动组自行攻击。</small>`;
   element('app', HTMLElement).append(root);
   const select = (name: string) => root.querySelector<HTMLSelectElement>(`[data-control="${name}"]`)!;
+  const battery = select('battery');
   const slot = select('slot'), mount = select('mount'), mode = select('mode'), pattern = select('pattern'), shell = select('shell');
   const automatic = root.querySelector<HTMLButtonElement>('[data-control="automatic"]')!;
   const height = root.querySelector<HTMLInputElement>('[data-control="height"]')!;
@@ -40,6 +42,7 @@ export function createTargetWeaponPanel(options: {
   const stop = () => options.send({ type: 'fire-hold', enabled: false });
   const change = (command: BattleCommand) => { stop(); options.send(command); };
   slot.addEventListener('change', () => change({ type: 'weapon-slot', slot: slot.value as TargetSlot }));
+  battery.addEventListener('change', () => change({ type: 'weapon-battery', battery: battery.value as 'all' | 'fore' | 'aft' }));
   mount.addEventListener('change', () => change({ type: 'weapon-mount', mount: mount.value === '' ? null : Number(mount.value) }));
   mode.addEventListener('change', () => change({ type: 'weapon-mode', mode: mode.value === 'air' ? 'air' : 'surface' }));
   pattern.addEventListener('change', () => change({ type: 'firing-pattern', pattern: pattern.value === 'gradual' ? 'gradual' : 'salvo' }));
@@ -78,7 +81,9 @@ export function createTargetWeaponPanel(options: {
       for (let i = 0; i < selected.mounts; i++) mount.append(new Option(`${i + 1}号座`, String(i))); }
     mount.value = control.selectedMount === null ? '' : String(control.selectedMount);
     const manual = selected.control === 'manual', selectedWeapon = options.content.weapons[selected.weaponId]!;
-    mount.disabled = pattern.disabled = !manual || selectedWeapon.kind !== 'gun';
+    battery.value = control.selectedBattery;
+    battery.disabled = mount.disabled = pattern.disabled = !manual || selectedWeapon.kind !== 'gun';
+    mount.title = control.selectedBattery === 'all' ? '可独立选择一座舰炮' : '当前使用前后炮组；独立选择炮座会退出炮组选择';
     mode.disabled = !manual || selected.availableModes.length < 2;
     mode.value = selected.mode; pattern.value = selected.pattern; shell.value = selected.shellType;
     for (const option of mode.options) option.disabled = !selected.availableModes.includes(option.value as 'air' | 'surface');
@@ -87,14 +92,15 @@ export function createTargetWeaponPanel(options: {
     automatic.setAttribute('aria-pressed', String(selected.enabled));
     height.disabled = aircraft.disabled = !manual || selected.mode !== 'air';
     aircraft.disabled ||= !state.battle?.aircraft?.some(a => a.owner === 'enemy');
-    hold.disabled = !manual || selected.pattern !== 'gradual' || !!state.battle?.combat.result;
+    hold.disabled = !manual || selectedWeapon.kind !== 'gun' || selected.pattern !== 'gradual' || !!state.battle?.combat.result;
     const time = (state.battle?.tick ?? 0) / options.content.rules.simulation_hz;
     const lines = control.groups.filter(g => g.side === 'player' && g.slot === selected.slot).map(g => {
       const remain = g.tubes.reduce((sum, tube) => sum + tube.remaining, 0);
       const tubes = g.tubes.map(tube => `${tube.mount + 1}-${tube.barrel + 1}:${tube.remaining}发/${Math.max(0, tube.readyAt - time).toFixed(1)}s`).join(' ');
       return `${options.content.weapons[g.weaponId]!.name} · ${g.control === 'manual' ? '手动' : '自动'} · 余${remain}发${g.aircraftAvailable || g.aircraftLost ? ` · 可用飞机${g.aircraftAvailable}/损失${g.aircraftLost}` : ''}\n${tubes}`;
     });
-    readout.textContent = `切换等待${Math.max(0, selected.switchReadyAt - time).toFixed(1)}s · ${control.aimValid ? '预瞄有效' : '请重新预瞄'}\n${lines.join('\n')}`;
+    const batteryName = { all: '全部炮组', fore: '前炮组', aft: '后炮组' }[control.selectedBattery];
+    readout.textContent = `${control.selectedMount === null ? batteryName : `${control.selectedMount + 1}号独立炮座`} · 切换等待${Math.max(0, selected.switchReadyAt - time).toFixed(1)}s · ${control.aimValid ? '预瞄有效' : '请重新预瞄'}\n${lines.join('\n')}`;
   }
   return { render, panel: root, stop, pins: () => [] as HTMLElement[],
     aimHeight: () => { const value = height.valueAsNumber; return Number.isFinite(value) ? Math.max(1, Math.min(3000, value)) : 120; },

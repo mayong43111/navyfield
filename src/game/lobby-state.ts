@@ -1,7 +1,7 @@
 import { findBattle } from './battles.ts';
 
 export type LobbyScreen = 'warzone' | 'prepare';
-export type Screen = LobbyScreen | 'battle' | 'yard';
+export type { Screen } from '../domain/application.ts';
 export type Area = 'training' | 'open';
 export type Team = 'alpha' | 'bravo';
 export type Formation = 'column' | 'line' | 'wedge';

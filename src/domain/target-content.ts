@@ -73,8 +73,9 @@ export interface TargetWeaponGroupState {
   yaw: number; targetId: string | null; lockReadyAt: number;
   aircraftAvailable: number; aircraftLost: number;
 }
+export type TargetBattery = 'all' | 'fore' | 'aft';
 export interface TargetControlState {
-  selectedSlot: TargetSlot; selectedMount: number | null; fireHeld: boolean;
+  selectedSlot: TargetSlot; selectedMount: number | null; selectedBattery: TargetBattery; fireHeld: boolean;
   aimValid: boolean; groups: TargetWeaponGroupState[];
 }
 export interface AircraftState {

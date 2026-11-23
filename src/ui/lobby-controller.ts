@@ -18,6 +18,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
   options: { room?: TargetRoom } = {}): {
   show: (screen: Screen) => void;
   getStatus: () => string;
+  cancelDeparture: () => void;
   dispose: () => void;
 } {
   const state = createLobbyState();
@@ -32,12 +33,12 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
   root.className = 'lobby';
   root.hidden = true;
   root.innerHTML = `
-    <header class="lobby-top metal"><span>舰队司令部</span><h1 id="lobby-title">战区</h1><b>单机 <a href="./credits.html" target="_blank" rel="noopener">署名 / 许可</a></b></header>
+    <header class="lobby-top metal"><span>舰队司令部</span><h1 id="lobby-title">战区</h1><b>本地编队 · 非多人大厅 <a href="./credits.html" target="_blank" rel="noopener">署名 / 许可</a></b></header>
     <section id="warzone-page" class="lobby-screen" aria-label="世界战区选房">
       <div class="channel-controls metal"><button data-area="training" type="button">新手战区</button><button data-area="open" type="button">自由战区</button><button id="room-previous" type="button" aria-label="上一页房间">◀</button><span id="room-page">1 / 1</span><button id="room-next" type="button" aria-label="下一页房间">▶</button><button id="room-new" type="button">＋ 建立房间</button><button data-go="yard" type="button">⚓ 港口 / 船坞</button></div>
       <div class="world-chart-area"><div class="world-chart"><canvas id="lobby-map" aria-label="世界海战地图"></canvas><div id="battle-markers" aria-label="二战海战地点，坐标为战区约位"></div><span class="chart-caption">海战位置示意</span></div></div>
       <aside class="warzone-details glass">
-        <h2>海战地点</h2><div id="battle-list"></div>
+        <h2>海战地点</h2><p>战史地点仅用于本地房间分类；实际出击为统一地图上的单机同型舰对决。</p><div id="battle-list"></div>
         <section class="battle-information"><h3 id="battle-name"></h3><time id="battle-date"></time><p id="battle-location"></p><p id="battle-description"></p><a id="battle-source" target="_blank" rel="noopener">战史资料 ↗</a></section>
         <section class="room-inspector"><h2>房间</h2><h3 id="selected-room-title">选择房间</h3><p id="selected-room-info"></p><button id="room-join" type="button" disabled>进入房间排阵</button></section>
       </aside>
@@ -92,7 +93,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
   let remainingCountdown = 0;
   const cancelCountdown = () => { if (countdown !== null) clearTimeout(countdown); countdown = null; remainingCountdown = 0; };
   if (options.room) root.querySelector<HTMLElement>('.formation-help')!.textContent =
-    `目标版单机1对1 · 地图${options.room.map_width_u}×${options.room.map_height_u}u · 初始间隔${options.room.center_gap_u}u · 建议准备预算${options.room.ready_budget_s}s · 出击倒计时${options.room.countdown_s}s · 战斗上限${options.room.combat_limit_s}s。编队其他舰不参战。`;
+    `单机1对1 · 出击倒计时${options.room.countdown_s}s · 战斗上限${options.room.combat_limit_s}s。仅所选旗舰出击。`;
   const pages = (['warzone', 'prepare'] as const).map(name => ({ name, node: element(`${name}-page`, HTMLElement) }));
 
   function record(text: string): void {
@@ -144,7 +145,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
   }
 
   function render(): void {
-    element('lobby-title', HTMLElement).textContent = screen === 'warzone' ? '世界战区' : '战前布阵';
+    element('lobby-title', HTMLElement).textContent = screen === 'warzone' ? '高级战区' : '高级编队';
     const battle = findBattle(battleId);
     element('battle-name', HTMLElement).textContent = battle.name;
     element('battle-date', HTMLElement).textContent = battle.date;
@@ -383,7 +384,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
     remainingCountdown = options.room.countdown_s;
     const tick = () => inputAction(() => {
       countdown = null;
-      if (!canStart(state) || screen !== 'prepare') { cancelCountdown(); render(); return; }
+      if (!canStart(state) || screen !== 'prepare' || document.hidden) { cancelCountdown(); render(); return; }
       remainingCountdown--;
       if (remainingCountdown <= 0) { launch(); return; }
       countdown = setTimeout(tick, 1000); render();
@@ -417,6 +418,9 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
       validation.textContent = error.message; validation.hidden = false;
     }
   });
+  const cancelDeparture = () => { cancelCountdown(); if (screen === 'prepare') render(); };
+  const visibility = () => { if (document.hidden) cancelDeparture(); };
+  document.addEventListener('visibilitychange', visibility);
   const observer = new ResizeObserver(() => { if (screen === 'warzone') paintLobby(map, land); });
   observer.observe(map);
   return {
@@ -436,7 +440,7 @@ export function createLobby(navigate: (screen: Screen, deployment?: BattleDeploy
       render();
       if (next === 'warzone') paintLobby(map, land);
     },
-    getStatus: () => message,
-    dispose: () => { cancelCountdown(); observer.disconnect(); root.remove(); }
+    getStatus: () => message, cancelDeparture,
+    dispose: () => { cancelCountdown(); document.removeEventListener('visibilitychange', visibility); observer.disconnect(); root.remove(); }
   };
 }

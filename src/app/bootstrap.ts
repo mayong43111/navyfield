@@ -8,6 +8,7 @@ export async function bootstrap(): Promise<void> {
   const status = element('status', HTMLParagraphElement);
   const error = element('error', HTMLDivElement);
   const report = (message: string) => {
+    document.getElementById('app')!.setAttribute('aria-busy', 'false');
     console.error(message); error.hidden = false; error.textContent = message;
     const retry = document.createElement('button');
     retry.type = 'button'; retry.textContent = '重试载入';
@@ -22,6 +23,7 @@ export async function bootstrap(): Promise<void> {
   const unsubscribe = subscribeContentProgress(progress => {
     const name = progress.url.split('/').pop() ?? '资源';
     status.textContent = `舰队整备中… ${name} · ${(progress.received / 1024).toFixed(0)} / ${(progress.total / 1024).toFixed(0)} KiB`;
+    element('loading-detail', HTMLElement).textContent = status.textContent;
   });
   status.textContent = '舰队整备中…';
   try { startApplication(canvas, status, await loadGameContent()); }

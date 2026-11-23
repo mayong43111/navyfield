@@ -1,0 +1,97 @@
+:root { --journey-navy: #081923; --journey-gold: #e2c47c; --journey-line: #406170; }
+body { grid-template-rows:minmax(0,1fr); }
+#loading { display:none; position:absolute; inset:0; place-items:center; text-align:center; background:radial-gradient(ellipse at center,#173a4a,#071923); z-index:15; padding:24px; }
+#loading span { font-size:64px; color:#e2c47c; }
+#loading h1 { color:#e4d3ad; font-size:26px; letter-spacing:4px; }
+#loading p { color:#a8c2cb; font-size:14px; }
+#app[aria-busy="true"] #loading { display:grid !important; visibility:visible; }
+.game-journey { position:absolute; inset:0; z-index:12; pointer-events:none; font:15px/1.65 Arial,"Microsoft YaHei",sans-serif; }
+.game-journey [hidden] { display:none !important; }
+.game-journey :is(button,a,dialog,.journey-page) { pointer-events:auto; }
+.game-journey button { min-height:42px; padding:9px 18px; border:1px solid #698693; border-radius:4px; box-shadow:none; background:#193442; color:#e5edf0; font-size:14px; text-shadow:none; }
+.game-journey button:hover { background:#294b59; color:#ffe3a5; }
+.game-journey button:disabled { cursor:not-allowed; opacity:.6; }
+.game-journey :is(button,a):focus-visible { outline:3px solid #e9cb84; outline-offset:3px; }
+.journey-header { position:absolute; top:0; left:0; right:0; height:64px; display:flex; align-items:center; justify-content:space-between; gap:18px; padding:0 24px; background:#091c27fa; border-bottom:1px solid var(--journey-line); pointer-events:auto; }
+.game-journey .journey-brand { padding:0; border:0; background:none; text-decoration:none; text-align:left; font-size:23px; font-weight:bold; letter-spacing:3px; color:var(--journey-gold); white-space:nowrap; }
+.journey-brand small { display:block; font-size:9px; letter-spacing:2px; color:#9bb4be; line-height:1; }
+.journey-header nav { display:flex; gap:8px; }
+.journey-header nav button { background:transparent; border-color:transparent; }
+.journey-header nav button[aria-current] { color:var(--journey-gold); border-bottom-color:var(--journey-gold); border-radius:0; }
+.journey-mode { font-size:12px; color:#9dc3ce; white-space:nowrap; }
+.journey-location { position:absolute; top:64px; left:0; right:0; height:34px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; font-size:12px; background:#12303bee; border-bottom:1px solid #315260; color:#9db8c1; }
+#journey-location { color:#e2d5b1; }
+.journey-page { position:absolute; inset:98px 0 0; padding:clamp(24px,4vw,58px) max(24px,calc((100% - 1120px)/2)); overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; background:radial-gradient(ellipse at 90% 10%,#23465266,transparent 55%),linear-gradient(125deg,#071722f7,#112c38f7); }
+.journey-page h1 { margin:8px 0 12px; font-size:clamp(30px,4vw,50px); line-height:1.25; color:#f0e5cb; letter-spacing:2px; }
+.journey-page h1:focus { outline:none; }
+.journey-eyebrow { letter-spacing:3px; color:var(--journey-gold); font-size:12px; }
+.journey-lead { max-width:760px; font-size:17px; color:#bdd0d7; }
+.journey-muted { color:#aac0ca; font-size:13px; line-height:1.8; }
+.journey-actions { display:flex; flex-wrap:wrap; gap:12px; margin:24px 0; }
+.game-journey .journey-primary { background:linear-gradient(#e1c580,#b59b5e); color:#142934; border-color:#f0d69c; font-weight:bold; padding-inline:26px; }
+.game-journey .journey-primary:hover { background:#f1d598; color:#081923; }
+.home-page { padding-top:clamp(30px,8vh,100px); }
+.home-emblem { float:right; width:150px; height:150px; display:grid; place-items:center; margin:0 10px 20px 30px; border:1px solid #728d8b66; outline:1px solid #728d8b33; outline-offset:12px; border-radius:50%; color:#dbbc73; font-size:70px; background:repeating-conic-gradient(from 0deg,#34576233 0 1deg,transparent 1deg 30deg); }
+.home-features { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:50px 0 24px; clear:both; }
+.home-features article { padding:22px 0; border-top:1px solid #607e83; }
+.home-features b { font-size:15px; color:#dfc78f; }
+.home-features p { color:#b6ccd4; }
+.briefing-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:26px; }
+.journey-card { padding:22px; border:1px solid var(--journey-line); border-radius:6px; background:#0c2330cc; }
+.journey-card h2 { margin:0 0 16px; font-size:20px; color:#e0c793; }
+.journey-card p { color:#b9cdd4; font-size:14px; }
+.game-journey dl { margin:0; }
+.journey-card dl > div { display:flex; gap:18px; justify-content:space-between; border-bottom:1px solid #31505b77; padding:8px 0; }
+.game-journey dt { color:#a1bac5; }
+.game-journey dd { margin:0; color:#e1ebed; text-align:right; }
+.briefing-controls { margin-top:20px; }
+.game-journey kbd { border:1px solid #62808b; border-radius:3px; padding:2px 5px; color:#e6d7b3; background:#183440; }
+#sortie-countdown { color:var(--journey-gold); min-height:25px; }
+.results-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:30px 0 !important; }
+.results-grid > div { padding:22px; background:#102e3dcc; border:1px solid #426370; border-top:2px solid #bca16b; border-radius:4px; }
+.results-grid dd { text-align:left; font-size:26px; font-weight:bold; margin-top:8px; color:#e8d09a; }
+.results-page h1 { color:#e7cb83; }
+.game-journey dialog { width:min(650px,calc(100% - 32px)); max-height:85dvh; overflow-y:auto; color:#dce8ec; border:1px solid #78909b; border-radius:8px; padding:28px; background:#102937; font-size:15px; }
+.game-journey dialog h2 { color:#ebd19b; margin-top:0; }
+.game-journey dialog li { margin-block:12px; }
+.game-journey dialog::backdrop { background:#000b; }
+#journey-alert { position:absolute; bottom:34px; left:24px; right:24px; background:#492d26; padding:12px; color:#ffe2be; pointer-events:auto; }
+#app:is([data-mode="home"],[data-mode="briefing"],[data-mode="results"]) > :not(#scene,#loading,.game-journey,#status,#error) { display:none !important; }
+#app .team { display:none !important; }
+#app[data-mode="yard"] .yard-topbar { top:98px; }
+#app[data-mode="yard"] .yard-info { top:145px; max-height:calc(100% - 153px); }
+#app[data-mode="yard"] .yard-armament { max-height:calc(100% - 155px); overflow-y:auto; }
+#app[data-mode="yard"] .health { display:none; }
+#app .lobby { top:98px; }
+#app[data-mode="battle"] .journey-location { display:none; }
+#app[data-mode="battle"] .journey-header { height:54px; }
+#app[data-mode="battle"] .health { top:54px; }
+#app[data-mode="battle"] .battle-stat { top:100px; }
+#app[data-mode="battle"] #battle-result { display:none; }
+#app #error { z-index:25; }
+#app[aria-busy="true"] > :not(#scene,#loading,#status,#error) { visibility:hidden; }
+@media(max-width:1000px) { .journey-mode { display:none; } .journey-header { padding-inline:16px; } .journey-header nav { gap:0; } }
+@media(max-width:760px) {
+  .journey-header { gap:6px; padding:0 12px; }
+  .game-journey .journey-brand { font-size:18px; letter-spacing:1px; }
+  .journey-header nav button { padding:6px; font-size:12px; max-width:86px; line-height:1.3; }
+  .journey-brand small { font-size:7px; }
+  .journey-location { padding-inline:14px; }
+  .journey-location > span:last-child { display:none; }
+  .journey-page { padding:24px 18px; }
+  .home-emblem { width:80px; height:80px; font-size:42px; margin:6px 8px 24px 20px; }
+  .home-features,.briefing-grid { grid-template-columns:1fr; gap:12px; }
+  .home-features { margin-top:24px; }
+  .home-features article { padding:12px 0; }
+  .results-grid { grid-template-columns:1fr 1fr; }
+  .results-grid > div { padding:14px; }
+  .results-grid dd { font-size:21px; }
+  .journey-card { padding:16px; }
+  #app[data-mode="yard"] { overflow-y:auto; }
+  #app[data-mode="yard"] #scene { position:absolute; top:136px; height:260px; }
+  #app[data-mode="yard"] .yard-info { position:relative; top:auto; left:auto; width:calc(100% - 24px); margin:410px 12px 12px; max-height:none; }
+  #app[data-mode="yard"] .yard-armament { position:relative; inset:auto; width:calc(100% - 24px); max-height:none; margin:12px; }
+  #app[data-mode="yard"] #yard-depart { position:relative; inset:auto !important; transform:none; visibility:visible !important; width:calc(100% - 24px); margin:12px; min-height:48px; }
+  #app[data-mode="yard"] :is(#yard-mount-pins,.ship-tag) { display:none; }
+}
+@media(prefers-reduced-motion:reduce) { .game-journey * { scroll-behavior:auto; transition:none; } }

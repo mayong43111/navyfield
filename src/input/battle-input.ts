@@ -20,7 +20,7 @@ export function bindBattleKeyboard(options: {
     if (!options.enabled(event)) return;
     const target = event.target;
     if (target instanceof HTMLElement && (target.matches('input, select, textarea') || target.isContentEditable)) return;
-    if (['Space', 'KeyF', 'KeyV', 'KeyA', 'KeyD', 'KeyC', 'KeyR', 'KeyY', 'ControlLeft', 'ControlRight'].includes(event.code)) event.preventDefault();
+    if (['Space', 'KeyF', 'KeyV', 'KeyA', 'KeyD', 'KeyC', 'KeyR', 'KeyZ', 'KeyX', 'Home', 'ControlLeft', 'ControlRight'].includes(event.code)) event.preventDefault();
     const changed = !options.keys.has(event.code);
     options.keys.add(event.code);
     if (changed && ['KeyF', 'KeyV', 'KeyA', 'KeyD'].includes(event.code)) steer();

@@ -12,9 +12,11 @@ import { createTargetWeaponPanel } from '../ui/target-weapons.ts';
 import '../ui/target-weapons.css';
 import { createShipyardController } from '../ui/shipyard-controller.ts';
 import { createBattleControls } from '../ui/battle-controls.ts';
+import { createGameJourney } from '../ui/game-journey.ts';
 import { createOverlays } from '../ui/overlays.ts';
 import { tacticalMapScale } from '../ui/tactical-map.ts';
 import { bindBattleKeyboard } from '../input/battle-input.ts';
+import { dispatchWeaponShortcut } from '../input/weapon-shortcuts.ts';
 import { bindBattlePointer } from '../input/battle-pointer.ts';
 import type { VesselVisualContract } from '../domain/port.ts';
 import type { ApplicationState } from '../domain/application.ts';
@@ -26,8 +28,7 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
     const entry = content.modelCatalog.targetModels.find(model => model.shipId === typeId);
     if (!entry?.runtimeAsset) return createMissingModel(typeId, ship.name, ship.length_u, ship.beam_u);
     const visual = createShip(content.models, entry.modelId);
-    const description = entry.status === 'local_original' ? '自研低模（非精确史实）' : '现有参考模型（上游权利待核）';
-    return { ...visual, modelName: `${ship.name} · ${description}` };
+    return { ...visual, modelName: ship.name };
   };
   const view = createBattleView(canvas, content.models, vessel), port = createTargetPort(content.target);
   const contract = (typeId: string): VesselVisualContract => {
@@ -60,10 +61,10 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
         ['舰长/舰宽', `${ship.length_u}/${ship.beam_u} 压缩u（非米）`], ['主武器', `${content.target.weapons[ship.main_weapon_id]!.name} ${ship.main_mounts}×${ship.main_barrels}`],
         ['第二武器', ship.secondary_weapon_id ? `${content.target.weapons[ship.secondary_weapon_id]!.name} ${ship.secondary_mounts}×${ship.secondary_barrels}` : '无'],
         ['自动小AA', banks.filter(b => b.role === 'aa').map(b => `${content.target.weapons[b.weapon_id]!.name} ${b.mounts}×${b.barrels}`).join(' / ') || '无'],
-        ['航空容量', String(ship.aircraft_capacity)], ['防雷防护', String(ship.bulge_hp)], ['模型状态', vessel(id).modelName]];
+        ['航空容量', String(ship.aircraft_capacity)], ['防雷防护', String(ship.bulge_hp)]];
     } });
   const bulgeInput = document.getElementById('yard-bulge-level') as HTMLInputElement;
-  bulgeInput.disabled = true; bulgeInput.title = '目标版防雷防护由舰船统一数据固定，不使用旧版档位倍率';
+  bulgeInput.disabled = true; bulgeInput.title = '防雷防护由舰型决定';
   const lobby = createLobby((screen, deployment) => {
     application.navigate(screen, deployment);
     if (deployment) overlays.deployment(deployment.team, deployment.slot);
@@ -79,9 +80,14 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
     const throttle = current.battle?.ships.find(s => s.side === 'player')?.navigation.throttle ?? 0;
     message(`发动机动力 ${Math.round(Math.max(-0.3, Math.min(1, throttle + step)) * 100)}%`);
   };
-  const controls = createBattleControls({ navigate: screen => application.navigate(screen),
-    fire: () => application.fire(), tda: () => application.toggleTDA(), power });
-  const pointer = bindBattlePointer({ canvas, map: overlays.map, isBattle: () => state().screen === 'battle',
+  const journey = createGameJourney({ navigate: screen => application.navigate(screen),
+    launch: () => { application.navigate('battle'); document.querySelector('#ship-tag span')!.textContent = '本舰 · 单机演习'; },
+    retry: () => application.retry(), cancelPending: () => lobby.cancelDeparture() }, content.target);
+  const controls = createBattleControls({ navigate: journey.navigate,
+    fire: () => application.fire(), tda: () => application.toggleTDA(), power,
+    returnCamera: () => { view.returnCamera(); pointer.clear(); message('视角已返回本舰 · Home回舰'); },
+    resupply: () => { application.portCommand({ type: 'reset-ammunition' }); message('港口弹仓已重置 · 每次出击按规则重新整备'); } });
+  const pointer = bindBattlePointer({ canvas, map: overlays.map, isBattle: () => state().screen === 'battle' && !journey.dialogOpen(),
     blocked: [hud.mapPanel, hud.enginePanel, hud.resultPanel, ammunition.panel],
     scale: () => tacticalMapScale(state().config?.layout ?? null),
     world: (x, y) => {
@@ -99,7 +105,7 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
   });
   const keys = new Set<string>();
   const unbindKeyboard = bindBattleKeyboard({ keys, isBattle: () => state().screen === 'battle',
-    enabled: event => ['battle', 'yard'].includes(state().screen) && !shipyard.dialogOpen() &&
+    enabled: event => ['battle', 'yard'].includes(state().screen) && !shipyard.dialogOpen() && !journey.dialogOpen() &&
       !(state().screen === 'yard' && event.code === 'Space' && event.target instanceof HTMLButtonElement),
     send: command => application.send(command), clearPointer: pointer.clear,
     release: code => { if (code === 'Space') ammunition.stop(); },
@@ -112,14 +118,12 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
         else application.fire();
       }
       if (code === 'ControlLeft' || code === 'ControlRight') application.toggleTDA();
-      if (code === 'KeyY' && state().screen === 'battle') {
-        const control = state().battle?.target;
-        const group = control?.groups.find(g => g.side === 'player' && g.slot === control.selectedSlot);
-        if (group?.mode === 'surface') application.send({ type: 'shell-type', weapon: 0, locker: 'A', shellType: group.shellType === 'AP' ? 'HE' : 'AP' });
+      if (state().screen === 'battle' && !state().battle?.combat.result) {
+        dispatchWeaponShortcut(code, state().battle?.target, content.target, command => application.send(command));
       }
-      if (code === 'KeyC') {
+      if (code === 'Home') {
         view.returnCamera(); pointer.clear();
-        if (state().screen === 'battle') message('视角已返回本舰 · 边缘移屏 / C回舰');
+        if (state().screen === 'battle') message('视角已返回本舰 · 边缘移屏 / Home回舰');
       }
       if (code === 'KeyR') { application.reset(); if (state().screen === 'yard') view.resetPortView(); }
     }
@@ -129,10 +133,10 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
     const active = update.state.port.active; view.selectVessel(active.id, active.typeId);
     if (!previous || previous.screen !== update.state.screen || previous.config !== update.state.config) {
       view.show(update.state.screen, update.state.config, update.state.battle);
-      hud.resultPanel.hidden = true; lobby.show(update.state.screen); keys.clear(); pointer.clear();
+      hud.resultPanel.hidden = true; lobby.show(update.state.screen); keys.clear(); pointer.clear(); ammunition.stop();
     }
     previous = update.state;
-    ammunition.render(update.state); shipyard.render(update.state); controls.render(update.state);
+    ammunition.render(update.state); shipyard.render(update.state); controls.render(update.state); journey.render(update.state);
     if (update.state.battle) for (const event of update.events) {
       view.present(event, update.state.battle); if (event.type === 'result') { keys.clear(); pointer.clear(); }
     }
@@ -142,24 +146,27 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
   document.addEventListener('visibilitychange', visibility);
   function frame(now: number): void {
     const seconds = Math.max(0, (now - lastTime) / 1000); lastTime = now;
-    application.advance(seconds, document.hidden);
+    if (journey.dialogOpen()) { keys.clear(); pointer.clear(); ammunition.stop(); }
+    application.advance(seconds, document.hidden || journey.dialogOpen());
     const current = state(), rendered = view.render(current.battle, current.port.active.mount,
       document.hidden ? 0 : Math.min(seconds, 0.1), pointer.read());
-    if (rendered.browsing) message('浏览远处 · C返回本舰');
-    if (current.battle) hud.battle(current.battle);
+    if (rendered.browsing) message('浏览远处 · Home返回本舰');
+    if (current.screen === 'battle' && current.battle) hud.battle(current.battle);
     const guns = current.battle?.ships.find(s => s.side === 'player')?.weapons ?? current.port.active.guns;
     hud.navigation(rendered.navigation, current.screen === 'yard', guns.map((gun, index) => ({
       reload: gun.reload, reloadSeconds: current.config?.ships.find(s => s.side === 'player')?.weapons[index]?.reloadSeconds ??
         content.originalData.guns.find(g => g.id === current.port.active.weapons[index])?.reloadSeconds ?? 1
     })), content.target.ships[current.port.active.typeId]!.speed_u_s);
     overlays.render(current, rendered);
-    status.textContent = current.screen !== 'battle' && current.screen !== 'yard' ? lobby.getStatus() : current.message ||
+    status.textContent = ['home', 'briefing', 'results'].includes(current.screen) ? journey.status() :
+      current.screen !== 'battle' && current.screen !== 'yard' ? lobby.getStatus() : current.message ||
       (current.port.active.weapons.some(w => w !== null) ? '左键锁定瞄准 · 右键航线 · 空格齐射 · F加速/V减速' : '未装备主炮 · 请在船厂配置');
     frameId = requestAnimationFrame(frame);
   }
-  application.navigate('warzone'); frameId = requestAnimationFrame(frame);
+  application.navigate('home'); document.getElementById('app')!.setAttribute('aria-busy', 'false');
+  frameId = requestAnimationFrame(frame);
   return () => {
     cancelAnimationFrame(frameId); document.removeEventListener('visibilitychange', visibility);
-    unbindKeyboard(); pointer.dispose(); unsubscribe(); application.end(); ammunition.dispose(); lobby.dispose(); view.dispose();
+    unbindKeyboard(); pointer.dispose(); unsubscribe(); application.end(); ammunition.dispose(); lobby.dispose(); controls.dispose(); journey.dispose(); view.dispose();
   };
 }

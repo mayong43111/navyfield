@@ -5,7 +5,7 @@ import { createCombat, hullIntersection, resolveBattle } from './combat.ts';
 import { freezeTargetConfig } from './target-config.ts';
 import { moveTargetAircraft, type TargetAircraftAction } from './target-aircraft.ts';
 import { createTargetGroup, targetMode, setTargetMode, setTargetShell, readyTargetTubes,
-  consumeTargetTubes, setTargetAutomatic } from './target-weapons.ts';
+  consumeTargetTubes, setTargetAutomatic, cycleTargetAmmo } from './target-weapons.ts';
 import { angleDelta, degrees, radians, targetRange, targetTrajectory, targetIntercept, targetDispersion,
   targetDamage, targetNavigation } from './target-physics.ts';
 import { nextRandom } from './random.ts';
@@ -32,7 +32,7 @@ export class TargetBattleSimulation {
     this.content = structuredClone(this.config.target!.content) as TargetContent;
     this.definitions = structuredClone(this.config.target!.groups) as TargetGroupDefinition[];
     const room = this.content.rooms.duel!;
-    this.controls = { selectedSlot: 'main', selectedMount: null, fireHeld: false, aimValid: false,
+    this.controls = { selectedSlot: 'main', selectedMount: null, selectedBattery: 'all', fireHeld: false, aimValid: false,
       groups: this.definitions.map(d => createTargetGroup(this.content, d, room.initial_reload_s)) };
     const ships = this.config.ships;
     const combat = createCombat(ships[0]!.hp, ships[1]!.hp, ships[0]!.protection);
@@ -90,7 +90,7 @@ export class TargetBattleSimulation {
       case 'weapon-slot': {
         if (!this.controls.groups.some(g => g.side === 'player' && g.slot === command.slot)) throw new Error('该炮位为空');
         if (command.slot !== this.controls.selectedSlot) {
-          this.controls.selectedSlot = command.slot; this.controls.selectedMount = null; this.controls.aimValid = false; this.resetHold();
+          this.controls.selectedSlot = command.slot; this.controls.selectedMount = null; this.controls.selectedBattery = 'all'; this.controls.aimValid = false; this.resetHold();
         }
         break;
       }
@@ -98,7 +98,23 @@ export class TargetBattleSimulation {
         const group = this.selected();
         if (group.control !== 'manual' || this.content.weapons[group.weaponId]!.kind !== 'gun' ||
           command.mount !== null && (!Number.isInteger(command.mount) || command.mount < 0 || command.mount >= group.mounts)) throw new Error('手动炮座选择无效');
-        if (this.controls.selectedMount !== command.mount) { this.controls.selectedMount = command.mount; this.resetHold(); }
+        if (this.controls.selectedMount !== command.mount || this.controls.selectedBattery !== 'all') {
+          this.controls.selectedMount = command.mount; this.controls.selectedBattery = 'all'; this.resetHold();
+        }
+        break;
+      }
+      case 'weapon-battery': {
+        const group = this.selected();
+        if (group.control !== 'manual' || this.content.weapons[group.weaponId]!.kind !== 'gun' ||
+          !['all', 'fore', 'aft'].includes(command.battery)) throw new Error('该武器不开放手动前后炮组选择');
+        this.controls.selectedBattery = command.battery; this.controls.selectedMount = null; this.resetHold();
+        break;
+      }
+      case 'weapon-ammo-cycle': {
+        const group = this.selected();
+        if (cycleTargetAmmo(this.content, this.definition(group), group, this.time)) {
+          this.controls.aimValid = false; this.resetHold();
+        }
         break;
       }
       case 'weapon-mode': {
@@ -130,7 +146,8 @@ export class TargetBattleSimulation {
       case 'shell-type': {
         const group = this.selected();
         if (!group || !['A', 'B'].includes(command.locker) || !Number.isInteger(command.weapon) || command.weapon < 0 || command.weapon >= group.mounts) throw new Error('主炮或弹仓不存在');
-        setTargetShell(this.content, this.definition(group), group, command.shellType, this.time); break;
+        if (setTargetShell(this.content, this.definition(group), group, command.shellType, this.time)) this.resetHold();
+        break;
       }
       case 'locker': {
         const group = this.controls.groups.find(g => g.side === 'player' && g.slot === 'main');
@@ -175,7 +192,8 @@ export class TargetBattleSimulation {
       throw new Error('对空用途需要有效敌机与飞机高度预瞄，不能使用海面点');
     }
     if (weapon.kind === 'aircraft') { this.launchAircraft(group, point); return; }
-    const definition = this.definition(group), indices = readyTargetTubes(this.content, definition, group, mount, this.time);
+    const definition = this.definition(group), indices = readyTargetTubes(this.content, definition, group, mount, this.time,
+      group.side === 'player' && weapon.kind === 'gun' ? this.controls.selectedBattery : 'all');
     for (const index of indices) this.reachable(group, point, group.tubes[index]!.mount);
     // Precompute every trajectory before changing a single tube's stock or reload deadline.
     const shots = indices.map(index => {

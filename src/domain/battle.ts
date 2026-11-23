@@ -95,6 +95,8 @@ export type BattleCommand =
   | { type: 'fire' }
   | { type: 'weapon-slot'; slot: TargetSlot }
   | { type: 'weapon-mount'; mount: number | null }
+  | { type: 'weapon-battery'; battery: 'all' | 'fore' | 'aft' }
+  | { type: 'weapon-ammo-cycle' }
   | { type: 'weapon-mode'; mode: TargetMode }
   | { type: 'firing-pattern'; pattern: FiringPattern }
   | { type: 'automatic'; slot: TargetSlot; enabled: boolean }
