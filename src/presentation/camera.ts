@@ -39,6 +39,10 @@ export function seaViewSize(camera: OrthographicCamera, zoom = camera.zoom): { w
   };
 }
 
+export function edgeScrollZone(viewport: { width: number; height: number }): number {
+  return Math.min(72, viewport.width / 2, viewport.height / 2);
+}
+
 export function edgePan(camera: OrthographicCamera, point: { x: number; y: number },
   viewport: { width: number; height: number }, dt: number): Vector3 {
   if (![point.x, point.y, viewport.width, viewport.height, dt].every(Number.isFinite)
@@ -46,7 +50,7 @@ export function edgePan(camera: OrthographicCamera, point: { x: number; y: numbe
   if (point.x < 0 || point.y < 0 || point.x > viewport.width || point.y > viewport.height || dt === 0) {
     return new Vector3();
   }
-  const zone = Math.min(32, viewport.width / 2, viewport.height / 2);
+  const zone = edgeScrollZone(viewport);
   function strength(position: number, length: number): number {
     if (position < zone) return (position - zone) / zone;
     if (position > length - zone) return (position - length + zone) / zone;

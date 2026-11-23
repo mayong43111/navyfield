@@ -100,7 +100,8 @@ export function startApplication(canvas: HTMLCanvasElement, status: HTMLElement,
       const control = state().battle?.target;
       const group = control?.groups.find(g => g.side === 'player' && g.slot === control.selectedSlot);
       application.send(button === 0 ? { type: 'aim', point: { ...point, y: group?.mode === 'air' ? ammunition.aimHeight() : 0.5 } } : { type: 'route', point });
-      message(button === 0 ? '预瞄点已设定 · 空格开火 / 按住渐次' : '航线已设定 · F/V切换手动推进');
+      message(button === 0 ? (group && content.target.weapons[group.weaponId]?.kind === 'aircraft'
+        ? '航空任务方向已设定 · 空格放飞' : '射击方向与仰角已锁定 · 空格开火 / 按住渐次') : '航线已设定 · F/V切换手动推进');
     }
   });
   const keys = new Set<string>();

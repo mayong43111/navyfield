@@ -46,6 +46,9 @@ export interface TargetRules {
   fleet_cv_limit: number; spawn_edge_margin: number; spawn_spacing: number;
   torpedo_hit_probability: number; aircraft_hp: number; aircraft_attack_hit_probability: number;
   aircraft_aa_exposure: number;
+  ai_observation_interval_s: number; ai_reaction_delay_s: number;
+  ai_position_error_u: number; ai_position_error_ratio: number;
+  ai_lead_fraction: number; ai_fire_delay_s: number;
 }
 export interface TargetProfile { id: string; role: string; strength: string; weakness: string;
   tactics: string; preferred_min_u: number; preferred_max_u: number; source: string }
@@ -94,7 +97,7 @@ const fields = {
   weapon_modes: { text: 'id weapon_id mode target_kind shell_policy source', numeric: 'range_u max_elevation_deg burst_radius_u damage_multiplier' },
   automation: { text: 'id ship_id role weapon_id source', numeric: 'mounts barrels bearing_deg arc_deg min_range_u max_range_u slew_deg_s lock_s aim_tolerance_deg hit_probability' },
   profiles: { text: 'id role strength weakness tactics source', numeric: 'preferred_min_u preferred_max_u' },
-  rules: { text: 'rule_version', numeric: 'schema_version gravity deck_threshold_deg penetration_range_loss he_min_fraction overpenetration_armor_ratio detection_range fire_duration fire_dps_hp_fraction fire_max_stacks fire_chance repair_hp_fraction repair_duration repair_cooldown repair_charges capture_radius capture_time simulation_hz fleet_bb_limit fleet_cv_limit spawn_edge_margin spawn_spacing torpedo_hit_probability aircraft_hp aircraft_attack_hit_probability aircraft_aa_exposure' },
+  rules: { text: 'rule_version', numeric: 'schema_version gravity deck_threshold_deg penetration_range_loss he_min_fraction overpenetration_armor_ratio detection_range fire_duration fire_dps_hp_fraction fire_max_stacks fire_chance repair_hp_fraction repair_duration repair_cooldown repair_charges capture_radius capture_time simulation_hz fleet_bb_limit fleet_cv_limit spawn_edge_margin spawn_spacing torpedo_hit_probability aircraft_hp aircraft_attack_hit_probability aircraft_aa_exposure ai_observation_interval_s ai_reaction_delay_s ai_position_error_u ai_position_error_ratio ai_lead_fraction ai_fire_delay_s' },
 } as const;
 
 function projectRow(value: unknown, shape: { text: string; numeric: string }, label: string): Record<string, string | number> {
@@ -138,6 +141,8 @@ export function parseTargetContent(value: unknown): TargetContent {
   for (const field of Object.values(data.rules)) if (typeof field === 'number' && (!Number.isFinite(field) || field < 0)) {
     throw new Error('目标规则数值无效');
   }
+  if (!(data.rules.ai_observation_interval_s > 0) || data.rules.ai_position_error_ratio > 1 ||
+    data.rules.ai_lead_fraction > 1) throw new Error('目标AI观测或提前量规则无效');
   for (const ship of Object.values(data.ships)) {
     if (!data.armor[ship.armor_id] || !data.weapons[ship.main_weapon_id] || !(ship.hp > 0) ||
       !(ship.length_u > ship.beam_u && ship.beam_u > 0) || !(ship.acceleration_u_s2 > 0) || !(ship.turn_radius_u > 0)) {

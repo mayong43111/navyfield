@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "rulesVersion": "target-v1.3.0",
-  "inputSha256": "221a7501a91d809a67dd03c170fa74981c4052e2650374a8220f16ba7411a8ce",
+  "inputSha256": "0cb1aebec32a1f8a36379d751409bc838a17c7ed21e7ee21cceaeb0cde316e9f",
   "inputFiles": [
     "design-data/source/armor.csv",
     "design-data/source/automation.csv",
@@ -751,7 +751,13 @@
     "torpedo_hit_probability": 0.25,
     "aircraft_hp": 1200.0,
     "aircraft_attack_hit_probability": 0.55,
-    "aircraft_aa_exposure": 12.0
+    "aircraft_aa_exposure": 12.0,
+    "ai_observation_interval_s": 2.0,
+    "ai_reaction_delay_s": 1.5,
+    "ai_position_error_u": 90.0,
+    "ai_position_error_ratio": 0.04,
+    "ai_lead_fraction": 0.65,
+    "ai_fire_delay_s": 1.2
   },
   "profiles": {
     "scout_dd": {

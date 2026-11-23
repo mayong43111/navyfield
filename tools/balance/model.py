@@ -48,6 +48,9 @@ RULE_UNITS = {
     'spawn_edge_margin': 'u', 'spawn_spacing': 'u',
     'torpedo_hit_probability': 'probability', 'aircraft_hp': 'hp',
     'aircraft_attack_hit_probability': 'probability', 'aircraft_aa_exposure': 's',
+    'ai_observation_interval_s': 's', 'ai_reaction_delay_s': 's',
+    'ai_position_error_u': 'u', 'ai_position_error_ratio': 'ratio',
+    'ai_lead_fraction': 'ratio', 'ai_fire_delay_s': 's',
 }
 
 
@@ -131,6 +134,11 @@ def validate(data):
     rules = data['rules']
     for key in ('gravity', 'detection_range', 'fire_duration', 'repair_duration', 'repair_cooldown', 'capture_time', 'simulation_hz', 'spawn_spacing', 'aircraft_hp'):
         require(rules[key] > 0, f'rules: {key} must be positive')
+    require(rules['ai_observation_interval_s'] > 0, 'AI observation interval must be positive')
+    for key in ('ai_reaction_delay_s', 'ai_position_error_u', 'ai_fire_delay_s'):
+        require(rules[key] >= 0, f'rules: {key} must be nonnegative')
+    for key in ('ai_position_error_ratio', 'ai_lead_fraction'):
+        require(0 <= rules[key] <= 1, f'rules: {key} must be in [0, 1]')
     require(rules['schema_version'] == 3, 'unsupported schema version')
     require(0 < rules['deck_threshold_deg'] < 45, 'invalid deck threshold')
     require(data['settings']['duel_runs'] > 0 and data['settings']['duel_limit_s'] > 0, 'empty duel experiment')

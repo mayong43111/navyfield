@@ -62,7 +62,7 @@ test('edge scrolling follows screen directions at constant pixel speed across zo
 test('edge scrolling ramps toward the border and avoids a diagonal speed boost', () => {
   const camera = view(BATTLE_ZOOM), viewport = { width: 1600, height: 900 };
   const full = edgePan(camera, { x: 0, y: 450 }, viewport, 0.1);
-  const half = edgePan(camera, { x: 16, y: 450 }, viewport, 0.1);
+  const half = edgePan(camera, { x: 36, y: 450 }, viewport, 0.1);
   assert.ok(Math.abs(full.length() / half.length() - 2) < 0.00001);
   const center = seaPoint(camera, 0, 0);
   camera.position.add(edgePan(camera, { x: 1600, y: 0 }, viewport, 0.1));

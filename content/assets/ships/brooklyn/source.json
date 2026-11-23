@@ -13,7 +13,7 @@
   "visualInput": "content/data/ships/original-visuals.json",
   "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
   "targetInput": "content/data/ships/target.json",
-  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "targetInputSha256": "a67efe1ea050721fa565b6fca6a2a185c2d4b7130e7fdc880e82e96a014a1a53",
   "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Stepped prewar bridge, two slim funnels, long forecastle and aft aviation handling deck recall USS Brooklyn CL-40. Its historical five triple-turret silhouette is intentionally not reproduced as five guns.",
   "targetArmament": "Exactly four double main mounts follow TARGET instead of the historical five triple mounts. The fifth historical turret is omitted, not represented by a fake working gun.",
   "references": [

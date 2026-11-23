@@ -2496,7 +2496,13 @@
     "torpedo_hit_probability": 0.25,
     "aircraft_hp": 1200.0,
     "aircraft_attack_hit_probability": 0.55,
-    "aircraft_aa_exposure": 12.0
+    "aircraft_aa_exposure": 12.0,
+    "ai_observation_interval_s": 2.0,
+    "ai_reaction_delay_s": 1.5,
+    "ai_position_error_u": 90.0,
+    "ai_position_error_ratio": 0.04,
+    "ai_lead_fraction": 0.65,
+    "ai_fire_delay_s": 1.2
   },
   "settings": {
     "seed": 43111,
@@ -2510,5 +2516,5 @@
     "auto_step_s": 0.1,
     "aa_attack_distance_u": 350.0
   },
-  "input_sha256": "3e3b647a3bf36afed0822f7a51c89e5ebadbec1405fda5f040d8e430357341b8"
+  "input_sha256": "871e80c8bdcd2da59be993a0a255655463f3fdc0452d2975eee5dc8330e4ef66"
 }

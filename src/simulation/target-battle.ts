@@ -14,6 +14,9 @@ import { STEP_SECONDS } from './battle.ts';
 type Payload = BattleEvent extends infer E ? E extends BattleEvent ? Omit<E, 'id' | 'tick'> : never : never;
 const opponent = (side: Side): Side => side === 'player' ? 'enemy' : 'player';
 const interpolate = (a: Point, b: Point, t: number): Point => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, z: a.z + (b.z - a.z) * t });
+type LockedAim = { velocity: Point; flight: number };
+type EnemyObservation = { time: number; navigation: NavigationState };
+type EnemySolution = { observedAt: number; point: Point };
 
 export class TargetBattleSimulation {
   readonly config: DeepReadonly<BattleConfig>;
@@ -26,9 +29,16 @@ export class TargetBattleSimulation {
   private nextEvent = 0;
   private events: BattleEvent[] = [];
   private fires: Record<Side, number[]> = { player: [], enemy: [] };
+  private lockedAims = new Map<string, (LockedAim | null)[]>();
+  private enemyObservations: EnemyObservation[] = [];
+  private nextEnemyObservation = 0;
+  private enemySolutions = new Map<string, EnemySolution>();
+  private enemyRequests = new Map<string, number>();
+  private enemyRandomState: number;
 
   constructor(input: BattleConfig) {
     this.config = freezeTargetConfig(input);
+    this.enemyRandomState = (input.seed ^ 0x9e3779b9) >>> 0;
     this.content = structuredClone(this.config.target!.content) as TargetContent;
     this.definitions = structuredClone(this.config.target!.groups) as TargetGroupDefinition[];
     const room = this.content.rooms.duel!;
@@ -80,6 +90,21 @@ export class TargetBattleSimulation {
         break;
       case 'aim': {
         if (![command.point.x, command.point.y, command.point.z].every(Number.isFinite)) throw new Error('预瞄无效');
+        const group = this.selected(), weapon = this.content.weapons[group.weaponId]!;
+        if (group.control === 'manual' && (weapon.kind === 'gun' || weapon.kind === 'torpedo')) {
+          const aims = Array.from({ length: group.mounts }, (_, mount): LockedAim | null => {
+            const origin = this.origin(group, mount);
+            if (weapon.kind === 'gun') {
+              const trajectory = targetTrajectory(origin, command.point, weapon.muzzle_u_s, this.content.rules.gravity,
+                targetMode(this.content, group).max_elevation_deg || weapon.max_elevation_deg);
+              return trajectory ? { velocity: trajectory.velocity, flight: trajectory.flight } : null;
+            }
+            const dx = command.point.x - origin.x, dz = command.point.z - origin.z, distance = Math.hypot(dx, dz);
+            return distance > 0 ? { velocity: { x: dx / distance * weapon.travel_u_s, y: 0, z: dz / distance * weapon.travel_u_s },
+              flight: distance / weapon.travel_u_s } : null;
+          });
+          this.lockedAims.set(group.id, aims);
+        }
         this.state.aim = { ...command.point };
         this.controls.aimValid = true;
         break;
@@ -167,6 +192,15 @@ export class TargetBattleSimulation {
     return { x: ship.x + Math.sin(ship.heading) * offset, y: source.beam_u,
       z: ship.z + Math.cos(ship.heading) * offset };
   }
+  private aimPoint(group: TargetWeaponGroupState, mount: number, fallback: Point): Point | null {
+    if (group.side !== 'player' || !this.lockedAims.has(group.id)) return fallback;
+    const locked = this.lockedAims.get(group.id)![mount];
+    if (!locked) return null;
+    const origin = this.origin(group, mount), gravity = this.content.weapons[group.weaponId]!.kind === 'gun' ? this.content.rules.gravity : 0;
+    return { x: origin.x + locked.velocity.x * locked.flight,
+      y: gravity ? origin.y + locked.velocity.y * locked.flight - gravity * locked.flight ** 2 / 2 : 0.5,
+      z: origin.z + locked.velocity.z * locked.flight };
+  }
   private reachable(group: TargetWeaponGroupState, point: Point, mount: number): void {
     const source = this.source(group.side), origin = this.origin(group, mount), nav = this.ship(group.side).navigation;
     const distance = Math.hypot(point.x - nav.x, point.z - nav.z), weapon = this.content.weapons[group.weaponId]!, mode = targetMode(this.content, group);
@@ -194,18 +228,25 @@ export class TargetBattleSimulation {
     if (weapon.kind === 'aircraft') { this.launchAircraft(group, point); return; }
     const definition = this.definition(group), indices = readyTargetTubes(this.content, definition, group, mount, this.time,
       group.side === 'player' && weapon.kind === 'gun' ? this.controls.selectedBattery : 'all');
-    for (const index of indices) this.reachable(group, point, group.tubes[index]!.mount);
+    const points = indices.map(index => {
+      const mount = group.tubes[index]!.mount, target = this.aimPoint(group, mount, point);
+      if (!target) throw new Error('锁定仰角超出该炮座射程，请重新瞄准');
+      this.reachable(group, target, mount);
+      return target;
+    });
     // Precompute every trajectory before changing a single tube's stock or reload deadline.
-    const shots = indices.map(index => {
-      const origin = this.origin(group, group.tubes[index]!.mount);
+    const shots = indices.map((index, shotIndex) => {
+      const origin = this.origin(group, group.tubes[index]!.mount), point = points[shotIndex]!;
       if (weapon.kind === 'torpedo') {
         const distance = Math.hypot(point.x - origin.x, point.z - origin.z);
         if (distance < 1) throw new Error('鱼雷目标过近');
         return { origin: { ...origin, y: 0.5 }, velocity: { x: (point.x - origin.x) / distance * weapon.travel_u_s,
           y: 0, z: (point.z - origin.z) / distance * weapon.travel_u_s }, elevation: 0, flight: 0 };
       }
-      const mode = targetMode(this.content, group), ideal = targetTrajectory(origin, point, weapon.muzzle_u_s,
-        this.content.rules.gravity, mode.max_elevation_deg || weapon.max_elevation_deg)!;
+      const mode = targetMode(this.content, group), locked = group.side === 'player' ? this.lockedAims.get(group.id)?.[group.tubes[index]!.mount] : null;
+      const ideal = locked ? { ...locked, elevation: Math.atan2(locked.velocity.y, Math.hypot(locked.velocity.x, locked.velocity.z)) }
+        : targetTrajectory(origin, point, weapon.muzzle_u_s,
+          this.content.rules.gravity, mode.max_elevation_deg || weapon.max_elevation_deg)!;
       const scattered = targetDispersion(origin, point, weapon, this.random);
       // Dispersion changes launch direction, never the authoritative muzzle speed.
       const flight = ideal.flight;
@@ -442,20 +483,48 @@ export class TargetBattleSimulation {
       targetNavigation(nav, source, throttle, rudder, STEP_SECONDS, this.config.layout.width, this.config.layout.height);
     }
   }
+  private enemyRandom(): number {
+    const result = nextRandom(this.enemyRandomState); this.enemyRandomState = result.state; return result.value;
+  }
   private enemyFire(): void {
-    const target = this.ship('player').navigation;
+    const rules = this.content.rules;
+    if (this.time + 1e-9 >= this.nextEnemyObservation) {
+      this.enemyObservations.push({ time: this.time, navigation: { ...this.ship('player').navigation } });
+      this.nextEnemyObservation = this.time + rules.ai_observation_interval_s;
+    }
+    const cutoff = this.time - rules.ai_reaction_delay_s;
+    while (this.enemyObservations.length > 1 && this.enemyObservations[1]!.time <= cutoff + 1e-9) this.enemyObservations.shift();
+    const observation = this.enemyObservations[0];
     for (const group of this.controls.groups.filter(g => g.side === 'enemy' && g.control === 'manual')) {
-      if (this.state.combat.enemy.hp <= 0 || this.state.combat.player.hp <= 0 || this.time + 1e-9 < group.nextRequestAt) continue;
-      const weapon = this.content.weapons[group.weaponId]!;
-      let point: Point = { x: target.x, y: 0.5, z: target.z };
-      if (weapon.kind === 'gun') {
-        const intercept = targetIntercept(this.origin(group, 0), point, { x: Math.sin(target.heading) * target.speed, y: 0,
-          z: Math.cos(target.heading) * target.speed }, weapon.muzzle_u_s, this.content.rules.gravity, weapon.max_elevation_deg);
-        if (!intercept) continue;
-        point = { x: point.x + Math.sin(target.heading) * target.speed * intercept.flight, y: 0.5,
-          z: point.z + Math.cos(target.heading) * target.speed * intercept.flight };
+      const requestAt = this.enemyRequests.get(group.id) ?? group.nextRequestAt + rules.ai_fire_delay_s;
+      if (!observation || observation.time > cutoff + 1e-9 || this.state.combat.enemy.hp <= 0 ||
+        this.state.combat.player.hp <= 0 || this.time + 1e-9 < Math.max(requestAt, group.nextRequestAt)) continue;
+      const weapon = this.content.weapons[group.weaponId]!, target = observation.navigation;
+      let solution = this.enemySolutions.get(group.id);
+      if (solution?.observedAt !== observation.time) {
+        let point: Point = { x: target.x, y: 0.5, z: target.z };
+        if (weapon.kind === 'gun') {
+          const velocity = { x: Math.sin(target.heading) * target.speed, y: 0, z: Math.cos(target.heading) * target.speed };
+          const origin = this.origin(group, 0);
+          const intercept = targetIntercept(origin, point, velocity, weapon.muzzle_u_s,
+            rules.gravity, weapon.max_elevation_deg) ?? targetTrajectory(origin, point, weapon.muzzle_u_s,
+            rules.gravity, weapon.max_elevation_deg);
+          if (!intercept) continue;
+          point = { x: point.x + velocity.x * intercept.flight * rules.ai_lead_fraction, y: 0.5,
+            z: point.z + velocity.z * intercept.flight * rules.ai_lead_fraction };
+        }
+        if (weapon.kind !== 'aircraft') {
+          const origin = this.origin(group, 0), range = Math.hypot(point.x - origin.x, point.z - origin.z);
+          const radius = (rules.ai_position_error_u + range * rules.ai_position_error_ratio) * Math.sqrt(this.enemyRandom());
+          const bearing = this.enemyRandom() * Math.PI * 2;
+          point.x += Math.sin(bearing) * radius; point.z += Math.cos(bearing) * radius;
+        }
+        solution = { observedAt: observation.time, point }; this.enemySolutions.set(group.id, solution);
       }
-      try { this.manualFire(group, point, null, true); } catch { /* AI retries only on future fixed steps. */ }
+      try {
+        this.manualFire(group, solution.point, null, true);
+        this.enemyRequests.set(group.id, this.time + weapon.reload_s + rules.ai_fire_delay_s);
+      } catch { /* A stale solution stays stable until the next delayed observation. */ }
     }
   }
   private synchronizeWeapons(): void {
@@ -467,12 +536,15 @@ export class TargetBattleSimulation {
         weapon.reload = Math.max(0, group.switchReadyAt - this.time, ...tubes.map(t => t.readyAt - this.time));
         weapon.ammunition.lockers.A.shellType = weapon.ammunition.lockers.B.shellType = group.shellType;
         weapon.ammunition.lockers.A.remaining = stock; weapon.ammunition.lockers.B.remaining = 0;
-        const origin = this.origin(group, mount), aim = this.state.aim, trajectory = targetTrajectory(origin, aim,
-          this.content.weapons[group.weaponId]!.muzzle_u_s, this.content.rules.gravity,
-          targetMode(this.content, group).max_elevation_deg || this.content.weapons[group.weaponId]!.max_elevation_deg);
-        weapon.yaw = angleDelta(Math.atan2(aim.x - origin.x, aim.z - origin.z), ship.navigation.heading);
-        weapon.elevation = trajectory?.elevation ?? 0;
-        try { this.reachable(group, aim, mount); weapon.aimState = 'aligned'; } catch { weapon.aimState = 'limited'; }
+        const origin = this.origin(group, mount), aim = ship.side === 'player'
+          ? this.aimPoint(group, mount, this.state.aim) : this.enemySolutions.get(group.id)?.point;
+        if (aim) {
+          const trajectory = targetTrajectory(origin, aim, this.content.weapons[group.weaponId]!.muzzle_u_s, this.content.rules.gravity,
+            targetMode(this.content, group).max_elevation_deg || this.content.weapons[group.weaponId]!.max_elevation_deg);
+          weapon.yaw = angleDelta(Math.atan2(aim.x - origin.x, aim.z - origin.z), ship.navigation.heading);
+          weapon.elevation = trajectory?.elevation ?? 0;
+          try { this.reachable(group, aim, mount); weapon.aimState = 'aligned'; } catch { weapon.aimState = 'limited'; }
+        } else weapon.aimState = 'turning';
         weapon.recoil = Math.max(0, weapon.recoil - STEP_SECONDS);
       });
     }
@@ -487,6 +559,10 @@ export class TargetBattleSimulation {
     const before = this.state.ships.map(s => ({ ...s.navigation }));
     const aircraftBefore = new Map(this.state.aircraft!.map(a => [a.id, { ...a.position }]));
     this.navigate();
+    if (this.controls.aimValid) {
+      const aim = this.aimPoint(this.selected(), this.controls.selectedMount ?? 0, this.state.aim);
+      if (aim) this.state.aim = aim;
+    }
     if (this.controls.fireHeld) {
       try { this.manualFire(this.selected(), this.state.aim, this.controls.selectedMount, this.controls.aimValid); } catch { /* Held input never queues catch-up shots. */ }
     }

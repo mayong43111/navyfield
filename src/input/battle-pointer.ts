@@ -1,4 +1,5 @@
 import type { Point } from '../domain/battle.ts';
+import { edgeScrollZone } from '../presentation/camera.ts';
 
 export function bindBattlePointer(options: {
   canvas: HTMLCanvasElement; map: HTMLCanvasElement; isBattle: () => boolean;
@@ -17,7 +18,14 @@ export function bindBattlePointer(options: {
     pointer = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom
       ? { x: event.clientX - rect.left, y: event.clientY - rect.top } : null;
   };
-  const out = (event: PointerEvent) => { if (!event.relatedTarget) clear(); };
+  const out = (event: PointerEvent) => {
+    if (event.relatedTarget) return;
+    if (!options.isBattle() || event.pointerType !== 'mouse' || event.buttons || !pointer) { clear(); return; }
+    const rect = options.canvas.getBoundingClientRect(), zone = edgeScrollZone(rect);
+    if (pointer.x >= zone && pointer.x <= rect.width - zone &&
+      pointer.y >= zone && pointer.y <= rect.height - zone) clear();
+  };
+  const visibility = () => { if (document.hidden) clear(); };
   const order = (event: PointerEvent) => {
     if (!options.isBattle() || (event.button !== 0 && event.button !== 2)) return;
     const rect = options.canvas.getBoundingClientRect();
@@ -33,11 +41,13 @@ export function bindBattlePointer(options: {
   const context = (event: MouseEvent) => { if (options.isBattle()) event.preventDefault(); };
   window.addEventListener('pointermove', move); window.addEventListener('pointerdown', clear);
   window.addEventListener('pointerout', out); window.addEventListener('blur', clear);
+  document.addEventListener('visibilitychange', visibility);
   options.canvas.addEventListener('pointerdown', order); options.map.addEventListener('pointerdown', mapOrder);
   for (const surface of [options.canvas, options.map]) surface.addEventListener('contextmenu', context);
   function dispose(): void {
     window.removeEventListener('pointermove', move); window.removeEventListener('pointerdown', clear);
     window.removeEventListener('pointerout', out); window.removeEventListener('blur', clear);
+    document.removeEventListener('visibilitychange', visibility);
     options.canvas.removeEventListener('pointerdown', order); options.map.removeEventListener('pointerdown', mapOrder);
     for (const surface of [options.canvas, options.map]) surface.removeEventListener('contextmenu', context);
   }

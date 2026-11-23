@@ -26,3 +26,9 @@ torpedo_hit_probability,0.25,probability,self-designed
 aircraft_hp,1200,hp,self-designed
 aircraft_attack_hit_probability,0.55,probability,self-designed
 aircraft_aa_exposure,12,s,self-designed
+ai_observation_interval_s,2,s,self-designed
+ai_reaction_delay_s,1.5,s,self-designed
+ai_position_error_u,90,u,self-designed
+ai_position_error_ratio,0.04,ratio,self-designed
+ai_lead_fraction,0.65,ratio,self-designed
+ai_fire_delay_s,1.2,s,self-designed

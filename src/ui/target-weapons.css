@@ -1,7 +1,18 @@
-.target-weapons { position:absolute; z-index:40; left:16px; bottom:20px; width:min(370px,calc(100vw - 32px)); max-height:48vh; overflow:auto; padding:12px; color:#e4eee5; background:#15282bee; border:1px solid #759386; border-radius:8px; font:12px/1.4 sans-serif; }
+.target-weapons { position:absolute; z-index:40; left:16px; bottom:220px; width:min(370px,calc(100vw - 32px)); max-height:48vh; overflow:auto; padding:12px; color:#e4eee5; background:#15282bee; border:1px solid #759386; border-radius:8px; font:12px/1.4 sans-serif; }
 .target-weapons[hidden] { display:none; }
 .target-weapons label { display:inline-flex; gap:5px; align-items:center; margin:4px; }
 .target-weapons select, .target-weapons input, .target-weapons button { font:inherit; }
 .target-weapons input { width:65px; }
 .target-weapons button { margin:4px; padding:4px; touch-action:none; }
 .target-weapons p { white-space:pre-wrap; overflow-wrap:anywhere; }
+.target-station { text-align:center; min-width:72px; }
+.target-station .station-dial { margin:8px auto; }
+.target-station > b, .target-station > small { display:block; color:#e4eee5; font:11px/1.5 sans-serif; }
+.target-station[hidden], .bearing-stack[hidden], .weapon-panel svg[hidden] { display:none !important; }
+@media (max-height:650px) {
+  .target-weapons { max-height:calc(100vh - 300px); }
+}
+@media (max-width:650px) {
+  .target-weapons { width:min(300px,calc(100vw - 32px)); padding:6px; }
+  .target-weapons small { display:none; }
+}

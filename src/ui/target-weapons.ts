@@ -1,4 +1,5 @@
 import { element } from '../ui.ts';
+import { createTargetInstruments } from './target-instruments.ts';
 import type { ApplicationState } from '../domain/application.ts';
 import type { BattleCommand } from '../domain/battle.ts';
 import type { TargetContent, TargetSlot } from '../domain/target-content.ts';
@@ -21,7 +22,7 @@ export function createTargetWeaponPanel(options: {
     <label>对空预瞄高度<input data-control="height" type="number" min="1" max="3000" step="10" value="120"> u</label>
     <button data-control="aircraft" type="button">预瞄最近敌机当前位置</button>
     <button data-control="hold" type="button">按住渐次开火（空格）</button>
-    <p data-control="readout" role="status"></p><small>C：全部→前→后炮组；Z：按舰炮可用弹种/用途切换；X：齐射/渐次。换用途/按Z后重新左键预瞄；对空使用共享备弹的HE定时球爆。独立选炮座会退出前后炮组选择；自动组自行攻击。</small>`;
+    <p data-control="readout" role="status"></p><small>C：全部→前→后炮组；Z：按舰炮可用弹种/用途切换；X：齐射/渐次。左键锁定海图方向与仰角，不追踪原点击位置；换用途/按Z后重新瞄准。对空使用共享备弹的HE定时球爆。独立选炮座会退出前后炮组选择；自动组自行攻击。</small>`;
   element('app', HTMLElement).append(root);
   const select = (name: string) => root.querySelector<HTMLSelectElement>(`[data-control="${name}"]`)!;
   const battery = select('battery');
@@ -36,6 +37,7 @@ export function createTargetWeaponPanel(options: {
   shellA.setAttribute('aria-label', '出击初始弹种');
   shellB.closest('label')!.hidden = true;
   const gunModel = element('yard-gun-model', HTMLSelectElement);
+  const instruments = createTargetInstruments(options.content);
   let mountKey = '';
   const group = () => { const state = options.state().battle?.target;
     return state?.groups.find(g => g.side === 'player' && g.slot === state.selectedSlot); };
@@ -65,7 +67,7 @@ export function createTargetWeaponPanel(options: {
   });
   function render(state: Readonly<ApplicationState>): void {
     root.hidden = state.screen !== 'battle';
-    element('battle-gun-console', HTMLDivElement).hidden = true;
+    instruments.render(state);
     const ship = options.content.ships[state.port.active.typeId]!, weapon = options.content.weapons[ship.main_weapon_id]!;
     gunModel.replaceChildren(new Option(weapon.name, weapon.id)); gunModel.disabled = true;
     shellA.disabled = state.screen !== 'yard' || weapon.kind !== 'gun'; shellB.disabled = true;

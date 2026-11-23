@@ -1,7 +1,7 @@
 # 目标数值试算报告（自动生成）
 
 - 规则：`target-v1.3.0`；种子：`43111`。
-- 输入 SHA-256：`3e3b647a3bf36afed0822f7a51c89e5ebadbec1405fda5f040d8e430357341b8`。
+- 输入 SHA-256：`871e80c8bdcd2da59be993a0a255655463f3fdc0452d2975eee5dc8330e4ef66`。
 - 全部数值为自研目标，不是史实或原版公式；目标数值现已接入单机1对1，离线任务/修理/占点报告不代表运行功能已实现。
 - 运行环境与完整精度见 [summary.json](summary.json)；编辑入口见 [设计说明](../../../docs/game-design/balance-target.md)。
 

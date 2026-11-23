@@ -13,7 +13,7 @@
   "visualInput": "content/data/ships/original-visuals.json",
   "visualInputSha256": "54a0dfedbc3d2fd0d26e4a2fdf618d901825cce40712064bded378e66da82c9d",
   "targetInput": "content/data/ships/target.json",
-  "targetInputSha256": "d0f9f28ad5c02e31cd62bd24cd164d38b64cd0e463fc83bd32b61759f001d051",
+  "targetInputSha256": "a67efe1ea050721fa565b6fca6a2a185c2d4b7130e7fdc880e82e96a014a1a53",
   "historicalApproximation": "Original procedural low-poly interpretation from general historical silhouette facts; not an exact historical reconstruction, game asset extraction, or reproduction of any source artwork. Long narrow straight WW2 flight deck, small offset starboard island, four starboard exhaust uptakes and open bow/stern gallery support interpret USS Independence CVL-22, not a modern Independence-class LCS.",
   "targetArmament": "Aircraft main armament creates no gun turrets, barrels or fake main muzzles. AircraftLaunch and AircraftRecovery are distinct local deck points. Two automatic single secondary guns use the actual ind_port and ind_starboard banks; AA counts follow TARGET.",
   "references": [

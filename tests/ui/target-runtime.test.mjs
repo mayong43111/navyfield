@@ -58,7 +58,10 @@ test('target panel distinguishes manual dual-purpose main guns from automatic ba
   assert.equal(document.querySelector('#shell-b').disabled, true);
   assert.equal(document.querySelector('#shell-b').closest('label').hidden, true);
   assert.equal(document.querySelector('#shell-a').getAttribute('aria-label'), '出击初始弹种');
-  assert.equal(document.querySelector('#battle-gun-console').hidden, true);
+  assert.equal(document.querySelector('#battle-gun-console').hidden, false);
+  assert.equal(document.querySelectorAll('.target-station').length, content.ships.escort_dd.main_mounts);
+  assert.match(document.querySelector('#battle-gun-console').textContent, /HE · 140 发/);
+  assert.equal(document.querySelector('.weapon-panel h2').textContent, content.weapons.gun_127_rapid.name);
   const mode = panel.panel.querySelector('[data-control="mode"]');
   mode.value = 'air'; mode.dispatchEvent(new window.Event('change'));
   app.advance(0.1, false); panel.render(app.observe());
@@ -72,6 +75,28 @@ test('target panel distinguishes manual dual-purpose main guns from automatic ba
   assert.equal(panel.panel.querySelector('[data-control="automatic"]').hidden, false);
   assert.equal(panel.panel.querySelector('[data-control="pattern"]').disabled, true);
   panel.dispose(); app.end();
+});
+test('instruments use real main weapons and aviation stocks across all twelve hulls', t => {
+  environment(t); const app = application();
+  const panel = createTargetWeaponPanel({ content, state: () => app.observe(), send: command => app.send(command), portCommand: command => app.portCommand(command) });
+  for (let index = 0; index < 12; index++) {
+    app.navigate('yard'); app.portCommand({ type: 'select-berth', index });
+    panel.render(app.observe()); assert.equal(document.querySelector('#battle-gun-console').hidden, true);
+    app.navigate('battle', { team: 'alpha', slot: 0 }); panel.render(app.observe());
+    const state = app.observe(), ship = content.ships[state.port.active.typeId], weapon = content.weapons[ship.main_weapon_id];
+    const group = state.battle.target.groups.find(g => g.side === 'player' && g.slot === 'main');
+    assert.equal(document.querySelector('#battle-gun-console').hidden, false);
+    assert.equal(document.querySelectorAll('.target-station').length, group.mounts);
+    assert.equal(document.querySelector('.weapon-panel h2').textContent, weapon.name);
+    assert.equal(document.querySelector('.bearing-stack').hidden, weapon.kind !== 'gun');
+    if (weapon.kind === 'aircraft') assert.match(document.querySelector('#station-banks').textContent, new RegExp(`可用 ${group.aircraftAvailable} 架`));
+    app.advance(1, false); panel.render(app.observe());
+    for (const station of document.querySelectorAll('.target-station [role="meter"]')) {
+      assert.ok(Number(station.getAttribute('aria-valuenow')) >= 0 && Number(station.getAttribute('aria-valuenow')) <= 100);
+    }
+    app.end();
+  }
+  panel.dispose();
 });
 test('battery panel and independent mount selection stay synchronized, and camera button has a real action', t => {
   const window = environment(t), app = application();
